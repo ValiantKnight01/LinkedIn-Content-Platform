@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Always-On Newsroom Kanban</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .pattern-stripes {
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.03),
+                rgba(0, 0, 0, 0.03) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4a373",
+                        "background-light": "#fefae0",
+                        "surface": "#e9edc9",
+                        "surface-secondary": "#faedcd",
+                        "accent": "#ccd5ae",
+                        "text-main": "#3D2B1F",
+                        "text-secondary": "#6B4F3A",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-body text-text-main">
+<div class="flex h-screen w-full">
+<aside class="flex h-full w-72 shrink-0 flex-col gap-8 border-r border-primary/20 bg-background-light p-6">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of the editor in chief" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLLoT4Ak_hjMMZMMiCqs7xBkUihbbOim1Ycnu4sMJ_P38CZrhxbmYQIv0hHkeUnsC9_bogKuu3CoUhxlISOKOaP84W2GIqFRj0DxSTLmzltiMtJkHYd0m4OuQvGw3lXHCOQJw6HUBn6_7C2C1nnY5jyQ6cfuqCml-IxxMuhKq4ejADoaNdcNAWzMXcLxTubDY2ZQ3tvzi6edNxiYgh13qprKj1MKFaaEvaxtNrfQcB_f8qDPeJauzM0MLcbh5nJXT9nI5W1CsZXCU');"></div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-lg font-bold leading-tight font-display">Editor-in-Chief</h1>
+<p class="text-text-secondary text-sm font-normal leading-normal">Editorial Platform</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-xl px-4 py-3 text-text-secondary hover:text-text-main" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<p class="text-base font-medium">Syllabus</p>
+</a>
+<a class="flex items-center gap-3 rounded-xl bg-accent/50 px-4 py-3 text-text-main" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">grid_view</span>
+<p class="text-base font-medium">Newsroom</p>
+</a>
+<a class="flex items-center gap-3 rounded-xl px-4 py-3 text-text-secondary hover:text-text-main" href="#">
+<span class="material-symbols-outlined">archive</span>
+<p class="text-base font-medium">Archives</p>
+</a>
+</nav>
+<div class="mt-auto">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-surface-secondary p-4">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-lg" data-alt="Abstract image representing organic themes" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1lSm1yUfy67dR81hD6D_DgHQifBX-qqr9P3awSlz3JLvTVJXrcGV8Uogbp7xwFp3XOB2_lstPlMI4g7LaPXAG-ubKtHdMzMALsna2NLT18eehpHyp10YmaGb3Qrjre8-q2j6f366lQ5-ZzL7VN3l-QhlGFJtRsxWtP_Ekx30Yv44i789Yd1yzwV8jNhs8MSmTXb3JO6f8X1LhrQLvbnAu-N1aJNdDWdNFSE6NMxj1Pm0Et_tJIeT6l56p3-Qz7V4_2jcSJF6wO5s');"></div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1 py-4">
+<p class="text-primary text-lg font-bold leading-tight font-display">Active Theme</p>
+<div class="flex flex-col gap-1">
+<p class="text-text-secondary text-sm font-normal">Current Month</p>
+<p class="text-text-main text-base font-medium">RAG Architectures</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex flex-1 flex-col overflow-x-auto">
+<header class="flex flex-wrap items-center justify-between gap-4 p-8">
+<div class="flex flex-col gap-2">
+<h1 class="font-display text-3xl font-bold leading-tight text-text-main">Today's Editorial Board</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 self-start rounded-full bg-surface-secondary px-4 py-2 font-medium text-primary shadow-sm transition-transform hover:scale-105">
+<span class="material-symbols-outlined text-base">cycle</span>
+<span class="text-sm">Generate Cycle (Next in 4h)</span>
+</button>
+</div>
+</header>
+<div class="grid min-w-[1200px] flex-1 grid-cols-4 gap-6 px-8 pb-8">
+<div class="flex h-full flex-col gap-4 rounded-xl border border-primary/20 bg-transparent p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold text-text-main font-display">Proposed Pool</h2>
+<span class="text-sm font-medium text-text-secondary">6</span>
+</div>
+<p class="text-xs text-text-secondary">3 new cards added every 4 hours. Approx. 18 per day.</p>
+<div class="flex flex-col gap-4 overflow-y-auto pt-2">
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Advanced RAG Techniques</p>
+<span class="material-symbols-outlined text-text-secondary">link</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Intro to Vector Databases</p>
+<span class="material-symbols-outlined text-text-secondary">forum</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Evaluating LLM Responses</p>
+<span class="material-symbols-outlined text-text-secondary">article</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">The Role of Context Windows</p>
+<span class="material-symbols-outlined text-text-secondary">link</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Fine-Tuning vs. RAG</p>
+<span class="material-symbols-outlined text-text-secondary">article</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Production-Ready RAG Systems</p>
+<span class="material-symbols-outlined text-text-secondary">forum</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex h-full flex-col gap-4 rounded-xl border border-primary/20 bg-transparent p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold text-text-main font-display">Selected</h2>
+<span class="text-sm font-medium text-text-secondary">3</span>
+</div>
+<div class="flex flex-col gap-4 pt-2">
+<div class="relative overflow-hidden rounded-xl bg-surface shadow-sm opacity-70 pattern-stripes">
+<div class="absolute inset-x-0 top-0 flex items-center gap-2 bg-primary/80 px-4 py-2 text-background-light backdrop-blur-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1, 'opsz' 20">schedule</span>
+<p class="text-sm font-medium">In Queue: #1</p>
+</div>
+<div class="p-4 pt-12">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Chunking Strategies for RAG</p>
+<span class="material-symbols-outlined text-text-secondary">link</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+</div>
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Re-ranking Models Explained</p>
+<span class="material-symbols-outlined text-text-secondary">article</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex h-full flex-col gap-4 rounded-xl border border-primary/20 bg-transparent p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold text-text-main font-display">In Draft</h2>
+<span class="text-sm font-medium text-text-secondary">1</span>
+</div>
+<div class="flex flex-col gap-4 pt-2">
+<div class="group cursor-grab rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-[1deg] hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Hybrid Search Methods</p>
+<span class="material-symbols-outlined text-text-secondary">forum</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-surface-secondary px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex h-full flex-col gap-4 rounded-xl border border-primary/20 bg-transparent p-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold text-text-main font-display">Published</h2>
+<span class="text-sm font-medium text-text-secondary">3</span>
+</div>
+<div class="flex flex-col gap-4 pt-2">
+<div class="group cursor-pointer rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Core RAG Architecture</p>
+<span class="material-symbols-outlined text-accent">check_circle</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-accent/50 px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+<div class="group cursor-pointer rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Understanding Embeddings</p>
+<span class="material-symbols-outlined text-accent">check_circle</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-accent/50 px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+<div class="group cursor-pointer rounded-xl bg-surface p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<div class="flex items-start justify-between">
+<p class="text-base font-medium text-text-main">Why RAG is the Future</p>
+<span class="material-symbols-outlined text-accent">check_circle</span>
+</div>
+<div class="mt-3">
+<span class="rounded-full bg-accent/50 px-2 py-1 text-xs font-medium text-text-secondary">Skill Group</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

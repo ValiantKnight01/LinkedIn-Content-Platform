@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Syllabus Calendar Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4a373","background-light": "#fefae0","surface": "#e9edc9","surface-secondary": "#faedcd","accent": "#ccd5ae","text-main": "#3D2B1F","text-secondary": "#6B4F3A",},
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-body text-text-main">
+<div class="flex h-screen w-full">
+<aside class="flex h-full w-72 flex-col gap-8 border-r border-primary/20 bg-background-light p-6">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of the editor in chief" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLLoT4Ak_hjMMZMMiCqs7xBkUihbbOim1Ycnu4sMJ_P38CZrhxbmYQIv0hHkeUnsC9_bogKuu3CoUhxlISOKOaP84W2GIqFRj0DxSTLmzltiMtJkHYd0m4OuQvGw3lXHCOQJw6HUBn6_7C2C1nnY5jyQ6cfuqCml-IxxMuhKq4ejADoaNdcNAWzMXcLxTubDY2ZQ3tvzi6edNxiYgh13qprKj1MKFaaEvaxtNrfQcB_f8qDPeJauzM0MLcbh5nJXT9nI5W1CsZXCU');"></div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-lg font-bold leading-tight font-display">Editor-in-Chief</h1>
+<p class="text-text-secondary text-sm font-normal leading-normal">Editorial Platform</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-xl bg-accent/50 px-4 py-3 text-text-main" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">auto_stories</span>
+<p class="text-base font-medium">Syllabus</p>
+</a>
+<a class="flex items-center gap-3 rounded-xl px-4 py-3 text-text-secondary hover:text-text-main" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<p class="text-base font-medium">Newsroom</p>
+</a>
+<a class="flex items-center gap-3 rounded-xl px-4 py-3 text-text-secondary hover:text-text-main" href="#">
+<span class="material-symbols-outlined">archive</span>
+<p class="text-base font-medium">Archives</p>
+</a>
+</nav>
+<div class="mt-auto">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-surface-secondary p-4">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-lg" data-alt="Abstract image representing organic themes" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1lSm1yUfy67dR81hD6D_DgHQifBX-qqr9P3awSlz3JLvTVJXrcGV8Uogbp7xwFp3XOB2_lstPlMI4g7LaPXAG-ubKtHdMzMALsna2NLT18eehpHyp10YmaGb3Qrjre8-q2j6f366lQ5-ZzL7VN3l-QhlGFJtRsxWtP_Ekx30Yv44i789Yd1yzwV8jNhs8MSmTXb3JO6f8X1LhrQLvbnAu-N1aJNdDWdNFSE6NMxj1Pm0Et_tJIeT6l56p3-Qz7V4_2jcSJF6wO5s');"></div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1 py-4">
+<p class="text-primary text-lg font-bold leading-tight font-display">Active Theme</p>
+<div class="flex flex-col gap-1">
+<p class="text-text-secondary text-sm font-normal">Current Month</p>
+<p class="text-text-main text-base font-medium">Organic Editorial</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex flex-1 flex-col overflow-auto">
+<header class="flex flex-wrap items-center justify-between gap-4 p-8">
+<div class="flex flex-col gap-2">
+<h1 class="font-display text-3xl font-bold leading-tight text-text-main">Monthly Syllabus</h1>
+</div>
+<button class="self-start rounded-lg bg-primary px-6 py-3 font-medium text-white transition-all hover:scale-105 hover:bg-opacity-90">Add Theme</button>
+</header>
+<div class="flex-1 space-y-12 px-8 pb-8">
+<div class="space-y-4">
+<h2 class="font-display text-2xl font-bold text-text-secondary">LLM Fundamentals</h2>
+<div class="grid grid-cols-1 gap-6 @lg:grid-cols-2 @4xl:grid-cols-3">
+<div class="group flex flex-col rounded-xl bg-surface-secondary p-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<h3 class="font-display text-xl font-bold text-primary">January</h3>
+<p class="mt-2 text-base font-medium text-text-main">Intro to Language Models</p>
+<p class="mt-1 text-sm text-text-secondary">History, core concepts (tokens, embeddings), and key architectures.</p>
+</div>
+<div class="group flex flex-col rounded-xl bg-surface-secondary p-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<h3 class="font-display text-xl font-bold text-primary">February</h3>
+<p class="mt-2 text-base font-medium text-text-main">Prompt Engineering</p>
+<p class="mt-1 text-sm text-text-secondary">Crafting effective prompts, zero-shot, few-shot, and chain-of-thought techniques.</p>
+</div>
+<div class="group flex flex-col rounded-xl bg-surface-secondary p-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<h3 class="font-display text-xl font-bold text-primary">March</h3>
+<p class="mt-2 text-base font-medium text-text-main">Fine-Tuning &amp; RAG</p>
+<p class="mt-1 text-sm text-text-secondary">Understanding when and how to fine-tune models vs. using Retrieval-Augmented Generation.</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="font-display text-2xl font-bold text-text-secondary">Agentic Workflows</h2>
+<div class="grid grid-cols-1 gap-6 @lg:grid-cols-2 @4xl:grid-cols-3">
+<div class="group flex flex-col rounded-xl bg-surface p-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<h3 class="font-display text-xl font-bold text-primary">April</h3>
+<p class="mt-2 text-base font-medium text-text-main">AI Agent Frameworks</p>
+<p class="mt-1 text-sm text-text-secondary">Exploring LangChain, LlamaIndex, and AutoGen for building autonomous agents.</p>
+</div>
+<div class="group flex flex-col rounded-xl bg-surface p-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<h3 class="font-display text-xl font-bold text-primary">May</h3>
+<p class="mt-2 text-base font-medium text-text-main">Tool Use &amp; APIs</p>
+<p class="mt-1 text-sm text-text-secondary">Enabling LLMs to interact with external tools and APIs for complex tasks.</p>
+</div>
+<div class="group flex flex-col rounded-xl bg-accent p-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+<h3 class="font-display text-xl font-bold text-primary">June</h3>
+<p class="mt-2 text-base font-medium text-text-main">Multi-Agent Systems</p>
+<p class="mt-1 text-sm text-text-secondary">Designing collaborative AI systems where multiple agents work together to solve problems.</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="font-display text-2xl font-bold text-text-secondary">Advanced Architectures</h2>
+<div class="grid grid-cols-1 gap-6 @lg:grid-cols-2 @4xl:grid-cols-3">
+<div class="group flex flex-col rounded-xl border border-dashed border-primary/50 bg-transparent p-4 transition duration-300 ease-out hover:-translate-y-1 hover:border-primary hover:bg-surface-secondary/50">
+<h3 class="font-display text-xl font-bold text-primary">July</h3>
+<p class="mt-2 flex h-full items-center justify-center text-base font-medium text-text-secondary">Assign Educational Theme...</p>
+</div>
+<div class="group flex flex-col rounded-xl border border-dashed border-primary/50 bg-transparent p-4 transition duration-300 ease-out hover:-translate-y-1 hover:border-primary hover:bg-surface-secondary/50">
+<h3 class="font-display text-xl font-bold text-primary">August</h3>
+<p class="mt-2 flex h-full items-center justify-center text-base font-medium text-text-secondary">Assign Educational Theme...</p>
+</div>
+<div class="group flex flex-col rounded-xl border border-dashed border-primary/50 bg-transparent p-4 transition duration-300 ease-out hover:-translate-y-1 hover:border-primary hover:bg-surface-secondary/50">
+<h3 class="font-display text-xl font-bold text-primary">September</h3>
+<p class="mt-2 flex h-full items-center justify-center text-base font-medium text-text-secondary">Assign Educational Theme...</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>
