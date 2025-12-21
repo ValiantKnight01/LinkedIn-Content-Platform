@@ -21,9 +21,10 @@ interface KanbanColumnProps {
   id: KanbanStatus;
   title: string;
   cards: KanbanCardType[];
+  onCardClick?: (card: KanbanCardType) => void;
 }
 
-export function KanbanColumn({ id, title, cards }: KanbanColumnProps) {
+export function KanbanColumn({ id, title, cards, onCardClick }: KanbanColumnProps) {
   const { setNodeRef } = useDroppable({ id });
 
   return (
@@ -64,10 +65,11 @@ export function KanbanColumn({ id, title, cards }: KanbanColumnProps) {
           strategy={verticalListSortingStrategy}
         >
           {cards.map((card) => (
-            <KanbanCard key={card.id} card={card} />
+            <KanbanCard key={card.id} card={card} onClick={onCardClick} />
           ))}
         </SortableContext>
       </div>
     </div>
   );
 }
+

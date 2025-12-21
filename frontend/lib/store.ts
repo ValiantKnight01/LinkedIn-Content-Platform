@@ -63,6 +63,15 @@ export interface KanbanCard {
   title: string;
   type: 'link' | 'forum' | 'article';
   status: KanbanStatus;
+  research_status?: 'queued' | 'researching' | 'complete';
+  angle?: string;
+  angle_guidance?: Record<string, string>;
+  read_time?: string;
+  description?: string;
+  data_points?: string[];
+  tags?: string[];
+  audience?: string;
+  source_url?: string;
 }
 
 interface NewsroomState {
@@ -71,6 +80,9 @@ interface NewsroomState {
   fetchCards: () => Promise<void>;
   moveCard: (cardId: string, newStatus: KanbanStatus, index: number) => void;
   generateCycle: () => Promise<void>;
+  approveCard: (id: string) => Promise<void>;
+  discardCard: (id: string) => Promise<void>;
+  updateCardDetails: (id: string, updates: Partial<KanbanCard>) => Promise<void>;
 }
 
 export const useNewsroomStore = create<NewsroomState>((set, get) => ({
@@ -121,4 +133,50 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
       set({ isLoading: false });
     }
   },
+
+  approveCard: async (id) => {
+    try {
+      const response = await fetch(`/api/newsroom/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status: 'inDraft' }),
+      });
+      if (response.ok) {
+        set((state) => ({
+          cards: state.cards.map((c) => (c.id === id ? { ...c, status: 'inDraft' } : c)),
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to approve card:", error);
+    }
+  },
+
+  discardCard: async (id) => {
+    try {
+      const response = await fetch(`/api/newsroom/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        set((state) => ({
+          cards: state.cards.filter((c) => c.id !== id),
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to discard card:", error);
+    }
+  },
+
+  updateCardDetails: async (id, updates) => {
+     try {
+      const response = await fetch(`/api/newsroom/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(updates),
+      });
+      const updatedCard = await response.json();
+      set((state) => ({
+          cards: state.cards.map((c) => (c.id === id ? updatedCard : c)),
+      }));
+    } catch (error) {
+      console.error("Failed to update card details:", error);
+    }
+  }
 }));

@@ -21,6 +21,7 @@ import {
 import { useNewsroomStore, KanbanCard as KanbanCardType, KanbanStatus } from '@/lib/store';
 import { KanbanColumn } from './kanban-column';
 import { KanbanCard } from './kanban-card';
+import { ResearchCompleteSheet } from './research-complete-sheet';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -39,6 +40,7 @@ export function NewsroomBoard() {
   const { cards, fetchCards, isLoading, generateCycle } = useNewsroomStore();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [dragStartStatus, setDragStartStatus] = useState<KanbanStatus | null>(null);
+  const [selectedResearchCard, setSelectedResearchCard] = useState<KanbanCardType | null>(null);
   
   // Confirmation State
   const [showConfirm, setShowConfirm] = useState(false);
@@ -67,6 +69,9 @@ export function NewsroomBoard() {
   function handleDragStart(event: DragStartEvent) {
     const card = getCardById(event.active.id as string);
     if (card) {
+        // Prevent dragging scheduled cards
+        if (card.status === 'scheduled') return;
+
         setActiveId(card.id);
         setDragStartStatus(card.status);
         // Snapshot current cards for rollback
@@ -154,6 +159,10 @@ export function NewsroomBoard() {
     setOriginalState(null);
   };
 
+  function handleCardClick(card: KanbanCardType) {
+    setSelectedResearchCard(card);
+  }
+
   const columns: { id: KanbanStatus; title: string }[] = [
     { 
         id: 'proposed', 
@@ -199,6 +208,7 @@ export function NewsroomBoard() {
                 id={col.id}
                 title={col.title}
                 cards={cards.filter((c) => c.status === col.id)}
+                onCardClick={handleCardClick}
               />
             ))}
 
@@ -216,6 +226,12 @@ export function NewsroomBoard() {
           </DndContext>
         </div>
       </div>
+
+      <ResearchCompleteSheet 
+        card={selectedResearchCard} 
+        isOpen={!!selectedResearchCard} 
+        onOpenChange={(open) => !open && setSelectedResearchCard(null)} 
+      />
 
       <AlertDialog open={showConfirm} onOpenChange={setShowConfirm}>
         <AlertDialogContent>
