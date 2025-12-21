@@ -9,7 +9,7 @@ A lightweight, personal tool designed to streamline the creation and scheduling 
 
 # Key Features
 - **Smart Post Editor:** A dedicated editor with LinkedIn-specific formatting and live preview.
-- **Newsroom Dashboard:** A Kanban-style board to manage the content lifecycle (Ideation -> Draft -> Ready -> Scheduled).
+- **Newsroom Dashboard:** A Kanban-style board to manage the content lifecycle (Ideation -> Draft -> Ready -> Scheduled), featuring a "Research Complete" view for reviewing AI-generated insights.
 - **Editorial Calendar:** A visual calendar view for long-term content planning and scheduling.
 - **AI Content Assistant:** Leveraging AI to brainstorm ideas, refine hooks, and improve post structure.
 - **Bento-Style Widgets:** Modular dashboard components for quick stats and actions.

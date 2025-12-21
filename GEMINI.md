@@ -36,8 +36,18 @@ This is a personal LinkedIn post scheduler and content creation tool. You are an
 ## Domain Definitions
 - **Syllabus:** The central content calendar and planning interface. This is where the "Editorial Calendar" view lives.
 - **Newsroom:** The primary dashboard/landing view (currently distinct from the calendar).
+  - **Research Complete View:** A slide-over sheet for "Selected" cards that have completed the research phase. Allows users to review AI-generated insights (Title, Angle, Data Points) and "Approve & Draft" or "Discard".
 - **Archives:** A repository view for past/published content.
 - **Active Theme:** A monthly editorial focus (e.g., "RAG Architectures") displayed in the sidebar.
+
+## Completed Tracks
+- **Track 1: Foundation & Identity:** Set up the Next.js project with Tailwind CSS v4 and the "Digital Newsroom" aesthetic.
+- **Track 2: Newsroom Dashboard (Syllabus):** Implemented the Calendar View and Sidebar.
+- **Track 3: Newsroom Kanban:** Implemented the Drag-and-Drop Kanban board.
+- **Track 4: Research Complete View:** Implemented the Approval Editor for researching cards.
+
+## Active Track
+- **None:** Awaiting next instruction.
 
 ### Phase: Perceive & Understand
 **Goal:** Build a complete and accurate model of the task and its environment.

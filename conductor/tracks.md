@@ -14,3 +14,8 @@
 
 ## [x] Track: Newsroom Kanban
 *Link: [./conductor/tracks/newsroom-kanban_20251221/](./conductor/tracks/newsroom-kanban_20251221/)*
+
+---
+
+## [x] Track: Implement the Research Complete View (Approval Editor)
+*Link: [./conductor/tracks/research-complete-view_20251221/](./conductor/tracks/research-complete-view_20251221/)*
