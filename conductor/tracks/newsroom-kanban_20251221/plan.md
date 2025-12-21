@@ -1,4 +1,4 @@
-# Implementation Plan - Track 3: Newsroom Kanban
+# Implementation Plan - Track 3: Newsroom Kanban (Checkpoint: 4a9983b)
 
 ## Phase 1: Foundation & Library Setup
 - [x] **Install Drag-and-Drop Library:**
