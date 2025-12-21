@@ -6,6 +6,7 @@
 - **Styling:** TailwindCSS v4
 - **UI Components:** shadcn/ui
 - **State Management:** Zustand / React Hooks
+- **Drag & Drop:** @dnd-kit (Core, Sortable, Utilities)
 - **Authentication:** NextAuth.js
 
 ## Backend
