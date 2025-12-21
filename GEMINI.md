@@ -21,6 +21,11 @@ This is a personal LinkedIn post scheduler and content creation tool. You are an
 - **Server Management**: Do NOT attempt to start or stop servers (frontend or backend). These are managed by the user.
 - **Hot Reloading**: The backend environment supports hot-reloading. Changes propagate automatically.
 - **Verification**: Verify implementation by checking expected behavior, not by analyzing process output unless debugging.
+- **Track-by-Track Development**:
+  - Do NOT plan the entire project upfront.
+  - Work on one "Track" (Phase) at a time.
+  - Only define detailed specs for the *active* track.
+  - Defer decisions for future tracks until that track begins.
 
 ### Phase: Perceive & Understand
 **Goal:** Build a complete and accurate model of the task and its environment.
