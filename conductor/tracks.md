@@ -19,3 +19,8 @@
 
 ## [x] Track: Implement the Research Complete View (Approval Editor)
 *Link: [./conductor/tracks/research-complete-view_20251221/](./conductor/tracks/research-complete-view_20251221/)*
+
+---
+
+## [~] Track: Backend Foundation & Monthly Themes API
+*Link: [./conductor/tracks/backend-foundation-themes_20251221/](./conductor/tracks/backend-foundation-themes_20251221/)*
