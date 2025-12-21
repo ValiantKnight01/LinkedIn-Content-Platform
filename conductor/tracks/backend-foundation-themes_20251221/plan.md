@@ -1,10 +1,10 @@
 # Implementation Plan: Backend Foundation & Monthly Themes API
 
-## Phase 1: Environment Setup
+## Phase 1: Environment Setup (1c68459)
 - [x] Task: Initialize `uv` project in `backend/` and add dependencies (`fastapi`, `uvicorn`, `mongoengine`, `pydantic-settings`). (1cc0c99)
 - [x] Task: Create a health-check endpoint to verify FastAPI is running. (e4daa5f)
 - [x] Task: Implement MongoDB connection logic using `mongoengine` and a `.env` file. (e4daa5f)
-- [ ] Task: Conductor - User Manual Verification 'Environment Setup' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Environment Setup' (Protocol in workflow.md) (1c68459)
 
 ## Phase 2: Core Data Models
 - [ ] Task: Define the `Theme` MongoEngine document in `backend/models/theme.py`.
