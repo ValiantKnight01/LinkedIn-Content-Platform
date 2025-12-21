@@ -7,5 +7,5 @@
 
 ---
 
-## [ ] Track: Newsroom Dashboard (Syllabus)
+## [x] Track: Newsroom Dashboard (Syllabus)
 *Link: [./conductor/tracks/editorial-calendar_20251221/](./conductor/tracks/editorial-calendar_20251221/)*
