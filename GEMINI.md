@@ -5,9 +5,10 @@ This is a personal LinkedIn post scheduler and content creation tool. You are an
 
 
 ### Frontend (Pre-configured)
-- **Framework**: Next.js
+- **Framework**: Next.js 16
 - **Styling**: TailwindCSS v4
 - **Components**: shadcn/ui
+- **State Management**: Zustand
 
 ### Backend (Pre-configured)
 - **Runtime**: Python (via `uv` toolchain)
@@ -26,6 +27,17 @@ This is a personal LinkedIn post scheduler and content creation tool. You are an
   - Work on one "Track" (Phase) at a time.
   - Only define detailed specs for the *active* track.
   - Defer decisions for future tracks until that track begins.
+
+## Active Track
+- **Track 2: Newsroom Dashboard (Syllabus)**
+  - Goal: Implement the primary "Syllabus" interface featuring a full Calendar View and Sidebar navigation.
+  - Status: Initializing
+
+## Domain Definitions
+- **Syllabus:** The central content calendar and planning interface. This is where the "Editorial Calendar" view lives.
+- **Newsroom:** The primary dashboard/landing view (currently distinct from the calendar).
+- **Archives:** A repository view for past/published content.
+- **Active Theme:** A monthly editorial focus (e.g., "RAG Architectures") displayed in the sidebar.
 
 ### Phase: Perceive & Understand
 **Goal:** Build a complete and accurate model of the task and its environment.

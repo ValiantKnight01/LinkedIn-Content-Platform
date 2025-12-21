@@ -5,7 +5,7 @@
 - **Language:** TypeScript
 - **Styling:** TailwindCSS v4
 - **UI Components:** shadcn/ui
-- **State Management:** React Hooks / Context API
+- **State Management:** Zustand / React Hooks
 - **Authentication:** NextAuth.js
 
 ## Backend

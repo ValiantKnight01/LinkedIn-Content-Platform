@@ -60,7 +60,7 @@
   --color-dark-brown: #3D2B1F;
 
   --radius: 0.625rem;
-  
+
   --background: var(--color-cream-paper);
   --foreground: var(--color-dark-brown);
 
@@ -83,7 +83,7 @@
   --accent-foreground: var(--color-dark-brown);
 
   --destructive: oklch(0.577 0.245 27.325); /* Keeping default destructive for now */
-  
+
   --border: var(--color-warm-tan);
   --input: var(--color-warm-tan);
   --ring: var(--color-warm-tan);
@@ -125,7 +125,7 @@
   --border: #4a3525;
   --input: #4a3525;
   --ring: var(--color-warm-tan);
-  
+
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -150,7 +150,7 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
   }
