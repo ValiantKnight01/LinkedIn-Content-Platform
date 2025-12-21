@@ -1,4 +1,4 @@
-# Track 1: Foundation & Identity
+# Track 1: Foundation & Identity (Checkpoint: 16c392b)
 
 **Goal:** Establish the visual core and secure access control.
 
