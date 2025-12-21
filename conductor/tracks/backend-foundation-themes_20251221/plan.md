@@ -7,17 +7,17 @@
 - [x] Task: Conductor - User Manual Verification 'Environment Setup' (Protocol in workflow.md) (1c68459)
 
 ## Phase 2: Core Data Models
-- [ ] Task: Define the `Theme` MongoEngine document in `backend/models/theme.py`.
-- [ ] Task: Create Pydantic schemas for request/response validation in `backend/schemas/theme.py`.
-- [ ] Task: Conductor - User Manual Verification 'Core Data Models' (Protocol in workflow.md)
+- [x] Task: Define the `Theme` MongoEngine document in `backend/models/theme.py`.
+- [x] Task: Create Pydantic schemas for request/response validation in `backend/schemas/theme.py`.
+- [x] Task: Conductor - User Manual Verification 'Core Data Models' (Protocol in workflow.md)
 
 ## Phase 3: Themes API Implementation
-- [ ] Task: Implement the `POST /themes` endpoint.
-- [ ] Task: Implement the `GET /themes` (list) and `GET /themes/{year}/{month}` (single) endpoints.
-- [ ] Task: Implement `PATCH` and `DELETE` endpoints for theme management.
-- [ ] Task: Conductor - User Manual Verification 'Themes API Implementation' (Protocol in workflow.md)
+- [x] Task: Implement the `POST /themes` endpoint.
+- [x] Task: Implement the `GET /themes` (list) and `GET /themes/{year}/{month}` (single) endpoints.
+- [x] Task: Implement `PATCH` and `DELETE` endpoints for theme management.
+- [x] Task: Conductor - User Manual Verification 'Themes API Implementation' (Protocol in workflow.md)
 
 ## Phase 4: Final Verification
-- [ ] Task: Verify all endpoints using FastAPI's automatic Swagger UI (`/docs`).
-- [ ] Task: Ensure data persistence across backend restarts.
-- [ ] Task: Conductor - User Manual Verification 'Final Verification' (Protocol in workflow.md)
+- [x] Task: Verify all endpoints using FastAPI's automatic Swagger UI (`/docs`).
+- [x] Task: Ensure data persistence across backend restarts.
+- [x] Task: Conductor - User Manual Verification 'Final Verification' (Protocol in workflow.md)

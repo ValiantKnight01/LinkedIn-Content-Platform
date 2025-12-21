@@ -22,5 +22,10 @@
 
 ---
 
-## [~] Track: Backend Foundation & Monthly Themes API
+## [x] Track: Backend Foundation & Monthly Themes API
 *Link: [./conductor/tracks/backend-foundation-themes_20251221/](./conductor/tracks/backend-foundation-themes_20251221/)*
+
+---
+
+## [~] Track: Frontend Monthly Syllabus View
+*Link: [./conductor/tracks/monthly-syllabus-ui_20251221/](./conductor/tracks/monthly-syllabus-ui_20251221/)*
