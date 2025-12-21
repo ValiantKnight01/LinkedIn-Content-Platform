@@ -9,9 +9,9 @@ export function LogoutButton() {
         <Button 
             variant="outline" 
             onClick={() => signOut({ callbackUrl: '/login' })}
-            className="gap-2"
+            className="gap-3 w-full justify-start pl-5 h-12 rounded-full text-base font-medium border-primary/20 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all"
         >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="h-5 w-5" />
             Sign Out
         </Button>
     );
