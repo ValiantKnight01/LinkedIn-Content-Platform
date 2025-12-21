@@ -7,7 +7,7 @@ This is a personal LinkedIn post scheduler and content creation tool. You are an
 ### Frontend (Pre-configured)
 - **Framework**: Next.js 16
 - **Styling**: TailwindCSS v4
-- **Components**: shadcn/ui
+- **Components**: shadcn/ui, @dnd-kit
 - **State Management**: Zustand
 
 ### Backend (Pre-configured)
