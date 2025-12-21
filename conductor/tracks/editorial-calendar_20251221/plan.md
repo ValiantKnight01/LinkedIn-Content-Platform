@@ -1,4 +1,4 @@
-# Implementation Plan - Track 2: Newsroom Dashboard (Syllabus)
+# Implementation Plan - Track 2: Newsroom Dashboard (Syllabus) (Checkpoint: 06a3b12)
 
 ## Phase 1: Shared Application Layout
 - [x] **Sidebar Component:**
