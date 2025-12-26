@@ -29,3 +29,8 @@
 
 ## [~] Track: Frontend Monthly Syllabus View
 *Link: [./conductor/tracks/monthly-syllabus-ui_20251221/](./conductor/tracks/monthly-syllabus-ui_20251221/)*
+
+---
+
+## [~] Track: Agentic Topic Research (Sub-Agent Architecture)
+*Link: [./conductor/tracks/agentic-research_20251226/](./conductor/tracks/agentic-research_20251226/)*
