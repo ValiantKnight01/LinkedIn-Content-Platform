@@ -13,7 +13,7 @@
 
 ## Phase 2: Agent Implementation (Sub-Agent Architecture)
 - [x] Task: Create `backend/src/agents/topic_researcher.py`. (de1379b)
-- [ ] Task: Implement `TopicResearchOrchestrator.plan_angles`.
+- [x] Task: Implement `TopicResearchOrchestrator.plan_angles`. (a94a3f8)
     -   *Logic*: Use `google-adk` to prompt Gemini to generate 4 search queries for distinct angles based on the theme and existing titles.
 - [ ] Task: Implement `ResearchWorker.execute_search`.
     -   *Logic*: Use `google.adk.tools.google_search` with a fallback to `duckduckgo-search` (`DDGS().text()`).
