@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField, ListField, ReferenceField, DateTimeField
-from datetime import datetime
+from datetime import datetime, timezone
 
 class Post(Document):
     title = StringField(required=True, max_length=200)
@@ -7,7 +7,7 @@ class Post(Document):
     sources = ListField(StringField())
     theme = ReferenceField('Theme', required=True)
     status = StringField(default='proposed', choices=['proposed', 'selected', 'inDraft', 'scheduled'])
-    created_at = DateTimeField(default=datetime.utcnow)
+    created_at = DateTimeField(default=lambda: datetime.now(timezone.utc))
 
     meta = {
         'collection': 'posts',
