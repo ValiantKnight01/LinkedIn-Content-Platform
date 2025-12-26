@@ -15,7 +15,7 @@
 - [x] Task: Create `backend/src/agents/topic_researcher.py`. (de1379b)
 - [x] Task: Implement `TopicResearchOrchestrator.plan_angles`. (a94a3f8)
     -   *Logic*: Use `google-adk` to prompt Gemini to generate 4 search queries for distinct angles based on the theme and existing titles.
-- [ ] Task: Implement `ResearchWorker.execute_search`.
+- [x] Task: Implement `ResearchWorker.execute_search`. (a94a3f8)
     -   *Logic*: Use `google.adk.tools.google_search` with a fallback to `duckduckgo-search` (`DDGS().text()`).
     -   *Synthesis*: Extract Title, Type, and multiple source URLs for each angle.
 - [ ] Task: Implement main `research_theme(theme_id)` orchestration.
