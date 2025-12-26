@@ -11,8 +11,8 @@ from google.genai import Client, types
 
 
 class TopicResearchOrchestrator:
-    def __init__(self, model_name: str = "gemini-2.0-flash-exp"):
-        self.client = Client()
+    def __init__(self, model_name: str = "gemini-3-flash-preview"):
+        self.client = Client(api_key=os.environ.get("GOOGLE_API_KEY"))
         self.model_name = model_name
 
     async def plan_angles(
@@ -65,8 +65,8 @@ class TopicResearchOrchestrator:
 
 
 class ResearchWorker:
-    def __init__(self, model_name: str = "gemini-2.0-flash-exp"):
-        self.client = Client()
+    def __init__(self, model_name: str = "gemini-3-flash-preview"):
+        self.client = Client(api_key=os.environ.get("GOOGLE_API_KEY"))
         self.model_name = model_name
         self.ddgs = DDGS()
 
