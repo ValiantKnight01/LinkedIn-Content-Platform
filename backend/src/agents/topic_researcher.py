@@ -9,15 +9,12 @@ from google.genai import Client, types
 # Ensure API key is set
 # os.environ["GOOGLE_API_KEY"] must be set
 
-
 class TopicResearchOrchestrator:
     def __init__(self, model_name: str = "gemini-3-flash-preview"):
         self.client = Client(api_key=os.environ.get("GOOGLE_API_KEY"))
         self.model_name = model_name
 
-    async def plan_angles(
-        self, theme: str, existing_titles: List[str]
-    ) -> List[Dict[str, str]]:
+    async def plan_angles(self, theme: str, existing_titles: List[str]) -> List[Dict[str, str]]:
         """
         Generates 4 distinct research angles.
         Returns a list of dicts: [{'angle': '...', 'query': '...'}, ...]
@@ -40,7 +37,7 @@ class TopicResearchOrchestrator:
         """
 
         try:
-            response = self.client.models.generate_content(
+            response = await self.client.aio.models.generate_content(
                 model=self.model_name,
                 contents=prompt,
                 config={"response_mime_type": "application/json"},
@@ -55,10 +52,7 @@ class TopicResearchOrchestrator:
             # Fallback
             return [
                 {"angle": "General Overview", "query": f"{theme} overview guide"},
-                {
-                    "angle": "Advanced Techniques",
-                    "query": f"advanced {theme} techniques",
-                },
+                {"angle": "Advanced Techniques", "query": f"advanced {theme} techniques"},
                 {"angle": "Case Studies", "query": f"{theme} case studies"},
                 {"angle": "Future Trends", "query": f"future of {theme} 2025"},
             ]
@@ -94,7 +88,7 @@ class ResearchWorker:
             Ensure the URL is real and comes from the search results.
             """
 
-            response = self.client.models.generate_content(
+            response = await self.client.aio.models.generate_content(
                 model=self.model_name,
                 contents=search_prompt,
                 config=types.GenerateContentConfig(
@@ -102,10 +96,6 @@ class ResearchWorker:
                     response_mime_type="application/json",
                 ),
             )
-
-            # The model should return the JSON based on the grounded info.
-            # Note: response.candidates[0].grounding_metadata contains the citations,
-            # but if we ask the model to put the URL in the JSON, it usually does a good job copying it.
 
             content = response.text
             result = json.loads(content)
@@ -120,8 +110,6 @@ class ResearchWorker:
             print(f"Google Search agent failed ({e}), trying DuckDuckGo...")
             try:
                 # Fallback to DDGS
-                # DDGS is synchronous, but we are in async function.
-                # Ideally run in executor, but for now blocking is acceptable for this prototype.
                 ddg_results = list(self.ddgs.text(query, max_results=3))
                 if ddg_results:
                     top_result = ddg_results[0]
@@ -147,8 +135,6 @@ async def research_theme(
     angles = await orchestrator.plan_angles(theme_title, existing_titles)
 
     # 2. Execute Workers in Parallel
-    # Note: We create one worker instance but call it multiple times.
-    # Since Client is thread-safe (stateless mostly), this should be fine.
     tasks = [worker.execute_search(a["angle"], a["query"]) for a in angles]
     results = await asyncio.gather(*tasks)
 
