@@ -3,6 +3,7 @@ from typing import List
 from ..models.theme import Theme
 from ..models.post import Post
 from ..schemas.theme import ThemeCreate, ThemeUpdate, ThemeResponse
+from ..agents.topic_researcher import research_theme
 from mongoengine.errors import NotUniqueError, ValidationError, DoesNotExist
 from bson import ObjectId
 
@@ -13,6 +14,49 @@ def format_theme(theme: Theme) -> dict:
     data = theme.to_mongo().to_dict()
     data["id"] = str(data.pop("_id"))
     return data
+
+def format_post(post: Post) -> dict:
+    data = post.to_mongo().to_dict()
+    data["id"] = str(data.pop("_id"))
+    data["theme_id"] = str(data["theme"])
+    if "created_at" in data:
+        data["created_at"] = data["created_at"].isoformat()
+    return data
+
+@router.post("/{id}/research", response_model=List[dict], status_code=status.HTTP_201_CREATED)
+async def research_topic_ideas(id: str):
+    if not ObjectId.is_valid(id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid ID format")
+
+    theme = Theme.objects(id=id).first()
+    if not theme:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Theme not found")
+
+    # Get existing posts to avoid duplicates
+    existing_posts = Post.objects(theme=theme)
+    existing_titles = [p.title for p in existing_posts]
+
+    try:
+        # Call Agent
+        generated_data = await research_theme(theme.title, existing_titles)
+        
+        saved_posts = []
+        for item in generated_data:
+            post = Post(
+                title=item['title'],
+                type=item['type'],
+                sources=item.get('sources', []),
+                theme=theme,
+                status='proposed'
+            )
+            post.save()
+            saved_posts.append(format_post(post))
+            
+        return saved_posts
+        
+    except Exception as e:
+        print(f"Research failed: {e}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Research agent failed: {str(e)}")
 
 @router.post("/", response_model=ThemeResponse, status_code=status.HTTP_201_CREATED)
 async def create_theme(theme_in: ThemeCreate):
