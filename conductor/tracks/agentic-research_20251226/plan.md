@@ -12,7 +12,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Foundation & Data Model' (Protocol in workflow.md)
 
 ## Phase 2: Agent Implementation (Sub-Agent Architecture)
-- [ ] Task: Create `backend/src/agents/topic_researcher.py`.
+- [x] Task: Create `backend/src/agents/topic_researcher.py`. (de1379b)
 - [ ] Task: Implement `TopicResearchOrchestrator.plan_angles`.
     -   *Logic*: Use `google-adk` to prompt Gemini to generate 4 search queries for distinct angles based on the theme and existing titles.
 - [ ] Task: Implement `ResearchWorker.execute_search`.
