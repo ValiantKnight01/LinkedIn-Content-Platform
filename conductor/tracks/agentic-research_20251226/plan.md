@@ -18,7 +18,7 @@
 - [x] Task: Implement `ResearchWorker.execute_search`. (a94a3f8)
     -   *Logic*: Use `google.adk.tools.google_search` with a fallback to `duckduckgo-search` (`DDGS().text()`).
     -   *Synthesis*: Extract Title, Type, and multiple source URLs for each angle.
-- [ ] Task: Implement main `research_theme(theme_id)` orchestration.
+- [x] Task: Implement main `research_theme(theme_id)` orchestration. (a94a3f8)
     -   *Logic*: Coordinate the orchestrator and parallel workers to produce the final 4 topic objects.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Agent Implementation' (Protocol in workflow.md)
 
