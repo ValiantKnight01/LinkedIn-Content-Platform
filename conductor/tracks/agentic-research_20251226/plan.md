@@ -4,7 +4,7 @@
 - [x] Task: Create `backend/src/models/post.py` with `Post` document. (517c79b)
     -   *Action*: Create file `backend/src/models/post.py`.
     -   *Code Snippet*: `class Post(Document): title = StringField(); type = StringField(); sources = ListField(StringField()); theme = ReferenceField('Theme'); status = StringField(default='proposed'); created_at = DateTimeField(default=datetime.utcnow)`
-- [ ] Task: Register `Post` model.
+- [x] Task: Register `Post` model. (c2adc39)
     -   *Action*: Update `backend/src/routes/themes.py` imports to include `Post`.
 - [ ] Task: Add dependencies.
     -   *Action*: `run_shell_command("uv pip install google-adk duckduckgo-search")`
