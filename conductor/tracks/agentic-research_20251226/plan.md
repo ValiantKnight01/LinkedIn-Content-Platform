@@ -23,7 +23,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Agent Implementation' (Protocol in workflow.md)
 
 ## Phase 3: API & Integration
-- [ ] Task: Implement `POST /api/themes/{id}/research` in `backend/src/routes/themes.py`.
+- [x] Task: Implement `POST /api/themes/{id}/research` in `backend/src/routes/themes.py`. (105b524)
     -   *Workflow*: Fetch Theme -> Get existing Post titles -> Call `research_theme` agent -> Save 4 `Post` objects -> Return JSON.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: API & Integration' (Protocol in workflow.md)
 
