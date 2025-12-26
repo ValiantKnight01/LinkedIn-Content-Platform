@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 from ..models.theme import Theme
+from ..models.post import Post
 from ..schemas.theme import ThemeCreate, ThemeUpdate, ThemeResponse
 from mongoengine.errors import NotUniqueError, ValidationError, DoesNotExist
 from bson import ObjectId
