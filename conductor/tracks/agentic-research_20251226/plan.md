@@ -6,7 +6,7 @@
     -   *Code Snippet*: `class Post(Document): title = StringField(); type = StringField(); sources = ListField(StringField()); theme = ReferenceField('Theme'); status = StringField(default='proposed'); created_at = DateTimeField(default=datetime.utcnow)`
 - [x] Task: Register `Post` model. (c2adc39)
     -   *Action*: Update `backend/src/routes/themes.py` imports to include `Post`.
-- [ ] Task: Add dependencies.
+- [x] Task: Add dependencies. (4b37a78)
     -   *Action*: `run_shell_command("uv pip install google-adk duckduckgo-search")`
     -   *Action*: `run_shell_command("uv pip freeze > requirements.txt")`
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Foundation & Data Model' (Protocol in workflow.md)
