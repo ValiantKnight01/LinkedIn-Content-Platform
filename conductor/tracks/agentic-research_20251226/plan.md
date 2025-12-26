@@ -11,7 +11,7 @@
     -   *Action*: `run_shell_command("uv pip freeze > requirements.txt")`
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Foundation & Data Model' (Protocol in workflow.md)
 
-## Phase 2: Agent Implementation (Sub-Agent Architecture)
+## Phase 2: Agent Implementation (Sub-Agent Architecture) (50595f6)
 - [x] Task: Create `backend/src/agents/topic_researcher.py`. (de1379b)
 - [x] Task: Implement `TopicResearchOrchestrator.plan_angles`. (a94a3f8)
     -   *Logic*: Use `google-adk` to prompt Gemini to generate 4 search queries for distinct angles based on the theme and existing titles.
