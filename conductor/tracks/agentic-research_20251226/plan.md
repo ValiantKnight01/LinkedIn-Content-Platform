@@ -1,6 +1,6 @@
 # Implementation Plan: Agentic Topic Research
 
-## Phase 1: Foundation & Data Model
+## Phase 1: Foundation & Data Model (bba5dd2)
 - [x] Task: Create `backend/src/models/post.py` with `Post` document. (517c79b)
     -   *Action*: Create file `backend/src/models/post.py`.
     -   *Code Snippet*: `class Post(Document): title = StringField(); type = StringField(); sources = ListField(StringField()); theme = ReferenceField('Theme'); status = StringField(default='proposed'); created_at = DateTimeField(default=datetime.utcnow)`
