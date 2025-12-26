@@ -172,11 +172,103 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
         body: JSON.stringify(updates),
       });
       const updatedCard = await response.json();
-      set((state) => ({
-          cards: state.cards.map((c) => (c.id === id ? updatedCard : c)),
+            set((state) => ({
+                cards: state.cards.map((c) => (c.id === id ? updatedCard : c)),
+            }));
+          } catch (error) {
+            console.error("Failed to update card details:", error);
+          }
+        }
       }));
-    } catch (error) {
-      console.error("Failed to update card details:", error);
-    }
-  }
-}));
+      
+      // --- Monthly Syllabus Store ---
+      
+      export interface Theme {
+        id: string;
+        title: string;
+        description?: string;
+        month: number;
+        year: number;
+        category?: string;
+      }
+      
+      interface SyllabusState {
+        themes: Theme[];
+        isLoading: boolean;
+        fetchThemes: () => Promise<void>;
+        addTheme: (theme: Omit<Theme, 'id'>) => Promise<void>;
+        updateTheme: (id: string, theme: Partial<Theme>) => Promise<void>;
+        deleteTheme: (id: string) => Promise<void>;
+        getActiveTheme: (month: number, year: number) => Theme | undefined;
+      }
+      
+        export const useSyllabusStore = create<SyllabusState>((set, get) => ({
+          themes: [],
+          isLoading: false,
+        
+          fetchThemes: async () => {
+            set({ isLoading: true });
+            try {
+              const response = await fetch('/api/themes');
+              const data = await response.json();
+              set({ themes: data, isLoading: false });
+            } catch (error) {
+              console.error("Failed to fetch themes:", error);
+              set({ isLoading: false });
+            }
+          },
+        
+          addTheme: async (theme) => {
+            try {
+              const response = await fetch('/api/themes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(theme),
+              });
+              if (response.ok) {
+                const newTheme = await response.json();
+                set((state) => ({ themes: [...state.themes, newTheme] }));
+              }
+            } catch (error) {
+              console.error("Failed to add theme:", error);
+            }
+          },
+        
+          updateTheme: async (id, theme) => {
+            try {
+              const response = await fetch(`/api/themes/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(theme),
+              });
+              if (response.ok) {
+                const updatedTheme = await response.json();
+                set((state) => ({
+                  themes: state.themes.map((t) => (t.id === id ? updatedTheme : t)),
+                }));
+              }
+            } catch (error) {
+              console.error("Failed to update theme:", error);
+            }
+          },
+        
+          deleteTheme: async (id) => {
+            try {
+              const response = await fetch(`/api/themes/${id}`, {
+                method: 'DELETE',
+              });
+              if (response.ok) {
+                set((state) => ({
+                  themes: state.themes.filter((t) => t.id !== id),
+                }));
+              }
+            } catch (error) {
+              console.error("Failed to delete theme:", error);
+            }
+          },
+        
+          getActiveTheme: (month, year) => {
+            return get().themes.find((t) => t.month === month && t.year === year);
+          },
+        }));
+      

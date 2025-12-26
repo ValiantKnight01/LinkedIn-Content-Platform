@@ -1,8 +1,10 @@
 'use client';
 
-import { BookOpen, LayoutGrid, Archive, Leaf } from "lucide-react";
+import { BookOpen, LayoutGrid, Archive, Leaf, ListTodo } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useEffect } from "react";
+import dayjs from "dayjs";
 
 import {
   Sidebar,
@@ -14,11 +16,11 @@ import {
   SidebarMenuButton,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
 } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
 import { LogoutButton } from "@/components/logout-button";
 import { useSession } from "next-auth/react";
+import { useSyllabusStore } from "@/lib/store";
 import Image from "next/image";
 
 // Menu items.
@@ -27,6 +29,11 @@ const items = [
     title: "Syllabus",
     url: "/syllabus",
     icon: BookOpen,
+  },
+  {
+    title: "Monthly Themes",
+    url: "/monthly-themes",
+    icon: ListTodo,
   },
   {
     title: "Newsroom",
@@ -43,6 +50,15 @@ const items = [
 export function AppSidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const { themes, fetchThemes, getActiveTheme } = useSyllabusStore();
+
+  useEffect(() => {
+    fetchThemes();
+  }, [fetchThemes]);
+
+  const currentMonth = dayjs().month() + 1;
+  const currentYear = dayjs().year();
+  const activeTheme = getActiveTheme(currentMonth, currentYear);
 
   return (
     <Sidebar className="border-r border-border bg-background">
@@ -78,7 +94,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="gap-2">
               {items.map((item) => {
-                 const isActive = pathname?.startsWith(item.url);
+                 const isActive = pathname === item.url;
                  return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
@@ -111,10 +127,10 @@ export function AppSidebar() {
             </div>
             <div>
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
-                Current Month
+                {dayjs().format('MMMM YYYY')}
               </p>
               <p className="font-serif text-lg font-medium text-foreground leading-tight">
-                RAG Architectures
+                {activeTheme?.title || "No active theme"}
               </p>
             </div>
           </CardContent>

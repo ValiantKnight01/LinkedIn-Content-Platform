@@ -19,3 +19,13 @@
 
 ## [x] Track: Implement the Research Complete View (Approval Editor)
 *Link: [./conductor/tracks/research-complete-view_20251221/](./conductor/tracks/research-complete-view_20251221/)*
+
+---
+
+## [x] Track: Backend Foundation & Monthly Themes API
+*Link: [./conductor/tracks/backend-foundation-themes_20251221/](./conductor/tracks/backend-foundation-themes_20251221/)*
+
+---
+
+## [~] Track: Frontend Monthly Syllabus View
+*Link: [./conductor/tracks/monthly-syllabus-ui_20251221/](./conductor/tracks/monthly-syllabus-ui_20251221/)*
