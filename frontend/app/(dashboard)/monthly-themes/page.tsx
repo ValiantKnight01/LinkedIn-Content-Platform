@@ -50,7 +50,7 @@ export default function MonthlyThemesPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-32 border-2 border-dashed border-[#d4a373]/30 rounded-[2.5rem] bg-[#faedcd]/10 w-full">
               <p className="text-[#6B4F3A] font-serif text-2xl mb-6 text-center px-6">
-                No editorial themes assigned yet.
+                No monthly themes assigned yet.
               </p>
               <Button 
                 variant="outline" 
