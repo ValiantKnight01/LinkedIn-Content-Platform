@@ -58,6 +58,7 @@ async def fetch_url(session: aiohttp.ClientSession, url: str) -> Optional[str]:
     try:
         async with session.get(url, timeout=15) as response:
             if response.status != 200:
+                print(f"      ! Failed to fetch {url}: Status {response.status}")
                 return None
             html = await response.text()
             soup = BeautifulSoup(html, 'html.parser')
@@ -68,9 +69,9 @@ async def fetch_url(session: aiohttp.ClientSession, url: str) -> Optional[str]:
             
             # Extract text
             text = soup.get_text(separator=' ', strip=True)
-            return text[:10000] # Limit per source
+            return text[:6000] # Limit per source
     except Exception as e:
-        print(f"Error fetching {url}: {e}")
+        print(f"      ! Error fetching {url}: {e}")
         return None
 
 # --- Curriculum Planning ---
@@ -105,9 +106,10 @@ async def plan_curriculum(theme_title: str, month: int, year: int) -> List[Dict[
             SystemMessage(content="You are an expert curriculum planner."),
             HumanMessage(content=prompt)
         ])
+        print(f"   + Successfully planned {len(plan.topics)} topics.")
         return [topic.dict() for topic in plan.topics]
     except Exception as e:
-        print(f"Curriculum Planning Error: {e}")
+        print(f"   x Curriculum Planning Error: {e}")
         return []
 
 # --- Deep Research ---
@@ -121,18 +123,22 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
     
     # 1. Search
     max_search_results = 20 if difficulty == "Beginner" else 35 if difficulty == "Intermediate" else 45
+    print(f"   > Step 1: Searching (Max results: {max_search_results})...")
     
     for query in search_queries:
         try:
+            print(f"     - Query: {query}")
             results = list(ddgs.text(query, max_results=max_search_results // len(search_queries), timelimit="y"))
             urls.extend([r['href'] for r in results if 'href' in r])
         except Exception as e:
-            print(f"Search error for query '{query}': {e}")
+            print(f"     ! Search error for query '{query}': {e}")
     
     # Deduplicate and limit to top 10 unique URLs
     unique_urls = list(dict.fromkeys(urls))[:10]
+    print(f"   > Found {len(unique_urls)} unique URLs to scrape.")
     
     # 2. Scrape
+    print(f"   > Step 2: Scraping content...")
     scraped_content = []
     async with aiohttp.ClientSession(headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}) as session:
         tasks = [fetch_url(session, url) for url in unique_urls]
@@ -142,7 +148,10 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
             if content:
                 scraped_content.append(f"Source: {url}\nContent: {content}")
 
+    print(f"   > Successfully scraped {len(scraped_content)} pages.")
+
     if not scraped_content:
+        print("   ! No content scraped. Ending research.")
         return {
             "summary": "Deep research failed to find or scrape relevant sources.",
             "sources": unique_urls,
@@ -150,6 +159,7 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         }
 
     # 3. Synthesize
+    print(f"   > Step 3: Synthesizing with {settings.llm_provider}...")
     llm = get_llm(temperature=0.5)
     structured_llm = llm.with_structured_output(ResearchSynthesis)
     
@@ -171,15 +181,16 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
             SystemMessage(content="You are an expert researcher and technical writer."),
             HumanMessage(content=prompt)
         ])
+        print("   + Synthesis complete.")
         return {
             "summary": synthesis.summary,
             "sources": synthesis.sources,
             "status": "researched"
         }
     except Exception as e:
-        print(f"Synthesis Error: {e}")
+        print(f"   x Synthesis Error: {e}")
         return {
-            "summary": "Error during synthesis of researched content.",
+            "summary": f"Error during synthesis: {str(e)}",
             "sources": unique_urls,
             "status": "researched"
         }
