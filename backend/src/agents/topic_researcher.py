@@ -1,31 +1,12 @@
-import os
 import json
-import asyncio
 from typing import List, Dict, Any, Optional, TypedDict
-from dotenv import load_dotenv
 
 from langchain_core.messages import SystemMessage, HumanMessage
 from pydantic import BaseModel, Field
-from langchain.chat_models import init_chat_model
 from ddgs import DDGS
 from langgraph.graph import StateGraph, END
 
-# Load environment variables
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../../.env"))
-
-# --- Configuration ---
-# Set to "anthropic" or "groq"
-PROVIDER = os.getenv("LLM_PROVIDER", "anthropic") 
-
-def get_llm(temperature: float = 0.7):
-    """Factory to get the configured LLM."""
-    if PROVIDER == "groq":
-        # Using Llama 3.3 70B as a high-quality open model on Groq
-        # Adjust model name if a specific 120B model becomes available/required
-        return init_chat_model("groq:llama-3.3-70b-versatile", temperature=temperature)
-    else:
-        # Default to Anthropic Haiku 4.5
-        return init_chat_model("anthropic:claude-haiku-4-5-20251001", temperature=temperature)
+from ..config import settings, get_llm
 
 # --- Schemas ---
 
@@ -54,7 +35,7 @@ class AgentState(TypedDict):
 
 def planner_node(state: AgentState):
     """Generates research angles using the configured LLM."""
-    print(f"--- Planning: {state['theme']} ({PROVIDER}) ---")
+    print(f"--- Planning: {state['theme']} ({settings.llm_provider}) ---")
     
     llm = get_llm(temperature=0.7)
     structured_llm = llm.with_structured_output(ResearchPlan)
@@ -82,7 +63,7 @@ def planner_node(state: AgentState):
 
 def researcher_node(state: AgentState):
     """Executes search and synthesizes results using the configured LLM and DDGS."""
-    print(f"--- Researching ({PROVIDER}) ---")
+    print(f"--- Researching ({settings.llm_provider}) ---")
     
     plan = state.get("plan")
     if not plan:
@@ -167,4 +148,3 @@ async def research_theme(theme_title: str, existing_titles: List[str]) -> List[D
     
     final_state = await app.ainvoke(initial_state)
     return final_state["results"]
-
