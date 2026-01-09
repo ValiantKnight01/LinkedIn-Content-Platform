@@ -1,13 +1,17 @@
 import { create } from 'zustand';
 import dayjs from 'dayjs';
 
-export type PostStatus = 'draft' | 'in-progress' | 'scheduled';
+export type PostStatus = 'draft' | 'in-progress' | 'scheduled' | 'planned' | 'researched' | 'proposed' | 'selected' | 'inDraft';
 
 export interface Post {
   id: string;
   title: string;
   date: string; // ISO format
   status: PostStatus;
+  learning_objective?: string;
+  difficulty?: string;
+  summary?: string;
+  sources?: string[];
 }
 
 // --- Calendar Store ---
@@ -19,6 +23,7 @@ interface CalendarState {
   nextMonth: () => void;
   prevMonth: () => void;
   fetchPosts: () => Promise<void>;
+  researchPost: (id: string) => Promise<void>;
 }
 
 export const useCalendarStore = create<CalendarState>((set, get) => ({
@@ -52,6 +57,22 @@ export const useCalendarStore = create<CalendarState>((set, get) => ({
       set({ isLoading: false });
     }
   },
+
+  researchPost: async (id: string) => {
+      // Optimistic update or just wait for re-fetch?
+      // Let's re-fetch for now to get the updated summary/sources
+      try {
+          const response = await fetch(`/api/posts/${id}/research`, { method: 'POST' });
+          if (response.ok) {
+              const updatedPost = await response.json();
+              set(state => ({
+                  posts: state.posts.map(p => p.id === id ? updatedPost : p)
+              }));
+          }
+      } catch (error) {
+          console.error("Failed to research post:", error);
+      }
+  }
 }));
 
 // --- Newsroom Kanban Store ---
@@ -181,94 +202,111 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
         }
       }));
       
-      // --- Monthly Syllabus Store ---
-      
-      export interface Theme {
-        id: string;
-        title: string;
-        description?: string;
-        month: number;
-        year: number;
-        category?: string;
+// --- Monthly Syllabus Store ---
+
+export interface Theme {
+  id: string;
+  title: string;
+  description?: string;
+  month: number;
+  year: number;
+  category?: string;
+}
+
+interface SyllabusState {
+  themes: Theme[];
+  isLoading: boolean;
+  fetchThemes: () => Promise<void>;
+  addTheme: (theme: Omit<Theme, 'id'>) => Promise<void>;
+  updateTheme: (id: string, theme: Partial<Theme>) => Promise<void>;
+  deleteTheme: (id: string) => Promise<void>;
+  getActiveTheme: (month: number, year: number) => Theme | undefined;
+  planTheme: (id: string) => Promise<void>;
+}
+
+export const useSyllabusStore = create<SyllabusState>((set, get) => ({
+  themes: [],
+  isLoading: false,
+
+  fetchThemes: async () => {
+    set({ isLoading: true });
+    try {
+      const response = await fetch('/api/themes');
+      const data = await response.json();
+      set({ themes: data, isLoading: false });
+    } catch (error) {
+      console.error("Failed to fetch themes:", error);
+      set({ isLoading: false });
+    }
+  },
+
+  addTheme: async (theme) => {
+    try {
+      const response = await fetch('/api/themes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(theme),
+      });
+      if (response.ok) {
+        const newTheme = await response.json();
+        set((state) => ({ themes: [...state.themes, newTheme] }));
       }
-      
-      interface SyllabusState {
-        themes: Theme[];
-        isLoading: boolean;
-        fetchThemes: () => Promise<void>;
-        addTheme: (theme: Omit<Theme, 'id'>) => Promise<void>;
-        updateTheme: (id: string, theme: Partial<Theme>) => Promise<void>;
-        deleteTheme: (id: string) => Promise<void>;
-        getActiveTheme: (month: number, year: number) => Theme | undefined;
-      }
-      
-        export const useSyllabusStore = create<SyllabusState>((set, get) => ({
-          themes: [],
-          isLoading: false,
-        
-          fetchThemes: async () => {
-            set({ isLoading: true });
-            try {
-              const response = await fetch('/api/themes');
-              const data = await response.json();
-              set({ themes: data, isLoading: false });
-            } catch (error) {
-              console.error("Failed to fetch themes:", error);
-              set({ isLoading: false });
-            }
-          },
-        
-          addTheme: async (theme) => {
-            try {
-              const response = await fetch('/api/themes', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(theme),
-              });
-              if (response.ok) {
-                const newTheme = await response.json();
-                set((state) => ({ themes: [...state.themes, newTheme] }));
-              }
-            } catch (error) {
-              console.error("Failed to add theme:", error);
-            }
-          },
-        
-          updateTheme: async (id, theme) => {
-            try {
-              const response = await fetch(`/api/themes/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(theme),
-              });
-              if (response.ok) {
-                const updatedTheme = await response.json();
-                set((state) => ({
-                  themes: state.themes.map((t) => (t.id === id ? updatedTheme : t)),
-                }));
-              }
-            } catch (error) {
-              console.error("Failed to update theme:", error);
-            }
-          },
-        
-          deleteTheme: async (id) => {
-            try {
-              const response = await fetch(`/api/themes/${id}`, {
-                method: 'DELETE',
-              });
-              if (response.ok) {
-                set((state) => ({
-                  themes: state.themes.filter((t) => t.id !== id),
-                }));
-              }
-            } catch (error) {
-              console.error("Failed to delete theme:", error);
-            }
-          },
-        
-          getActiveTheme: (month, year) => {
-            return get().themes.find((t) => t.month === month && t.year === year);
-          },
+    } catch (error) {
+      console.error("Failed to add theme:", error);
+    }
+  },
+
+  updateTheme: async (id, theme) => {
+    try {
+      const response = await fetch(`/api/themes/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(theme),
+      });
+      if (response.ok) {
+        const updatedTheme = await response.json();
+        set((state) => ({
+          themes: state.themes.map((t) => (t.id === id ? updatedTheme : t)),
         }));
-      
+      }
+    } catch (error) {
+      console.error("Failed to update theme:", error);
+    }
+  },
+
+  deleteTheme: async (id) => {
+    try {
+      const response = await fetch(`/api/themes/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        set((state) => ({
+          themes: state.themes.filter((t) => t.id !== id),
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to delete theme:", error);
+    }
+  },
+
+  getActiveTheme: (month, year) => {
+    return get().themes.find((t) => t.month === month && t.year === year);
+  },
+
+  planTheme: async (id) => {
+      set({ isLoading: true });
+      try {
+          const response = await fetch(`/api/themes/${id}/plan`, {
+              method: 'POST',
+          });
+          if (response.ok) {
+              // Optionally trigger a refresh of posts or something
+              // But for now, we just acknowledge the success.
+          }
+      } catch (error) {
+          console.error("Failed to plan theme:", error);
+      } finally {
+          set({ isLoading: false });
+      }
+  },
+}));
