@@ -7,6 +7,7 @@ class PostBase(BaseModel):
     type: str = Field(..., pattern='^(link|article|forum)$')
     status: Optional[str] = Field('planned', pattern='^(proposed|planned|researched|selected|inDraft|scheduled)$')
     sources: Optional[List[str]] = []
+    summary: Optional[str] = None
     
     # New fields for Progressive Curriculum
     day: Optional[int] = None
@@ -22,6 +23,7 @@ class PostUpdate(BaseModel):
     type: Optional[str] = Field(None, pattern='^(link|article|forum)$')
     status: Optional[str] = Field(None, pattern='^(proposed|planned|researched|selected|inDraft|scheduled)$')
     sources: Optional[List[str]] = None
+    summary: Optional[str] = None
     day: Optional[int] = None
     learning_objective: Optional[str] = None
     difficulty: Optional[str] = None

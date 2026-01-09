@@ -24,9 +24,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Agent Refactor' (Protocol in workflow.md)
 
 ## Phase 3: API & Backend Integration
-- [ ] Task: Update `POST /themes/{id}/plan` (Renamed from `/research`).
+- [x] Task: Update `POST /themes/{id}/plan` (Renamed from `/research`). (f7433e3)
     -   *How To*: Call `plan_curriculum`. Save `Post` objects with `search_queries` list.
-- [ ] Task: Create `POST /posts/{id}/research`.
+- [~] Task: Create `POST /posts/{id}/research`.
     -   *How To*: Fetch Post. Call `research_single_topic`. Update `sources` (urls scraped), `summary` (synthesized text), and `status`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: API & Backend Integration' (Protocol in workflow.md)
 
