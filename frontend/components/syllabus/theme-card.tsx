@@ -2,7 +2,7 @@
 
 import { Theme, useSyllabusStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
-import { Trash2, Edit } from "lucide-react";
+import { Trash2, Edit, Sparkles } from "lucide-react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { AddThemeDialog } from "./add-theme-dialog";
@@ -17,16 +17,24 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Loader2 } from "lucide-react";
 
 interface ThemeCardProps {
   theme: Theme;
 }
 
 export function ThemeCard({ theme }: ThemeCardProps) {
-  const { deleteTheme } = useSyllabusStore();
+  const { deleteTheme, planTheme } = useSyllabusStore();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isPlanning, setIsPlanning] = useState(false);
 
   const monthName = dayjs().month(theme.month - 1).format('MMMM');
+
+  const handlePlan = async () => {
+    setIsPlanning(true);
+    await planTheme(theme.id);
+    setIsPlanning(false);
+  };
 
   return (
     <>
@@ -87,9 +95,30 @@ export function ThemeCard({ theme }: ThemeCardProps) {
           )}
         </div>
 
-        <p className="absolute bottom-4 right-10 font-sans text-xs text-muted-foreground/40 uppercase tracking-widest">
-          {theme.year}
-        </p>
+        <div className="absolute bottom-4 right-10 flex gap-4 items-center">
+             <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full border-[#d4a373] text-[#d4a373] hover:bg-[#d4a373] hover:text-white transition-colors"
+                onClick={handlePlan}
+                disabled={isPlanning}
+             >
+                {isPlanning ? (
+                    <>
+                        <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                        Planning...
+                    </>
+                ) : (
+                    <>
+                        <Sparkles className="mr-2 h-3 w-3" />
+                        Plan Curriculum
+                    </>
+                )}
+             </Button>
+            <p className="font-sans text-xs text-muted-foreground/40 uppercase tracking-widest">
+              {theme.year}
+            </p>
+        </div>
       </div>
 
       <AddThemeDialog 

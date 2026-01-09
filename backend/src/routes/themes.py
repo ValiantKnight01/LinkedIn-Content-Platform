@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 from ..models.theme import Theme
+from ..models.post import Post
 from ..schemas.theme import ThemeCreate, ThemeUpdate, ThemeResponse
+from ..agents.topic_researcher import research_theme, plan_curriculum
 from mongoengine.errors import NotUniqueError, ValidationError, DoesNotExist
 from bson import ObjectId
 
@@ -12,6 +14,54 @@ def format_theme(theme: Theme) -> dict:
     data = theme.to_mongo().to_dict()
     data["id"] = str(data.pop("_id"))
     return data
+
+def format_post(post: Post) -> dict:
+    data = post.to_mongo().to_dict()
+    data["id"] = str(data.pop("_id"))
+    # Ensure theme is converted to string and removed from data
+    if "theme" in data:
+        data["theme_id"] = str(data.pop("theme"))
+    if "created_at" in data:
+        data["created_at"] = data["created_at"].isoformat()
+    return data
+
+@router.post("/{id}/plan", response_model=List[dict], status_code=status.HTTP_201_CREATED)
+async def plan_theme_curriculum(id: str):
+    if not ObjectId.is_valid(id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid ID format")
+
+    theme = Theme.objects(id=id).first()
+    if not theme:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Theme not found")
+
+    # Clear existing posts for this theme to avoid mess during planning
+    # (Optional, but often preferred for "Regenerate Plan")
+    Post.objects(theme=theme).delete()
+
+    try:
+        # Call Agent
+        generated_data = await plan_curriculum(theme.title, theme.month, theme.year)
+        
+        saved_posts = []
+        for item in generated_data:
+            post = Post(
+                title=item['title'],
+                type=item['type'],
+                day=item['day'],
+                learning_objective=item['learning_objective'],
+                difficulty=item['difficulty'],
+                search_queries=item['search_queries'],
+                theme=theme,
+                status='planned'
+            )
+            post.save()
+            saved_posts.append(format_post(post))
+            
+        return saved_posts
+        
+    except Exception as e:
+        print(f"Curriculum planning failed: {e}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Planning agent failed: {str(e)}")
 
 @router.post("/", response_model=ThemeResponse, status_code=status.HTTP_201_CREATED)
 async def create_theme(theme_in: ThemeCreate):

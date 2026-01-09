@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Editorial Calendar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4a373","background-light": "#fefae0","surface": "#e9edc9","surface-secondary": "#faedcd","accent": "#ccd5ae","text-main": "#3D2B1F","text-secondary": "#6B4F3A",},
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-body text-text-main">
+<div class="flex h-screen w-full">
+<aside class="flex h-full w-72 flex-col gap-8 border-r border-primary/20 bg-background-light p-6">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of the editor in chief" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDLLoT4Ak_hjMMZMMiCqs7xBkUihbbOim1Ycnu4sMJ_P38CZrhxbmYQIv0hHkeUnsC9_bogKuu3CoUhxlISOKOaP84W2GIqFRj0DxSTLmzltiMtJkHYd0m4OuQvGw3lXHCOQJw6HUBn6_7C2C1nnY5jyQ6cfuqCml-IxxMuhKq4ejADoaNdcNAWzMXcLxTubDY2ZQ3tvzi6edNxiYgh13qprKj1MKFaaEvaxtNrfQcB_f8qDPeJauzM0MLcbh5nJXT9nI5W1CsZXCU');"></div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-lg font-bold leading-tight font-display">Editor-in-Chief</h1>
+<p class="text-text-secondary text-sm font-normal leading-normal">Editorial Platform</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-xl bg-accent/50 px-4 py-3 text-text-main" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">auto_stories</span>
+<p class="text-base font-medium">Syllabus</p>
+</a>
+<a class="flex items-center gap-3 rounded-xl px-4 py-3 text-text-secondary hover:text-text-main" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<p class="text-base font-medium">Newsroom</p>
+</a>
+<a class="flex items-center gap-3 rounded-xl px-4 py-3 text-text-secondary hover:text-text-main" href="#">
+<span class="material-symbols-outlined">archive</span>
+<p class="text-base font-medium">Archives</p>
+</a>
+</nav>
+<div class="mt-auto">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-surface-secondary p-4">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-lg" data-alt="Abstract image representing organic themes" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1lSm1yUfy67dR81hD6D_DgHQifBX-qqr9P3awSlz3JLvTVJXrcGV8Uogbp7xwFp3XOB2_lstPlMI4g7LaPXAG-ubKtHdMzMALsna2NLT18eehpHyp10YmaGb3Qrjre8-q2j6f366lQ5-ZzL7VN3l-QhlGFJtRsxWtP_Ekx30Yv44i789Yd1yzwV8jNhs8MSmTXb3JO6f8X1LhrQLvbnAu-N1aJNdDWdNFSE6NMxj1Pm0Et_tJIeT6l56p3-Qz7V4_2jcSJF6wO5s');"></div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1 py-4">
+<p class="text-primary text-lg font-bold leading-tight font-display">Active Theme</p>
+<div class="flex flex-col gap-1">
+<p class="text-text-secondary text-sm font-normal">Current Month</p>
+<p class="text-text-main text-base font-medium">RAG Architectures</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex flex-1 flex-col overflow-auto">
+<header class="flex flex-wrap items-center justify-between gap-4 p-8">
+<div class="flex flex-col gap-2">
+<h1 class="font-display text-3xl font-bold leading-tight text-text-main">November Editorial Calendar</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 self-start rounded-lg border border-primary/50 px-4 py-3 font-medium text-primary transition-all hover:scale-105 hover:bg-primary/10">
+<span class="material-symbols-outlined">chevron_left</span>
+<span>October</span>
+</button>
+<button class="flex items-center gap-2 self-start rounded-lg border border-primary/50 px-4 py-3 font-medium text-primary transition-all hover:scale-105 hover:bg-primary/10">
+<span>December</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 flex-col px-8 pb-8">
+<div class="grid grid-cols-7 border-l border-t border-primary/20">
+<div class="border-b border-r border-primary/20 py-3 text-center font-bold text-text-secondary">Sun</div>
+<div class="border-b border-r border-primary/20 py-3 text-center font-bold text-text-secondary">Mon</div>
+<div class="border-b border-r border-primary/20 py-3 text-center font-bold text-text-secondary">Tue</div>
+<div class="border-b border-r border-primary/20 py-3 text-center font-bold text-text-secondary">Wed</div>
+<div class="border-b border-r border-primary/20 py-3 text-center font-bold text-text-secondary">Thu</div>
+<div class="border-b border-r border-primary/20 py-3 text-center font-bold text-text-secondary">Fri</div>
+<div class="border-b border-r border-primary/20 py-3 text-center font-bold text-text-secondary">Sat</div>
+</div>
+<div class="grid flex-1 grid-cols-7 grid-rows-5 border-l border-primary/20">
+<div class="border-b border-r border-primary/20 bg-surface/30 p-2 text-right text-text-secondary/50">
+<span class="font-display text-2xl">27</span>
+</div>
+<div class="border-b border-r border-primary/20 bg-surface/30 p-2 text-right text-text-secondary/50">
+<span class="font-display text-2xl">28</span>
+</div>
+<div class="border-b border-r border-primary/20 bg-surface/30 p-2 text-right text-text-secondary/50">
+<span class="font-display text-2xl">29</span>
+</div>
+<div class="border-b border-r border-primary/20 bg-surface/30 p-2 text-right text-text-secondary/50">
+<span class="font-display text-2xl">30</span>
+</div>
+<div class="border-b border-r border-primary/20 bg-surface/30 p-2 text-right text-text-secondary/50">
+<span class="font-display text-2xl">31</span>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">1</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">2</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Intro to Vectors</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Drafting</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">3</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Embeddings</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-blue-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Review</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">4</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">5</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-accent/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-accent px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">RAG Architectures</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-green-600"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Published</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">6</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">7</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">8</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Vector DBs</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Drafting</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">9</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Chunking Strats</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-blue-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Review</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">10</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">11</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">12</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-accent/60 ring-2 ring-inset ring-accent transition-all duration-300 ease-out">
+<div class="bg-surface px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Hybrid Search</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-green-600"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Published</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">13</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">14</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Context Windows</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Drafting</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">15</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">16</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Query Transform</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-blue-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Review</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">17</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">18</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-accent/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-accent px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Re-ranking Models</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-green-600"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Published</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">19</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">20</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Evaluating RAG</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Drafting</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">21</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">22</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Advanced RAG</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-blue-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Review</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">23</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">24</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-accent/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-accent px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Production RAG</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-green-600"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Published</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">25</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">26</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Fine-Tuning vs</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Drafting</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">27</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="flex items-start justify-between p-2">
+<span class="ml-auto font-display text-2xl text-text-secondary">28</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-surface-secondary/30 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-surface-secondary px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Case Studies</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-blue-500"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Review</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">29</span>
+</div>
+</div>
+<div class="group relative flex flex-col border-b border-r border-primary/20 bg-accent/20 transition-all duration-300 ease-out hover:bg-surface/50">
+<div class="bg-accent px-3 py-1.5 shadow-sm border-b border-primary/10">
+<p class="truncate text-sm font-bold text-text-main">Future of Search</p>
+</div>
+<div class="flex grow flex-col justify-between p-2">
+<div class="mt-2 flex items-center gap-1">
+<span class="size-2 rounded-full bg-green-600"></span>
+<span class="text-[10px] font-medium text-text-secondary uppercase tracking-wider">Published</span>
+</div>
+<span class="ml-auto font-display text-2xl text-text-secondary">30</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
