@@ -40,12 +40,11 @@ class AgentState(TypedDict):
 # --- Nodes ---
 
 def planner_node(state: AgentState):
-    """Generates research angles using Anthropic (Claude)."""
+    """Generates research angles using Anthropic (Claude 4.5 Haiku)."""
     print(f"--- Planning: {state['theme']} ---")
     
-    # Initialize Model
-    # We use Claude 3.5 Sonnet for high-quality planning
-    llm = ChatAnthropic(model="claude-3-5-sonnet-latest", temperature=0.7)
+    # Using the latest Haiku model for efficient planning
+    llm = ChatAnthropic(model="claude-4-5-haiku-latest", temperature=0.7)
     structured_llm = llm.with_structured_output(ResearchPlan)
 
     prompt = f"""You are an expert editorial planner. 
@@ -63,14 +62,14 @@ def planner_node(state: AgentState):
         print(f"Planning Error: {e}")
         # Fallback plan
         return {"plan": ResearchPlan(angles=[
-            AnglePlan(angle="Overview", query=f"{state['theme']} trends 2025"),
+            AnglePlan(angle="Overview", query=f"{state['theme']} trends 2026"),
             AnglePlan(angle="Technical", query=f"{state['theme']} implementation"),
             AnglePlan(angle="Examples", query=f"{state['theme']} case studies"),
             AnglePlan(angle="Deep Dive", query=f"advanced {state['theme']} concepts")
         ])}
 
 def researcher_node(state: AgentState):
-    """Executes search and synthesizes results using Groq (Llama 3) and DuckDuckGo."""
+    """Executes search and synthesizes results using Anthropic (Claude 4.5 Haiku)."""
     print("--- Researching ---")
     
     plan = state.get("plan")
@@ -79,13 +78,12 @@ def researcher_node(state: AgentState):
 
     # Initialize Tools & Model
     search = DuckDuckGoSearchRun()
-    # We use Llama 3 70b via Groq for fast synthesis
-    llm = ChatGroq(model="llama3-70b-8192", temperature=0.5)
+    # Moving from Groq to Anthropic Haiku for synthesis
+    llm = ChatAnthropic(model="claude-4-5-haiku-latest", temperature=0.5)
     structured_llm = llm.with_structured_output(TopicResult)
 
     results = []
     
-    # Simple sequential execution (could be parallelized with 'Send' or asyncio.gather in a real async node)
     for angle in plan.angles:
         print(f"  > Searching: {angle.angle}...")
         try:
