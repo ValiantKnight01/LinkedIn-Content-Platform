@@ -1,11 +1,11 @@
 # Implementation Plan: Progressive Monthly Curriculum & Deep Research
 
-## Phase 1: Data Model Updates
+## Phase 1: Data Model Updates (Checkpoint: 56fe293)
 - [x] Task: Update `Post` model in `backend/src/models/post.py`. (b361cdf)
     -   *How To*: Add `day = IntField()`, `learning_objective = StringField()`, `difficulty = StringField()`, and `search_queries = ListField(StringField())`. Update `status` default to `'planned'`.
 - [x] Task: Update `Post` schemas in `backend/src/schemas/`. (b361cdf)
     -   *How To*: Update Pydantic models to reflect `search_queries` (List[str]) and other new fields.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Data Model Updates' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Data Model Updates' (Protocol in workflow.md) (56fe293)
 
 ## Phase 2: Agent Refactor (Splitting & Deep Research)
 - [ ] Task: Install scraping dependencies.
