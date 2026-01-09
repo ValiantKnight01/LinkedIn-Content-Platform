@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from langchain_core.messages import SystemMessage, HumanMessage
 from pydantic import BaseModel, Field
 from langchain.chat_models import init_chat_model
-from langchain_community.tools import DuckDuckGoSearchRun
+from ddgs import DDGS
 from langgraph.graph import StateGraph, END
 
 # Load environment variables
@@ -81,7 +81,7 @@ def planner_node(state: AgentState):
         ])}
 
 def researcher_node(state: AgentState):
-    """Executes search and synthesizes results using the configured LLM."""
+    """Executes search and synthesizes results using the configured LLM and DDGS."""
     print(f"--- Researching ({PROVIDER}) ---")
     
     plan = state.get("plan")
@@ -89,7 +89,7 @@ def researcher_node(state: AgentState):
         return {"results": []}
 
     # Initialize Tools & Model
-    search = DuckDuckGoSearchRun()
+    ddgs = DDGS()
     llm = get_llm(temperature=0.5)
     structured_llm = llm.with_structured_output(TopicResult)
 
@@ -98,13 +98,25 @@ def researcher_node(state: AgentState):
     for angle in plan.angles:
         print(f"  > Searching: {angle.angle}...")
         try:
-            # 1. Search
-            search_results = search.invoke(angle.query)
+            # 1. Search using the DDGS pattern
+            # Using max_results=20 and timelimit='y' to ensure coverage of the last 4 months
+            search_results = list(ddgs.text(
+                angle.query,
+                max_results=20,
+                timelimit="y" 
+            ))
+            
+            # Format results for synthesis
+            context = "\n\n".join([
+                f"Source: {r.get('href')}\nTitle: {r.get('title')}\nSnippet: {r.get('body')}"
+                for r in search_results
+            ])
             
             # 2. Synthesize
             prompt = f"""Research Angle: {angle.angle}
             Search Query: {angle.query}
-            Search Results: {search_results}
+            Search Results:
+            {context}
             
             Synthesize a compelling topic title and identify the content type based on these results.
             """
