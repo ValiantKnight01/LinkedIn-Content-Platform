@@ -39,6 +39,8 @@
 - [x] Task: Refactor `topic_researcher.py` to use LangGraph with Anthropic Claude 4.5 Haiku. (0df48a7)
     -   *Logic*: Use LangGraph `StateGraph` with a Planner and Researcher both powered by `claude-haiku-4-5-20251001`.
 - [x] Task: Conductor - User Manual Verification 'Phase 5: Refactor to LangGraph' (6bbc2fc)
+- [x] Task: Refactor `topic_researcher.py` for dynamic LLM selection (Anthropic/Groq). (b93d054)
+    -   *Logic*: Use `init_chat_model` factory to switch between Claude Haiku and Llama 3.3 based on `LLM_PROVIDER`.
 
 
 
