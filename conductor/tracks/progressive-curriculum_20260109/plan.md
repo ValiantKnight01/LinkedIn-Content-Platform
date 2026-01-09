@@ -23,12 +23,12 @@
         5. Pass to `get_llm()` for synthesis.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Agent Refactor' (Protocol in workflow.md)
 
-## Phase 3: API & Backend Integration
+## Phase 3: API & Backend Integration (Checkpoint: 2d93a9c)
 - [x] Task: Update `POST /themes/{id}/plan` (Renamed from `/research`). (f7433e3)
     -   *How To*: Call `plan_curriculum`. Save `Post` objects with `search_queries` list.
-- [~] Task: Create `POST /posts/{id}/research`.
+- [x] Task: Create `POST /posts/{id}/research`. (292665f)
     -   *How To*: Fetch Post. Call `research_single_topic`. Update `sources` (urls scraped), `summary` (synthesized text), and `status`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: API & Backend Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: API & Backend Integration' (Protocol in workflow.md) (2d93a9c)
 
 ## Phase 4: Frontend Implementation
 - [ ] Task: Update Syllabus Calendar View.
