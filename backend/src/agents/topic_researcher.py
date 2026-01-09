@@ -6,13 +6,26 @@ from dotenv import load_dotenv
 
 from langchain_core.messages import SystemMessage, HumanMessage
 from pydantic import BaseModel, Field
-from langchain_anthropic import ChatAnthropic
-from langchain_groq import ChatGroq
+from langchain.chat_models import init_chat_model
 from langchain_community.tools import DuckDuckGoSearchRun
 from langgraph.graph import StateGraph, END
 
 # Load environment variables
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../../.env"))
+
+# --- Configuration ---
+# Set to "anthropic" or "groq"
+PROVIDER = os.getenv("LLM_PROVIDER", "anthropic") 
+
+def get_llm(temperature: float = 0.7):
+    """Factory to get the configured LLM."""
+    if PROVIDER == "groq":
+        # Using Llama 3.3 70B as a high-quality open model on Groq
+        # Adjust model name if a specific 120B model becomes available/required
+        return init_chat_model("groq:llama-3.3-70b-versatile", temperature=temperature)
+    else:
+        # Default to Anthropic Haiku 4.5
+        return init_chat_model("anthropic:claude-haiku-4-5-20251001", temperature=temperature)
 
 # --- Schemas ---
 
@@ -40,11 +53,10 @@ class AgentState(TypedDict):
 # --- Nodes ---
 
 def planner_node(state: AgentState):
-    """Generates research angles using Anthropic (Claude 4.5 Haiku)."""
-    print(f"--- Planning: {state['theme']} ---")
+    """Generates research angles using the configured LLM."""
+    print(f"--- Planning: {state['theme']} ({PROVIDER}) ---")
     
-    # Using the latest Haiku model (Claude 4.5)
-    llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0.7)
+    llm = get_llm(temperature=0.7)
     structured_llm = llm.with_structured_output(ResearchPlan)
 
     prompt = f"""You are an expert editorial planner. 
@@ -69,8 +81,8 @@ def planner_node(state: AgentState):
         ])}
 
 def researcher_node(state: AgentState):
-    """Executes search and synthesizes results using Anthropic (Claude 4.5 Haiku)."""
-    print("--- Researching ---")
+    """Executes search and synthesizes results using the configured LLM."""
+    print(f"--- Researching ({PROVIDER}) ---")
     
     plan = state.get("plan")
     if not plan:
@@ -78,8 +90,7 @@ def researcher_node(state: AgentState):
 
     # Initialize Tools & Model
     search = DuckDuckGoSearchRun()
-    # Moving from Groq to Anthropic Haiku for synthesis
-    llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0.5)
+    llm = get_llm(temperature=0.5)
     structured_llm = llm.with_structured_output(TopicResult)
 
     results = []
@@ -141,15 +152,6 @@ async def research_theme(theme_title: str, existing_titles: List[str]) -> List[D
         "plan": None,
         "results": []
     }
-    
-    # LangGraph apps can be invoked directly
-    # Note: invoke is synchronous, but we can wrap it if we need strictly async top-level,
-    # or use .ainvoke if the nodes were async. For simplicity here we assume blocking for now
-    # or we can make nodes async.
-    
-    # Since the original interface was async, we should probably use ainvoke.
-    # Let's verify if the nodes are compatible with ainvoke (they are regular functions).
-    # LangGraph handles both.
     
     final_state = await app.ainvoke(initial_state)
     return final_state["results"]
