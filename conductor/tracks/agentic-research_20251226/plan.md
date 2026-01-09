@@ -36,12 +36,9 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Frontend & Verification' (Protocol in workflow.md)
 
 ## Phase 5: Refactor to LangGraph
-
 - [x] Task: Refactor `topic_researcher.py` to use LangGraph with Anthropic Claude 4.5 Haiku. (0df48a7)
-
-    -   *Logic*: Use LangGraph `StateGraph` with a Planner and Researcher both powered by `claude-4-5-haiku-latest`.
-
-- [ ] Task: Conductor - User Manual Verification 'Phase 5: Refactor to LangGraph' (Protocol in workflow.md)
+    -   *Logic*: Use LangGraph `StateGraph` with a Planner and Researcher both powered by `claude-haiku-4-5-20251001`.
+- [x] Task: Conductor - User Manual Verification 'Phase 5: Refactor to LangGraph' (6bbc2fc)
 
 
 
