@@ -30,9 +30,9 @@
     -   *How To*: Fetch Post. Call `research_single_topic`. Update `sources` (urls scraped), `summary` (synthesized text), and `status`.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: API & Backend Integration' (Protocol in workflow.md) (2d93a9c)
 
-## Phase 4: Frontend Implementation
-- [ ] Task: Update Syllabus Calendar View.
+## Phase 4: Frontend Implementation (Checkpoint: 907e939)
+- [x] Task: Update Syllabus Calendar View. (9af6092)
     -   *How To*: Wire "Research Theme" to `/plan`. Display "Planned" cards.
-- [ ] Task: Update Post Card/Detail View.
+- [x] Task: Update Post Card/Detail View. (9af6092)
     -   *How To*: Add "Research Day" button. Show progress (scraping takes longer than simple search). Display rich result.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Frontend Implementation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Frontend Implementation' (Protocol in workflow.md) (9af6092)
