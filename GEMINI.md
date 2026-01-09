@@ -28,10 +28,6 @@ This is a personal LinkedIn post scheduler and content creation tool. You are an
   - Only define detailed specs for the *active* track.
   - Defer decisions for future tracks until that track begins.
 
-## Active Track
-- **Track 2: Newsroom Dashboard (Syllabus)**
-  - Goal: Implement the primary "Syllabus" interface featuring a full Calendar View and Sidebar navigation.
-  - Status: Initializing
 
 ## Domain Definitions
 - **Syllabus:** The central content calendar and planning interface. This is where the "Editorial Calendar" view lives.
@@ -40,11 +36,6 @@ This is a personal LinkedIn post scheduler and content creation tool. You are an
 - **Archives:** A repository view for past/published content.
 - **Active Theme:** A monthly editorial focus (e.g., "RAG Architectures") displayed in the sidebar.
 
-## Completed Tracks
-- **Track 1: Foundation & Identity:** Set up the Next.js project with Tailwind CSS v4 and the "Digital Newsroom" aesthetic.
-- **Track 2: Newsroom Dashboard (Syllabus):** Implemented the Calendar View and Sidebar.
-- **Track 3: Newsroom Kanban:** Implemented the Drag-and-Drop Kanban board.
-- **Track 4: Research Complete View:** Implemented the Approval Editor for researching cards.
 
 ## Active Track
 - **None:** Awaiting next instruction.

@@ -34,3 +34,8 @@
 
 ## [~] Track: Agentic Topic Research (Sub-Agent Architecture)
 *Link: [./conductor/tracks/agentic-research_20251226/](./conductor/tracks/agentic-research_20251226/)*
+
+---
+
+## [~] Track: Progressive Monthly Curriculum & Deep Research
+*Link: [./conductor/tracks/progressive-curriculum_20260109/](./conductor/tracks/progressive-curriculum_20260109/)*
