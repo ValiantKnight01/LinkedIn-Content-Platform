@@ -3,7 +3,7 @@ from typing import List
 from ..models.theme import Theme
 from ..models.post import Post
 from ..schemas.theme import ThemeCreate, ThemeUpdate, ThemeResponse
-from ..agents.topic_researcher import research_theme
+from ..agents.topic_researcher import research_theme, plan_curriculum
 from mongoengine.errors import NotUniqueError, ValidationError, DoesNotExist
 from bson import ObjectId
 
@@ -25,8 +25,8 @@ def format_post(post: Post) -> dict:
         data["created_at"] = data["created_at"].isoformat()
     return data
 
-@router.post("/{id}/research", response_model=List[dict], status_code=status.HTTP_201_CREATED)
-async def research_topic_ideas(id: str):
+@router.post("/{id}/plan", response_model=List[dict], status_code=status.HTTP_201_CREATED)
+async def plan_theme_curriculum(id: str):
     if not ObjectId.is_valid(id):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid ID format")
 
@@ -34,22 +34,25 @@ async def research_topic_ideas(id: str):
     if not theme:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Theme not found")
 
-    # Get existing posts to avoid duplicates
-    existing_posts = Post.objects(theme=theme)
-    existing_titles = [p.title for p in existing_posts]
+    # Clear existing posts for this theme to avoid mess during planning
+    # (Optional, but often preferred for "Regenerate Plan")
+    Post.objects(theme=theme).delete()
 
     try:
         # Call Agent
-        generated_data = await research_theme(theme.title, existing_titles)
+        generated_data = await plan_curriculum(theme.title, theme.month, theme.year)
         
         saved_posts = []
         for item in generated_data:
             post = Post(
                 title=item['title'],
                 type=item['type'],
-                sources=item.get('sources', []),
+                day=item['day'],
+                learning_objective=item['learning_objective'],
+                difficulty=item['difficulty'],
+                search_queries=item['search_queries'],
                 theme=theme,
-                status='proposed'
+                status='planned'
             )
             post.save()
             saved_posts.append(format_post(post))
@@ -57,8 +60,8 @@ async def research_topic_ideas(id: str):
         return saved_posts
         
     except Exception as e:
-        print(f"Research failed: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Research agent failed: {str(e)}")
+        print(f"Curriculum planning failed: {e}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Planning agent failed: {str(e)}")
 
 @router.post("/", response_model=ThemeResponse, status_code=status.HTTP_201_CREATED)
 async def create_theme(theme_in: ThemeCreate):
