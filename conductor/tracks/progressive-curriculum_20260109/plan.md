@@ -7,7 +7,7 @@
     -   *How To*: Update Pydantic models to reflect `search_queries` (List[str]) and other new fields.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Data Model Updates' (Protocol in workflow.md) (56fe293)
 
-## Phase 2: Agent Refactor (Splitting & Deep Research)
+## Phase 2: Agent Refactor (Splitting & Deep Research) (Checkpoint: 45b8a36)
 - [x] Task: Install scraping dependencies. (9f78d52)
     -   *How To*: `uv pip install beautifulsoup4 aiohttp`. Update `requirements.txt`.
 - [x] Task: Refactor `backend/src/agents/topic_researcher.py` - Shared Config. (979d749)
