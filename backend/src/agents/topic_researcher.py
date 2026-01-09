@@ -5,7 +5,7 @@ from typing import List, Dict, Any, Optional, TypedDict
 from dotenv import load_dotenv
 
 from langchain_core.messages import SystemMessage, HumanMessage
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_anthropic import ChatAnthropic
 from langchain_groq import ChatGroq
 from langchain_community.tools import DuckDuckGoSearchRun
@@ -43,8 +43,8 @@ def planner_node(state: AgentState):
     """Generates research angles using Anthropic (Claude 4.5 Haiku)."""
     print(f"--- Planning: {state['theme']} ---")
     
-    # Using the latest Haiku model for efficient planning
-    llm = ChatAnthropic(model="claude-4-5-haiku-latest", temperature=0.7)
+    # Using the latest Haiku model (Claude 4.5)
+    llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0.7)
     structured_llm = llm.with_structured_output(ResearchPlan)
 
     prompt = f"""You are an expert editorial planner. 
@@ -79,7 +79,7 @@ def researcher_node(state: AgentState):
     # Initialize Tools & Model
     search = DuckDuckGoSearchRun()
     # Moving from Groq to Anthropic Haiku for synthesis
-    llm = ChatAnthropic(model="claude-4-5-haiku-latest", temperature=0.5)
+    llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0.5)
     structured_llm = llm.with_structured_output(TopicResult)
 
     results = []

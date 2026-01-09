@@ -18,7 +18,9 @@ def format_theme(theme: Theme) -> dict:
 def format_post(post: Post) -> dict:
     data = post.to_mongo().to_dict()
     data["id"] = str(data.pop("_id"))
-    data["theme_id"] = str(data["theme"])
+    # Ensure theme is converted to string and removed from data
+    if "theme" in data:
+        data["theme_id"] = str(data.pop("theme"))
     if "created_at" in data:
         data["created_at"] = data["created_at"].isoformat()
     return data
