@@ -1,4 +1,6 @@
 import json
+import calendar
+from datetime import datetime
 from typing import List, Dict, Any, Optional, TypedDict
 
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -9,6 +11,17 @@ from langgraph.graph import StateGraph, END
 from ..config import settings, get_llm
 
 # --- Schemas ---
+
+class DailyTopic(BaseModel):
+    day: int = Field(description="The day of the month (1-31)")
+    title: str = Field(description="A compelling title for the post")
+    learning_objective: str = Field(description="What the reader will learn")
+    difficulty: str = Field(description="Difficulty level: Beginner, Intermediate, Advanced")
+    type: str = Field(description="Type of post: link, article, or forum")
+    search_queries: List[str] = Field(description="3-5 specific search queries for deep research")
+
+class CurriculumPlan(BaseModel):
+    topics: List[DailyTopic] = Field(description="List of daily topics for the entire month")
 
 class AnglePlan(BaseModel):
     angle: str = Field(description="The name of the research angle")
@@ -31,7 +44,45 @@ class AgentState(TypedDict):
     plan: Optional[ResearchPlan]
     results: List[Dict[str, Any]]
 
-# --- Nodes ---
+# --- Curriculum Planning ---
+
+async def plan_curriculum(theme_title: str, month: int, year: int) -> List[Dict[str, Any]]:
+    """Generates a monthly curriculum plan for a given theme."""
+    print(f"--- Planning Curriculum: {theme_title} for {month}/{year} ({settings.llm_provider}) ---")
+    
+    num_days = calendar.monthrange(year, month)[1]
+    llm = get_llm(temperature=0.7)
+    structured_llm = llm.with_structured_output(CurriculumPlan)
+
+    prompt = f"""You are an expert content strategist and educator.
+    Theme: {theme_title}
+    Target Month: {month}/{year} ({num_days} days)
+
+    Create a progressive 30-day (or {num_days}-day) curriculum. 
+    The curriculum should start with foundational concepts and gradually move to advanced topics.
+    
+    For EACH day, provide:
+    1. A compelling title.
+    2. A clear learning objective.
+    3. Difficulty level (Beginner for first 10 days, Intermediate for next 10, Advanced for last 10).
+    4. Content type (link, article, or forum).
+    5. 3-5 specific, high-intent search queries that will be used to scrape deep information for that day's post.
+
+    Ensure the topics are distinct and follow a logical learning path.
+    """
+    
+    try:
+        plan = await structured_llm.ainvoke([
+            SystemMessage(content="You are an expert curriculum planner."),
+            HumanMessage(content=prompt)
+        ])
+        return [topic.dict() for topic in plan.topics]
+    except Exception as e:
+        print(f"Curriculum Planning Error: {e}")
+        # Return empty list or fallback logic if needed
+        return []
+
+# --- Nodes (Legacy Research Theme Flow) ---
 
 def planner_node(state: AgentState):
     """Generates research angles using the configured LLM."""
