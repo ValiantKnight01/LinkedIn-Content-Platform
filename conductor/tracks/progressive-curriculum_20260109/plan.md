@@ -8,20 +8,20 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Data Model Updates' (Protocol in workflow.md) (56fe293)
 
 ## Phase 2: Agent Refactor (Splitting & Deep Research)
-- [ ] Task: Install scraping dependencies.
+- [x] Task: Install scraping dependencies. (9f78d52)
     -   *How To*: `uv pip install beautifulsoup4 aiohttp`. Update `requirements.txt`.
-- [ ] Task: Refactor `backend/src/agents/topic_researcher.py` - Shared Config.
+- [x] Task: Refactor `backend/src/agents/topic_researcher.py` - Shared Config. (979d749)
     -   *How To*: Ensure `get_llm()` is accessible to both new functions and respects `LLM_PROVIDER`.
-- [ ] Task: Implement `plan_curriculum` function.
+- [x] Task: Implement `plan_curriculum` function. (5a7de90)
     -   *How To*: Write prompt to generate monthly plan with *multiple* search queries per day. Use `get_llm()`. Return `List[DailyTopic]`.
-- [ ] Task: Implement `research_single_topic` with Scraping.
+- [x] Task: Implement `research_single_topic` with Scraping. (3308aeb)
     -   *How To*:
         1. `DDGS` search using `search_queries`.
         2. Filter top 10 URLs.
         3. Async fetch & `BeautifulSoup` clean.
         4. Concatenate cleaned text.
         5. Pass to `get_llm()` for synthesis.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Agent Refactor' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Agent Refactor' (Protocol in workflow.md)
 
 ## Phase 3: API & Backend Integration
 - [ ] Task: Update `POST /themes/{id}/plan` (Renamed from `/research`).
