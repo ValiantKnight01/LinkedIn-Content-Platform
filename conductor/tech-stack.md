@@ -16,6 +16,7 @@
   - **Anthropic** (via `langchain-anthropic`)
   - **Cloudflare AI Workers** (via `langchain-community`)
 - **Language:** Python 3.12+
+- **Web Scraping:** `beautifulsoup4`, `aiohttp`, `ddgs` (DuckDuckGo Search)
 - **Task Queue:** Redis (for post scheduling and background AI processing)
 - **Runtime:** Managed via `uv`
 

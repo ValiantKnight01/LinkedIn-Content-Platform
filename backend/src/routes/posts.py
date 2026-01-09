@@ -1,5 +1,8 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Query
+from typing import List, Optional
+from datetime import datetime
 from ..models.post import Post
+from ..models.theme import Theme
 from ..agents.topic_researcher import research_single_topic
 from mongoengine.errors import DoesNotExist, ValidationError
 from bson import ObjectId
@@ -14,6 +17,45 @@ def format_post(post: Post) -> dict:
     if "created_at" in data:
         data["created_at"] = data["created_at"].isoformat()
     return data
+
+@router.get("/", response_model=List[dict])
+async def list_posts(month: Optional[int] = Query(None), year: Optional[int] = Query(None)):
+    """List posts, optionally filtered by month and year via their Theme."""
+    if month and year:
+        theme = Theme.objects(month=month, year=year).first()
+        if not theme:
+            return []
+        posts = Post.objects(theme=theme)
+    else:
+        posts = Post.objects.all()
+
+    formatted_posts = []
+    for p in posts:
+        fp = format_post(p)
+        # Construct a 'date' field for the frontend calendar if we have the theme context
+        # Or if we fetched it, we can look up the theme. 
+        # Since we fetched by theme above, we know the year/month.
+        # If listed all, we might need to fetch theme for each (inefficient) or rely on what we have.
+        
+        # Optimization: If we fetched by theme, use that theme's year/month
+        current_theme = p.theme 
+        # Note: mongoengine ReferenceField dereferences automatically if accessed, 
+        # but 'p.theme' in the loop might trigger a query per post if not careful.
+        # However, for the calendar view, we usually fetch by month/year.
+        
+        if current_theme:
+            # Create ISO date string: YYYY-MM-DD
+            try:
+                # Handle cases where day might be missing (legacy/proposed posts)
+                day = p.day if p.day else 1
+                date_obj = datetime(current_theme.year, current_theme.month, day)
+                fp['date'] = date_obj.isoformat()
+            except ValueError:
+                fp['date'] = None # Invalid date
+        
+        formatted_posts.append(fp)
+        
+    return formatted_posts
 
 @router.post("/{id}/research", response_model=dict, status_code=status.HTTP_200_OK)
 async def research_post(id: str):

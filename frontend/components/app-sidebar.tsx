@@ -1,6 +1,6 @@
 'use client';
 
-import { BookOpen, LayoutGrid, Archive, Leaf, ListTodo } from "lucide-react";
+import { BookOpen, Archive, Leaf, ListTodo } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -34,11 +34,6 @@ const items = [
     title: "Monthly Themes",
     url: "/monthly-themes",
     icon: ListTodo,
-  },
-  {
-    title: "Newsroom",
-    url: "/newsroom",
-    icon: LayoutGrid,
   },
   {
     title: "Archives",

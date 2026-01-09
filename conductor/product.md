@@ -9,9 +9,8 @@ A lightweight, personal tool designed to streamline the creation and scheduling 
 
 # Key Features
 - **Smart Post Editor:** A dedicated editor with LinkedIn-specific formatting and live preview.
-- **Newsroom Dashboard:** A Kanban-style board to manage the content lifecycle (Ideation -> Draft -> Ready -> Scheduled), featuring a "Research Complete" view for reviewing AI-generated insights.
-- **Editorial Calendar:** A visual calendar view for long-term content planning and scheduling.
-- **Monthly Themes:** A structured way to plan monthly editorial focuses (e.g., "RAG Architectures") within the Syllabus.
+- **Syllabus & Calendar:** A central hub for planning monthly editorial themes and generating progressive learning curriculums.
+- **Deep Research Agents:** AI that performs multi-step web scraping and synthesis to create authoritative content summaries from high-quality sources.
 - **AI Content Assistant:** Leveraging AI to brainstorm ideas, refine hooks, and improve post structure.
 - **Bento-Style Widgets:** Modular dashboard components for quick stats and actions.
 
