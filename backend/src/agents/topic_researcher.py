@@ -1,7 +1,10 @@
 import json
 import calendar
+import asyncio
+import aiohttp
 from datetime import datetime
 from typing import List, Dict, Any, Optional, TypedDict
+from bs4 import BeautifulSoup
 
 from langchain_core.messages import SystemMessage, HumanMessage
 from pydantic import BaseModel, Field
@@ -36,6 +39,10 @@ class TopicResult(BaseModel):
     sources: List[str] = Field(description="List of source URLs found")
     summary: str = Field(description="Brief summary of the topic")
 
+class ResearchSynthesis(BaseModel):
+    summary: str = Field(description="A detailed synthesis of the researched topic (5-8 paragraphs)")
+    sources: List[str] = Field(description="The most relevant source URLs used")
+
 # --- State ---
 
 class AgentState(TypedDict):
@@ -43,6 +50,28 @@ class AgentState(TypedDict):
     existing_titles: List[str]
     plan: Optional[ResearchPlan]
     results: List[Dict[str, Any]]
+
+# --- Utilities ---
+
+async def fetch_url(session: aiohttp.ClientSession, url: str) -> Optional[str]:
+    """Fetches a URL and returns cleaned text content."""
+    try:
+        async with session.get(url, timeout=15) as response:
+            if response.status != 200:
+                return None
+            html = await response.text()
+            soup = BeautifulSoup(html, 'html.parser')
+            
+            # Remove scripts, styles, nav, and footers
+            for element in soup(['script', 'style', 'nav', 'footer', 'header']):
+                element.decompose()
+            
+            # Extract text
+            text = soup.get_text(separator=' ', strip=True)
+            return text[:10000] # Limit per source
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+        return None
 
 # --- Curriculum Planning ---
 
@@ -79,8 +108,81 @@ async def plan_curriculum(theme_title: str, month: int, year: int) -> List[Dict[
         return [topic.dict() for topic in plan.topics]
     except Exception as e:
         print(f"Curriculum Planning Error: {e}")
-        # Return empty list or fallback logic if needed
         return []
+
+# --- Deep Research ---
+
+async def research_single_topic(title: str, learning_objective: str, search_queries: List[str], difficulty: str) -> Dict[str, Any]:
+    """Executes deep research by searching, scraping, and synthesizing multiple sources."""
+    print(f"--- Deep Researching: {title} ({settings.llm_provider}) ---")
+    
+    ddgs = DDGS()
+    urls = []
+    
+    # 1. Search
+    max_search_results = 20 if difficulty == "Beginner" else 35 if difficulty == "Intermediate" else 45
+    
+    for query in search_queries:
+        try:
+            results = list(ddgs.text(query, max_results=max_search_results // len(search_queries), timelimit="y"))
+            urls.extend([r['href'] for r in results if 'href' in r])
+        except Exception as e:
+            print(f"Search error for query '{query}': {e}")
+    
+    # Deduplicate and limit to top 10 unique URLs
+    unique_urls = list(dict.fromkeys(urls))[:10]
+    
+    # 2. Scrape
+    scraped_content = []
+    async with aiohttp.ClientSession(headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}) as session:
+        tasks = [fetch_url(session, url) for url in unique_urls]
+        pages = await asyncio.gather(*tasks)
+        
+        for url, content in zip(unique_urls, pages):
+            if content:
+                scraped_content.append(f"Source: {url}\nContent: {content}")
+
+    if not scraped_content:
+        return {
+            "summary": "Deep research failed to find or scrape relevant sources.",
+            "sources": unique_urls,
+            "status": "researched"
+        }
+
+    # 3. Synthesize
+    llm = get_llm(temperature=0.5)
+    structured_llm = llm.with_structured_output(ResearchSynthesis)
+    
+    context = "\n\n---\n\n".join(scraped_content)
+    prompt = f"""Topic: {title}
+    Learning Objective: {learning_objective}
+    Difficulty: {difficulty}
+    
+    Researched Content:
+    {context}
+    
+    Using the researched content above, synthesize a detailed and authoritative summary for a LinkedIn post. 
+    The summary should be educational, engaging, and directly address the learning objective.
+    Focus on extracting data points, unique insights, and actionable advice.
+    """
+    
+    try:
+        synthesis = await structured_llm.ainvoke([
+            SystemMessage(content="You are an expert researcher and technical writer."),
+            HumanMessage(content=prompt)
+        ])
+        return {
+            "summary": synthesis.summary,
+            "sources": synthesis.sources,
+            "status": "researched"
+        }
+    except Exception as e:
+        print(f"Synthesis Error: {e}")
+        return {
+            "summary": "Error during synthesis of researched content.",
+            "sources": unique_urls,
+            "status": "researched"
+        }
 
 # --- Nodes (Legacy Research Theme Flow) ---
 
@@ -104,7 +206,6 @@ def planner_node(state: AgentState):
         return {"plan": plan}
     except Exception as e:
         print(f"Planning Error: {e}")
-        # Fallback plan
         return {"plan": ResearchPlan(angles=[
             AnglePlan(angle="Overview", query=f"{state['theme']} trends 2026"),
             AnglePlan(angle="Technical", query=f"{state['theme']} implementation"),
@@ -120,7 +221,6 @@ def researcher_node(state: AgentState):
     if not plan:
         return {"results": []}
 
-    # Initialize Tools & Model
     ddgs = DDGS()
     llm = get_llm(temperature=0.5)
     structured_llm = llm.with_structured_output(TopicResult)
@@ -130,21 +230,12 @@ def researcher_node(state: AgentState):
     for angle in plan.angles:
         print(f"  > Searching: {angle.angle}...")
         try:
-            # 1. Search using the DDGS pattern
-            # Using max_results=20 and timelimit='y' to ensure coverage of the last 4 months
-            search_results = list(ddgs.text(
-                angle.query,
-                max_results=20,
-                timelimit="y" 
-            ))
-            
-            # Format results for synthesis
+            search_results = list(ddgs.text(angle.query, max_results=20, timelimit="y"))
             context = "\n\n".join([
                 f"Source: {r.get('href')}\nTitle: {r.get('title')}\nSnippet: {r.get('body')}"
                 for r in search_results
             ])
             
-            # 2. Synthesize
             prompt = f"""Research Angle: {angle.angle}
             Search Query: {angle.query}
             Search Results:
