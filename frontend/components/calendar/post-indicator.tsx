@@ -3,14 +3,14 @@
 import { Post, PostStatus, useCalendarStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Loader2, Sparkles, FileText, Globe } from "lucide-react";
 import { useState } from "react";
@@ -51,8 +51,8 @@ export function PostIndicator({ post }: { post: Post }) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
         <div className={cn(
             "flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all cursor-pointer w-full overflow-hidden hover:opacity-80",
             bgStyles[post.status]
@@ -60,115 +60,115 @@ export function PostIndicator({ post }: { post: Post }) {
           <div className={cn("h-2 w-2 rounded-full shrink-0", statusColors[post.status])} />
           <span className="text-[11px] font-semibold text-foreground/80 truncate">{post.title}</span>
         </div>
-      </DialogTrigger>
+      </SheetTrigger>
       
-      <DialogContent className="max-w-2xl bg-[#fefae0] border-primary/20 max-h-[90vh] flex flex-col">
-        <DialogHeader>
-          <div className="flex items-center gap-3 mb-2">
-            <Badge variant="outline" className={cn("capitalize", bgStyles[post.status])}>
-              {post.status}
-            </Badge>
-            {post.difficulty && (
-              <Badge variant="outline" className="border-primary/20 text-foreground/60">
-                {post.difficulty}
-              </Badge>
-            )}
-          </div>
-          <DialogTitle className="font-serif text-3xl font-bold text-[#3D2B1F] leading-tight">
-            {post.title}
-          </DialogTitle>
-          <DialogDescription className="text-base text-[#6B4F3A] mt-2">
-            {post.learning_objective || "No learning objective defined."}
-          </DialogDescription>
-        </DialogHeader>
+      <SheetContent 
+        className="w-full sm:max-w-xl bg-[#fefae0] border-l border-primary/20 p-0 gap-0 overflow-hidden" 
+        side="right"
+      >
+        <div className="flex flex-col h-full w-full">
+            <SheetHeader className="p-8 pb-4 shrink-0 space-y-4">
+              <div className="flex items-center gap-3">
+                <Badge variant="outline" className={cn("capitalize px-3 py-1", bgStyles[post.status])}>
+                  {post.status}
+                </Badge>
+                {post.difficulty && (
+                  <Badge variant="outline" className="border-primary/20 text-foreground/60 px-3 py-1">
+                    {post.difficulty}
+                  </Badge>
+                )}
+              </div>
+              <SheetTitle className="font-serif text-3xl font-bold text-[#3D2B1F] leading-tight">
+                {post.title}
+              </SheetTitle>
+              <SheetDescription className="text-base text-[#6B4F3A] leading-relaxed">
+                {post.learning_objective || "No learning objective defined."}
+              </SheetDescription>
+            </SheetHeader>
 
-        <ScrollArea className="flex-1 pr-4 -mr-4">
-          <div className="space-y-6 py-4">
-            {/* Research Results */}
-            {post.status === 'researched' && post.summary ? (
-              <div className="space-y-4">
-                <div className="bg-white/50 p-6 rounded-2xl border border-primary/10">
-                  <h4 className="flex items-center gap-2 font-bold text-lg text-[#3D2B1F] mb-3">
-                    <Sparkles className="h-5 w-5 text-indigo-500" />
-                    Research Synthesis
-                  </h4>
-                  <div className="prose prose-sm max-w-none text-[#4A3728] leading-relaxed">
-                    {post.summary.split('\n').map((paragraph, i) => (
-                      <p key={i} className="mb-2 last:mb-0">{paragraph}</p>
-                    ))}
+            <ScrollArea className="flex-1 min-h-0 w-full">
+              <div className="px-8 pb-8">
+                {/* Research Results */}
+                {post.status === 'researched' && post.summary ? (
+                  <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="space-y-4">
+                      <h4 className="flex items-center gap-2 font-bold text-lg text-[#3D2B1F]">
+                        <Sparkles className="h-5 w-5 text-indigo-500" />
+                        Research Synthesis
+                      </h4>
+                      <div className="prose prose-sm max-w-none text-[#4A3728] leading-relaxed">
+                        {post.summary.split('\n').map((paragraph, i) => (
+                          <p key={i} className="mb-4 last:mb-0 text-lg">{paragraph}</p>
+                        ))}
+                      </div>
+                    </div>
+
+                    {post.sources && post.sources.length > 0 && (
+                      <div className="space-y-4 pt-4 border-t border-primary/10">
+                        <h4 className="flex items-center gap-2 font-bold text-sm text-foreground/60 uppercase tracking-widest pl-1">
+                          <Globe className="h-4 w-4" />
+                          Sources
+                        </h4>
+                        <div className="grid gap-2">
+                          {post.sources.map((source, idx) => (
+                            <a 
+                              key={idx} 
+                              href={source} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-xs text-primary underline-offset-4 hover:underline truncate block p-4 rounded-2xl bg-black/5 hover:bg-black/10 transition-all border border-transparent hover:border-primary/5"
+                            >
+                              {source}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-
-                {post.sources && post.sources.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="flex items-center gap-2 font-bold text-sm text-foreground/60 uppercase tracking-widest">
-                      <Globe className="h-4 w-4" />
-                      Sources
-                    </h4>
-                    <div className="grid gap-2">
-                      {post.sources.map((source, idx) => (
-                        <a 
-                          key={idx} 
-                          href={source} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-xs text-primary underline-offset-4 hover:underline truncate block p-2 rounded-lg bg-white/30 hover:bg-white/50 transition-colors"
-                        >
-                          {source}
-                        </a>
-                      ))}
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-24 text-center space-y-6 border-2 border-dashed border-primary/10 rounded-[2.5rem] bg-primary/5">
+                    <div className="h-20 w-20 rounded-full bg-white/60 flex items-center justify-center shadow-sm">
+                      <FileText className="h-10 w-10 text-primary/40" />
+                    </div>
+                    <div className="space-y-2 max-w-xs mx-auto">
+                      <p className="font-serif text-2xl font-medium text-[#3D2B1F]">Ready to Research</p>
+                      <p className="text-sm text-[#6B4F3A] leading-relaxed">
+                        Generate a detailed summary and collect authoritative sources for this topic.
+                      </p>
                     </div>
                   </div>
                 )}
               </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-center space-y-4 border-2 border-dashed border-primary/10 rounded-2xl">
-                <div className="h-12 w-12 rounded-full bg-primary/5 flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-primary/40" />
-                </div>
-                <div className="space-y-1">
-                  <p className="font-medium text-foreground/70">Ready to Research</p>
-                  <p className="text-sm text-muted-foreground">
-                    Generate a detailed summary and collect sources for this topic.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </ScrollArea>
+            </ScrollArea>
 
-        <DialogFooter className="pt-4 border-t border-primary/10">
-          <div className="flex w-full justify-between items-center">
-             <div className="text-xs text-muted-foreground">
-               Day {post.date ? new Date(post.date).getDate() : 'N/A'} of Curriculum
-             </div>
-             
-             {post.status !== 'researched' || !post.summary ? (
-                <Button 
-                  onClick={handleResearch} 
-                  disabled={isResearching}
-                  className="rounded-full bg-[#3D2B1F] text-[#fefae0] hover:bg-[#2a1e16]"
-                >
-                  {isResearching ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Researching...
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="mr-2 h-4 w-4" />
-                      Start Deep Research
-                    </>
-                  )}
-                </Button>
-             ) : (
-                 <Button variant="outline" className="rounded-full border-primary/20">
-                    Draft Post (Coming Soon)
-                 </Button>
-             )}
-          </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+            <SheetFooter className="p-8 pt-4 border-t border-primary/10 bg-inherit shrink-0">
+                 {post.status !== 'researched' || !post.summary ? (
+                    <Button 
+                      onClick={handleResearch} 
+                      disabled={isResearching}
+                      className="w-full h-14 rounded-full bg-[#3D2B1F] text-[#fefae0] hover:bg-[#2a1e16] text-lg font-medium shadow-lg hover:shadow-xl transition-all"
+                    >
+                      {isResearching ? (
+                        <>
+                          <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                          Researching Topic...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="mr-2 h-6 w-6" />
+                          Start Deep Research
+                        </>
+                      )}
+                    </Button>
+                 ) : (
+                     <div className="w-full flex justify-between items-center text-sm text-muted-foreground px-2">
+                        <span className="font-medium">Research Complete</span>
+                        <span className="opacity-50">Drafting module locked</span>
+                     </div>
+                 )}
+            </SheetFooter>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
