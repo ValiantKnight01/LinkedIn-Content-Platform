@@ -37,8 +37,10 @@
 
 ## Phase 5: Refactor to LangGraph
 
-- [~] Task: Refactor `topic_researcher.py` to use LangGraph with Anthropic and Groq.
+- [x] Task: Refactor `topic_researcher.py` to use LangGraph with Anthropic and Groq. (b68be51)
 
     -   *Logic*: Use LangGraph `StateGraph` with a Planner (Claude) and Researcher (Llama 3 via Groq).
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Refactor to LangGraph' (Protocol in workflow.md)
+
+
