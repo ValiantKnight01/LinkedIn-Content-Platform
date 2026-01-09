@@ -1,0 +1,8 @@
+{
+  "track_id": "backend-foundation-themes_20251221",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2025-12-21T10:00:00Z",
+  "updated_at": "2025-12-21T10:00:00Z",
+  "description": "Initialize backend with FastAPI, MongoEngine, and Monthly Themes API"
+}

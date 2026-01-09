@@ -10,7 +10,11 @@
 - **Authentication:** NextAuth.js
 
 ## Backend
-- **Framework:** Google ADK (built on FastAPI)
+- **Framework:** LangGraph (Agent Orchestration)
+- **LLM Providers:**
+  - **Groq** (via `langchain-groq`)
+  - **Anthropic** (via `langchain-anthropic`)
+  - **Cloudflare AI Workers** (via `langchain-community`)
 - **Language:** Python 3.12+
 - **Task Queue:** Redis (for post scheduling and background AI processing)
 - **Runtime:** Managed via `uv`

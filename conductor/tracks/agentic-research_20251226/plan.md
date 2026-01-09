@@ -3,7 +3,7 @@
 ## Phase 1: Foundation & Data Model (bba5dd2)
 - [x] Task: Create `backend/src/models/post.py` with `Post` document. (517c79b)
     -   *Action*: Create file `backend/src/models/post.py`.
-    -   *Code Snippet*: `class Post(Document): title = StringField(); type = StringField(); sources = ListField(StringField()); theme = ReferenceField('Theme'); status = StringField(default='proposed'); created_at = DateTimeField(default=datetime.utcnow)`
+    -   *Code Snippet*: `class Post(Document): title = StringField(); type = StringField(); sources = ListField(StringField()); theme = ReferenceField('Theme'); status = StringField(default='proposed'); created_at = DateTimeField(default=lambda: datetime.now(timezone.utc))`
 - [x] Task: Register `Post` model. (c2adc39)
     -   *Action*: Update `backend/src/routes/themes.py` imports to include `Post`.
 - [x] Task: Add dependencies. (4b37a78)
@@ -34,3 +34,11 @@
 - [ ] Task: Verify end-to-end flow.
     -   *Verification*: Click "Research", wait for agent, see 4 new cards with multiple sources appear in "Proposed".
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Frontend & Verification' (Protocol in workflow.md)
+
+## Phase 5: Refactor to LangGraph
+
+- [~] Task: Refactor `topic_researcher.py` to use LangGraph with Anthropic and Groq.
+
+    -   *Logic*: Use LangGraph `StateGraph` with a Planner (Claude) and Researcher (Llama 3 via Groq).
+
+- [ ] Task: Conductor - User Manual Verification 'Phase 5: Refactor to LangGraph' (Protocol in workflow.md)

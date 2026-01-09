@@ -1,16 +1,20 @@
-import asyncio
-import json
 import os
-from typing import Any, Dict, List, Optional
-from google.adk.agents import Agent
-from google.adk.runners import Runner
-from google.adk.sessions import InMemorySessionService
-from google.adk.tools import google_search
-from google.genai import types
-from pydantic import BaseModel, Field
+import json
+import asyncio
+from typing import List, Dict, Any, Optional, TypedDict
+from dotenv import load_dotenv
 
-# Ensure API key is set
-# GOOGLE_API_KEY must be set in environment
+from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_anthropic import ChatAnthropic
+from langchain_groq import ChatGroq
+from langchain_community.tools import DuckDuckGoSearchRun
+from langgraph.graph import StateGraph, END
+
+# Load environment variables
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../../.env"))
+
+# --- Schemas ---
 
 class AnglePlan(BaseModel):
     angle: str = Field(description="The name of the research angle")
@@ -25,104 +29,130 @@ class TopicResult(BaseModel):
     sources: List[str] = Field(description="List of source URLs found")
     summary: str = Field(description="Brief summary of the topic")
 
-class ResearchOrchestrator:
-    def __init__(self, model_name: str = "gemini-3-flash-preview"):
-        self.agent = Agent(
-            name="orchestrator",
-            model=model_name,
-            instruction="""You are an expert editorial planner. 
-            Given a monthly theme and existing topics, generate 4 DISTINCT, high-value research angles.
-            For each angle, provide a descriptive name and a specific Google Search query.
-            Output must be structured JSON.""",
-            output_schema=ResearchPlan
-        )
-        self.session_service = InMemorySessionService()
-        self.runner = Runner(
-            agent=self.agent,
-            app_name="topic_research",
-            session_service=self.session_service
-        )
+# --- State ---
 
-    async def plan_angles(self, theme: str, existing_titles: List[str]) -> List[Dict[str, str]]:
-        prompt = f"Theme: {theme}\nExisting Topics: {json.dumps(existing_titles)}"
-        
-        user_content = types.Content(role='user', parts=[types.Part(text=prompt)])
-        
-        # Run agent
-        # We use a unique session ID for this request
-        session_id = f"plan_{os.urandom(4).hex()}"
-        await self.session_service.create_session(app_name="topic_research", user_id="system", session_id=session_id)
-        
-        final_text = ""
-        async for event in self.runner.run_async(user_id="system", session_id=session_id, new_message=user_content):
-            if event.is_final_response() and event.content and event.content.parts:
-                final_text = event.content.parts[0].text
-        
+class AgentState(TypedDict):
+    theme: str
+    existing_titles: List[str]
+    plan: Optional[ResearchPlan]
+    results: List[Dict[str, Any]]
+
+# --- Nodes ---
+
+def planner_node(state: AgentState):
+    """Generates research angles using Anthropic (Claude)."""
+    print(f"--- Planning: {state['theme']} ---")
+    
+    # Initialize Model
+    # We use Claude 3.5 Sonnet for high-quality planning
+    llm = ChatAnthropic(model="claude-3-5-sonnet-latest", temperature=0.7)
+    structured_llm = llm.with_structured_output(ResearchPlan)
+
+    prompt = f"""You are an expert editorial planner. 
+    Theme: {state['theme']}
+    Existing Topics: {json.dumps(state['existing_titles'])}
+    
+    Generate 4 DISTINCT, high-value research angles.
+    For each angle, provide a descriptive name and a specific search query.
+    """
+    
+    try:
+        plan = structured_llm.invoke([SystemMessage(content="Generate a research plan."), HumanMessage(content=prompt)])
+        return {"plan": plan}
+    except Exception as e:
+        print(f"Planning Error: {e}")
+        # Fallback plan
+        return {"plan": ResearchPlan(angles=[
+            AnglePlan(angle="Overview", query=f"{state['theme']} trends 2025"),
+            AnglePlan(angle="Technical", query=f"{state['theme']} implementation"),
+            AnglePlan(angle="Examples", query=f"{state['theme']} case studies"),
+            AnglePlan(angle="Deep Dive", query=f"advanced {state['theme']} concepts")
+        ])}
+
+def researcher_node(state: AgentState):
+    """Executes search and synthesizes results using Groq (Llama 3) and DuckDuckGo."""
+    print("--- Researching ---")
+    
+    plan = state.get("plan")
+    if not plan:
+        return {"results": []}
+
+    # Initialize Tools & Model
+    search = DuckDuckGoSearchRun()
+    # We use Llama 3 70b via Groq for fast synthesis
+    llm = ChatGroq(model="llama3-70b-8192", temperature=0.5)
+    structured_llm = llm.with_structured_output(TopicResult)
+
+    results = []
+    
+    # Simple sequential execution (could be parallelized with 'Send' or asyncio.gather in a real async node)
+    for angle in plan.angles:
+        print(f"  > Searching: {angle.angle}...")
         try:
-            plan = ResearchPlan.model_validate_json(final_text)
-            return [{"angle": a.angle, "query": a.query} for a in plan.angles]
+            # 1. Search
+            search_results = search.invoke(angle.query)
+            
+            # 2. Synthesize
+            prompt = f"""Research Angle: {angle.angle}
+            Search Query: {angle.query}
+            Search Results: {search_results}
+            
+            Synthesize a compelling topic title and identify the content type based on these results.
+            """
+            
+            result = structured_llm.invoke([
+                SystemMessage(content="Synthesize search results into a topic."), 
+                HumanMessage(content=prompt)
+            ])
+            results.append(result.dict())
+            
         except Exception as e:
-            print(f"Error parsing plan: {e}")
-            return [
-                {"angle": "Overview", "query": f"{theme} trends 2025"},
-                {"angle": "Technical", "query": f"{theme} implementation guide"},
-                {"angle": "Case Study", "query": f"{theme} real world examples"},
-                {"angle": "Advanced", "query": f"advanced {theme} techniques"}
-            ]
-
-class ResearchWorker:
-    def __init__(self, model_name: str = "gemini-3-flash-preview"):
-        self.agent = Agent(
-            name="researcher",
-            model=model_name,
-            instruction="""Research the provided query using Google Search. 
-            Find 1-3 high-quality sources.
-            Synthesize a compelling topic title and identify the content type.
-            Return the result as structured JSON.""",
-            tools=[google_search],
-            output_schema=TopicResult
-        )
-        self.session_service = InMemorySessionService()
-        self.runner = Runner(
-            agent=self.agent,
-            app_name="topic_research",
-            session_service=self.session_service
-        )
-
-    async def execute_search(self, angle: str, query: str) -> Dict[str, Any]:
-        prompt = f"Angle: {angle}\nQuery: {query}"
-        user_content = types.Content(role='user', parts=[types.Part(text=prompt)])
-        
-        session_id = f"worker_{os.urandom(4).hex()}"
-        await self.session_service.create_session(app_name="topic_research", user_id="system", session_id=session_id)
-        
-        final_text = ""
-        async for event in self.runner.run_async(user_id="system", session_id=session_id, new_message=user_content):
-            if event.is_final_response() and event.content and event.content.parts:
-                final_text = event.content.parts[0].text
-        
-        try:
-            result = TopicResult.model_validate_json(final_text)
-            return result.model_dump()
-        except Exception as e:
-            print(f"Error parsing worker result: {e}")
-            # Fallback (DDG could be added here if needed, but for now generic)
-            return {
-                "title": f"Discovery: {angle}",
+            print(f"  x Failed angle {angle.angle}: {e}")
+            results.append({
+                "title": f"Explore: {angle.angle}",
                 "type": "link",
-                "sources": [f"https://www.google.com/search?q={query.replace(' ', '+')}"],
-                "summary": "Manual search required due to research agent error."
-            }
+                "sources": [],
+                "summary": "Research failed, manual review required."
+            })
+
+    return {"results": results}
+
+# --- Graph Definition ---
+
+def build_graph():
+    workflow = StateGraph(AgentState)
+    
+    workflow.add_node("planner", planner_node)
+    workflow.add_node("researcher", researcher_node)
+    
+    workflow.set_entry_point("planner")
+    workflow.add_edge("planner", "researcher")
+    workflow.add_edge("researcher", END)
+    
+    return workflow.compile()
+
+# --- Public Interface ---
 
 async def research_theme(theme_title: str, existing_titles: List[str]) -> List[Dict[str, Any]]:
-    orchestrator = ResearchOrchestrator()
-    worker = ResearchWorker()
+    """Entry point for the application to call the research agent."""
+    app = build_graph()
     
-    # 1. Plan
-    angles = await orchestrator.plan_angles(theme_title, existing_titles)
+    initial_state = {
+        "theme": theme_title,
+        "existing_titles": existing_titles,
+        "plan": None,
+        "results": []
+    }
     
-    # 2. Execute Research for each angle
-    tasks = [worker.execute_search(a['angle'], a['query']) for a in angles]
-    results = await asyncio.gather(*tasks)
+    # LangGraph apps can be invoked directly
+    # Note: invoke is synchronous, but we can wrap it if we need strictly async top-level,
+    # or use .ainvoke if the nodes were async. For simplicity here we assume blocking for now
+    # or we can make nodes async.
     
-    return results
+    # Since the original interface was async, we should probably use ainvoke.
+    # Let's verify if the nodes are compatible with ainvoke (they are regular functions).
+    # LangGraph handles both.
+    
+    final_state = await app.ainvoke(initial_state)
+    return final_state["results"]
+
