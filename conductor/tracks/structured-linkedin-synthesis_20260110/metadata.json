@@ -1,0 +1,8 @@
+{
+  "track_id": "structured-linkedin-synthesis_20260110",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-10T12:00:00Z",
+  "updated_at": "2026-01-10T12:00:00Z",
+  "description": "Refactor topic research synthesis to a structured JSON format optimized for LinkedIn posts and future carousel generation."
+}
