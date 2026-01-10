@@ -12,18 +12,18 @@ Add support for updating post details in the database.
 ## Phase 2: Store & Foundation
 Update the frontend state management and base UI components.
 
-- [~] Task: Add `updatePost` action to `useCalendarStore` in `frontend/lib/store.ts`.
+- [x] Task: Add `updatePost` action to `useCalendarStore` in `frontend/lib/store.ts`. 60eba91
     - *How To:* Define `updatePost: (id: string, updates: Partial<Post>) => Promise<void>` in the store interface. Implement the function to call `PATCH /api/posts/{id}` and optimistically update the `posts` array in the state.
-- [ ] Task: Adjust `SheetContent` in `PostIndicator` for 50vw width on desktop and 100% on mobile.
+- [x] Task: Adjust `SheetContent` in `PostIndicator` for 50vw width on desktop and 100% on mobile. f535af0
     - *How To:* In `frontend/components/calendar/post-indicator.tsx`, modify the `SheetContent` `className`. Change `sm:max-w-xl` to `sm:max-w-[50vw] w-full`. Ensure the mobile view retains `w-full`.
-- [ ] Task: Integrate shadcn/ui `Tabs` component into the `PostIndicator` sheet.
+- [x] Task: Integrate shadcn/ui `Tabs` component into the `PostIndicator` sheet. a657d00
     - *How To:* Import `Tabs, TabsList, TabsTrigger, TabsContent` from `@/components/ui/tabs`. Wrap the sheet's main content area in a `Tabs` provider. Create triggers for "Research", "Edit", and "Preview".
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Store & Foundation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Store & Foundation' (Protocol in workflow.md) a657d00
 
 ## Phase 3: Edit Mode
 Build the interactive form for modifying post content.
 
-- [ ] Task: Implement "Edit" tab with inputs for all standard fields (Title, Hook, etc.).
+- [~] Task: Implement "Edit" tab with inputs for all standard fields (Title, Hook, etc.).
     - *How To:* In the `TabsContent value="edit"`, create a form layout. Use `Input` for single-line text (Title, Hook) and `Textarea` for longer content (Learning Objective). Bind these to a local state initialized from the `post` prop.
 - [ ] Task: Implement dynamic field management for "Sections" and "Key Takeaways".
     - *How To:* Create sub-components for list management (e.g., `SectionEditor`). Use a simple array map to render inputs for each item, with "Add" and "Remove" buttons. For "Sections", provide inputs for `header`, `content`, and `example_use_case` for each item.
