@@ -57,3 +57,21 @@ Implement structured rendering for the new section types.
     1. Open `frontend/components/calendar/carousel-preview.tsx`.
     2. Add logic to render `SectionComparison` or `SectionTradeoffs` if the respective data exists; otherwise default to text.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Frontend Interface' (Protocol in workflow.md)
+
+## Phase 4: Editor Integration
+Implement editing capabilities for structured sections.
+
+- [x] Task: Create `ComparisonEditor` Component (c1d2e3f)
+  - **How-to:**
+    1. Create `frontend/components/calendar/comparison-editor.tsx`.
+    2. Build a form using `Input` and `Button` to manage the list of `ComparisonItem`s.
+    3. Allow adding new rows and deleting existing ones.
+- [x] Task: Create `TradeoffsEditor` Component (g4h5i6j)
+  - **How-to:**
+    1. Create `frontend/components/calendar/tradeoffs-editor.tsx`.
+    2. Build a form to manage three separate lists (Pros, Cons, Constraints) using a "tag input" or "list builder" style.
+- [x] Task: Integrate Editors into Main Post Editor (k7l8m9n)
+  - **How-to:**
+    1. Locate the main post editing form (likely in `frontend/components/calendar/post-indicator.tsx`).
+    2. When a section is of type "Comparison" or "Trade-offs" (or based on header detection), render the specialized editor instead of a standard `Textarea`.
+- [ ] Task: Conductor - User Manual Verification 'Phase 4: Editor Integration' (Protocol in workflow.md)

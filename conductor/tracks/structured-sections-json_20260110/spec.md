@@ -37,6 +37,11 @@ Current post sections for "Before vs After" and "Trade-offs" are unstructured te
 - **Comparison View:** Render as a structured comparison table/list.
 - **Trade-offs View:** Render with distinct visual groupings for Pros, Cons, and Constraints.
 
+### 2.4 Frontend Editor Integration
+- **Comparison Editor:** A form component to add/edit/remove comparison rows (Dimension, Before, After) and the summary.
+- **Trade-offs Editor:** A form component to manage lists of Pros, Cons, and Constraints (add/remove items).
+- **Post Editor Update:** Integrate these specific section editors into the main Post Editor flow, allowing users to switch between "Text" mode and "Structured" mode (or auto-detect).
+
 ## 3. Non-Functional Requirements
 - **Validation:** Strict backend validation for structure integrity.
 - **Aesthetic:** UI components must use existing Tailwind tokens and shadcn/ui patterns.

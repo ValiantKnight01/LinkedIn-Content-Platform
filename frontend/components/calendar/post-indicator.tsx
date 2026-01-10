@@ -27,6 +27,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Save, Trash2, Plus, Copy, Check } from "lucide-react";
 import { CarouselPreview } from "./carousel-preview";
+import { ComparisonEditor } from "./comparison-editor";
+import { TradeoffsEditor } from "./tradeoffs-editor";
+import { SectionComparison } from "./section-comparison";
+import { SectionTradeoffs } from "./section-tradeoffs";
 
 const statusColors: Record<PostStatus, string> = {
   draft: "bg-yellow-400",
@@ -72,7 +76,19 @@ export function PostIndicator({ post }: { post: Post }) {
 
   const handleCopy = () => {
     const sections = (editData.sections || [])
-      .map(s => `\n${s.header.toUpperCase()}\n${s.content}${s.example_use_case ? `\n\nExample: ${s.example_use_case}` : ''}`)
+      .map(s => {
+        let content = s.content || "";
+        
+        if (s.comparison) {
+          content = s.comparison.items.map(item => 
+            `• ${item.dimension}: ${item.before} → ${item.after}`
+          ).join('\n') + (s.comparison.summary ? `\n\n${s.comparison.summary}` : '');
+        } else if (s.tradeoffs) {
+          content = `PROS:\n${s.tradeoffs.pros.map(p => `✓ ${p}`).join('\n')}\n\nCONS:\n${s.tradeoffs.cons.map(c => `✗ ${c}`).join('\n')}\n\nCONSTRAINTS:\n${s.tradeoffs.constraints.map(c => `→ ${c}`).join('\n')}${s.tradeoffs.real_world_context ? `\n\nReal-world: ${s.tradeoffs.real_world_context}` : ''}`;
+        }
+
+        return `\n${s.header.toUpperCase()}\n${content}${s.example_use_case ? `\n\nExample: ${s.example_use_case}` : ''}`;
+      })
       .join('\n\n---\n');
 
     const takeaways = (editData.key_takeaways || [])
@@ -176,13 +192,21 @@ export function PostIndicator({ post }: { post: Post }) {
                       {post.sections && post.sections.length > 0 && (
                         <div className="space-y-8 py-4">
                           {post.sections.map((section, idx) => (
-                            <div key={idx} className="space-y-2 p-6 rounded-[2rem] bg-white/40 border border-primary/5 shadow-sm">
+                            <div key={idx} className="space-y-4 p-6 rounded-[2rem] bg-white/40 border border-primary/5 shadow-sm">
                               <h5 className="font-serif text-xl font-bold text-[#3D2B1F]">
                                 {section.header}
                               </h5>
-                              <p className="text-[#4A3728] text-lg leading-relaxed">
-                                {section.content}
-                              </p>
+                              
+                              {section.comparison ? (
+                                <SectionComparison comparison={section.comparison} />
+                              ) : section.tradeoffs ? (
+                                <SectionTradeoffs tradeoffs={section.tradeoffs} />
+                              ) : (
+                                <p className="text-[#4A3728] text-lg leading-relaxed">
+                                  {section.content}
+                                </p>
+                              )}
+
                               {section.example_use_case && (
                                 <p className="text-sm text-[#6B4F3A] bg-black/5 p-3 rounded-xl italic">
                                   Example: {section.example_use_case}
@@ -453,87 +477,259 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   
                       
-                                                                  <div className="space-y-4">
+                                                                                                                                    <div className="space-y-4">
                       
-                                                                    <div className="space-y-2">
+                                                                  
                       
-                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Slide Header</Label>
+                                                                                                                                      <div className="space-y-2">
                       
-                                                                      <Input 
+                                                                  
                       
-                                                                        value={section.header} 
+                                                                                                                                        <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Slide Header</Label>
                       
-                                                                        onChange={(e) => {
+                                                                  
                       
-                                                                          const newSections = [...(editData.sections || [])];
+                                                                                                                                        <Input 
                       
-                                                                          newSections[idx].header = e.target.value;
+                                                                  
                       
-                                                                          setEditData({ ...editData, sections: newSections });
+                                                                                                                                          value={section.header} 
                       
-                                                                        }}
+                                                                  
                       
-                                                                        className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-10 transition-all"
+                                                                                                                                          onChange={(e) => {
                       
-                                                                        placeholder="Slide heading..."
+                                                                  
                       
-                                                                      />
+                                                                                                                                            const newSections = [...(editData.sections || [])];
                       
-                                                                    </div>
+                                                                  
                       
-                                                                    <div className="space-y-2">
+                                                                                                                                            newSections[idx].header = e.target.value;
                       
-                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Slide Content</Label>
+                                                                  
                       
-                                                                      <Textarea 
+                                                                                                                                            setEditData({ ...editData, sections: newSections });
                       
-                                                                        value={section.content} 
+                                                                  
                       
-                                                                        onChange={(e) => {
+                                                                                                                                          }}
                       
-                                                                          const newSections = [...(editData.sections || [])];
+                                                                  
                       
-                                                                          newSections[idx].content = e.target.value;
+                                                                                                                                          className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-10 transition-all"
                       
-                                                                          setEditData({ ...editData, sections: newSections });
+                                                                  
                       
-                                                                        }}
+                                                                                                                                          placeholder="Slide heading..."
                       
-                                                                        className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 min-h-[80px] text-[#3D2B1F] rounded-xl transition-all"
+                                                                  
                       
-                                                                        placeholder="What's the core message?"
+                                                                                                                                        />
                       
-                                                                      />
+                                                                  
                       
-                                                                    </div>
+                                                                                                                                      </div>
                       
-                                                                    <div className="space-y-2">
+                                                                  
                       
-                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Example (Optional)</Label>
+                                                                  
                       
-                                                                      <Input 
+                                                                  
                       
-                                                                        value={section.example_use_case} 
+                                                                                                                                      {section.comparison ? (
                       
-                                                                        onChange={(e) => {
+                                                                  
                       
-                                                                          const newSections = [...(editData.sections || [])];
+                                                                                                                                        <ComparisonEditor 
                       
-                                                                          newSections[idx].example_use_case = e.target.value;
+                                                                  
                       
-                                                                          setEditData({ ...editData, sections: newSections });
+                                                                                                                                          data={section.comparison} 
                       
-                                                                        }}
+                                                                  
                       
-                                                                        className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-10 transition-all"
+                                                                                                                                          onChange={(newData) => {
                       
-                                                                        placeholder="Real-world example..."
+                                                                  
                       
-                                                                      />
+                                                                                                                                            const newSections = [...(editData.sections || [])];
                       
-                                                                    </div>
+                                                                  
                       
-                                                                  </div>
+                                                                                                                                            newSections[idx].comparison = newData;
+                      
+                                                                  
+                      
+                                                                                                                                            setEditData({ ...editData, sections: newSections });
+                      
+                                                                  
+                      
+                                                                                                                                          }}
+                      
+                                                                  
+                      
+                                                                                                                                        />
+                      
+                                                                  
+                      
+                                                                                                                                      ) : section.tradeoffs ? (
+                      
+                                                                  
+                      
+                                                                                                                                        <TradeoffsEditor 
+                      
+                                                                  
+                      
+                                                                                                                                          data={section.tradeoffs} 
+                      
+                                                                  
+                      
+                                                                                                                                          onChange={(newData) => {
+                      
+                                                                  
+                      
+                                                                                                                                            const newSections = [...(editData.sections || [])];
+                      
+                                                                  
+                      
+                                                                                                                                            newSections[idx].tradeoffs = newData;
+                      
+                                                                  
+                      
+                                                                                                                                            setEditData({ ...editData, sections: newSections });
+                      
+                                                                  
+                      
+                                                                                                                                          }}
+                      
+                                                                  
+                      
+                                                                                                                                        />
+                      
+                                                                  
+                      
+                                                                                                                                      ) : (
+                      
+                                                                  
+                      
+                                                                                                                                        <div className="space-y-2">
+                      
+                                                                  
+                      
+                                                                                                                                          <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Slide Content</Label>
+                      
+                                                                  
+                      
+                                                                                                                                          <Textarea 
+                      
+                                                                  
+                      
+                                                                                                                                            value={section.content} 
+                      
+                                                                  
+                      
+                                                                                                                                            onChange={(e) => {
+                      
+                                                                  
+                      
+                                                                                                                                              const newSections = [...(editData.sections || [])];
+                      
+                                                                  
+                      
+                                                                                                                                              newSections[idx].content = e.target.value;
+                      
+                                                                  
+                      
+                                                                                                                                              setEditData({ ...editData, sections: newSections });
+                      
+                                                                  
+                      
+                                                                                                                                            }}
+                      
+                                                                  
+                      
+                                                                                                                                            className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 min-h-[80px] text-[#3D2B1F] rounded-xl transition-all"
+                      
+                                                                  
+                      
+                                                                                                                                            placeholder="What's the core message?"
+                      
+                                                                  
+                      
+                                                                                                                                          />
+                      
+                                                                  
+                      
+                                                                                                                                        </div>
+                      
+                                                                  
+                      
+                                                                                                                                      )}
+                      
+                                                                  
+                      
+                                                                  
+                      
+                                                                  
+                      
+                                                                                                                                      <div className="space-y-2">
+                      
+                                                                  
+                      
+                                                                                                                                        <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Example (Optional)</Label>
+                      
+                                                                  
+                      
+                                                                                                                                        <Input 
+                      
+                                                                  
+                      
+                                                                                                                                          value={section.example_use_case} 
+                      
+                                                                  
+                      
+                                                                                                                                          onChange={(e) => {
+                      
+                                                                  
+                      
+                                                                                                                                            const newSections = [...(editData.sections || [])];
+                      
+                                                                  
+                      
+                                                                                                                                            newSections[idx].example_use_case = e.target.value;
+                      
+                                                                  
+                      
+                                                                                                                                            setEditData({ ...editData, sections: newSections });
+                      
+                                                                  
+                      
+                                                                                                                                          }}
+                      
+                                                                  
+                      
+                                                                                                                                          className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-10 transition-all"
+                      
+                                                                  
+                      
+                                                                                                                                          placeholder="Real-world example..."
+                      
+                                                                  
+                      
+                                                                                                                                        />
+                      
+                                                                  
+                      
+                                                                                                                                      </div>
+                      
+                                                                  
+                      
+                                                                                                                                    </div>
+                      
+                                                                  
+                      
+                                                                  
                       
                                                                 </div>
                       
