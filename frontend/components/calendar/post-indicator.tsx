@@ -89,18 +89,83 @@ export function PostIndicator({ post }: { post: Post }) {
             <ScrollArea className="flex-1 min-h-0 w-full">
               <div className="px-8 pb-8">
                 {/* Research Results */}
-                {post.status === 'researched' && post.summary ? (
+                {post.status === 'researched' && (post.summary || post.hook) ? (
                   <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <h4 className="flex items-center gap-2 font-bold text-lg text-[#3D2B1F]">
                         <Sparkles className="h-5 w-5 text-indigo-500" />
                         Research Synthesis
                       </h4>
-                      <div className="prose prose-sm max-w-none text-[#4A3728] leading-relaxed">
-                        {post.summary.split('\n').map((paragraph, i) => (
-                          <p key={i} className="mb-4 last:mb-0 text-lg">{paragraph}</p>
-                        ))}
-                      </div>
+                      
+                      {/* New Structured Fields */}
+                      {post.hook && (
+                        <div className="space-y-2">
+                          <p className="text-xl font-medium text-[#3D2B1F] italic leading-relaxed">
+                            "{post.hook}"
+                          </p>
+                        </div>
+                      )}
+
+                      {post.sections && post.sections.length > 0 && (
+                        <div className="space-y-8 py-4">
+                          {post.sections.map((section, idx) => (
+                            <div key={idx} className="space-y-2 p-6 rounded-[2rem] bg-white/40 border border-primary/5 shadow-sm">
+                              <h5 className="font-serif text-xl font-bold text-[#3D2B1F]">
+                                {section.header}
+                              </h5>
+                              <p className="text-[#4A3728] text-lg leading-relaxed">
+                                {section.content}
+                              </p>
+                              {section.example_use_case && (
+                                <p className="text-sm text-[#6B4F3A] bg-black/5 p-3 rounded-xl italic">
+                                  Example: {section.example_use_case}
+                                </p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {post.key_takeaways && post.key_takeaways.length > 0 && (
+                        <div className="space-y-3 p-6 rounded-[2rem] bg-indigo-50/50 border border-indigo-100">
+                          <p className="font-bold text-sm text-indigo-900 uppercase tracking-widest mb-2">Key Takeaways</p>
+                          <ul className="space-y-2">
+                            {post.key_takeaways.map((point, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-[#4A3728] text-lg leading-relaxed">
+                                <span className="text-indigo-500 shrink-0 mt-1">•</span>
+                                {point}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {post.call_to_action && (
+                        <div className="p-6 rounded-[2rem] bg-primary/5 border border-primary/10">
+                          <p className="font-serif text-xl font-medium text-[#3D2B1F] text-center">
+                            {post.call_to_action}
+                          </p>
+                        </div>
+                      )}
+
+                      {post.hashtags && post.hashtags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {post.hashtags.map((tag, idx) => (
+                            <span key={idx} className="text-sm font-medium text-indigo-600">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Legacy Summary Fallback */}
+                      {!post.hook && post.summary && (
+                        <div className="prose prose-sm max-w-none text-[#4A3728] leading-relaxed">
+                          {post.summary.split('\n').map((paragraph, i) => (
+                            <p key={i} className="mb-4 last:mb-0 text-lg">{paragraph}</p>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     {post.sources && post.sources.length > 0 && (
@@ -142,7 +207,7 @@ export function PostIndicator({ post }: { post: Post }) {
             </ScrollArea>
 
             <SheetFooter className="p-8 pt-4 border-t border-primary/10 bg-inherit shrink-0">
-                 {post.status !== 'researched' || !post.summary ? (
+                 {post.status !== 'researched' || (!post.summary && !post.hook) ? (
                     <Button 
                       onClick={handleResearch} 
                       disabled={isResearching}

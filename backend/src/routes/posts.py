@@ -78,13 +78,18 @@ async def research_post(id: str):
             title=post.title,
             learning_objective=post.learning_objective or "",
             search_queries=post.search_queries,
-            difficulty=post.difficulty or "Beginner"
+            difficulty=post.difficulty or "Beginner",
+            day=post.day or 1
         )
         
         # Update Post
         post.update(
             set__sources=research_data.get('sources', []),
-            set__summary=research_data.get('summary', ""),
+            set__hook=research_data.get('hook', ""),
+            set__sections=research_data.get('sections', []),
+            set__key_takeaways=research_data.get('key_takeaways', []),
+            set__call_to_action=research_data.get('call_to_action', ""),
+            set__hashtags=research_data.get('hashtags', []),
             set__status='researched'
         )
         
