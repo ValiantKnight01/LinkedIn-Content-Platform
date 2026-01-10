@@ -125,7 +125,7 @@ async def plan_curriculum(theme_title: str, month: int, year: int) -> List[Dict[
 
 # --- Deep Research ---
 
-async def research_single_topic(title: str, learning_objective: str, search_queries: List[str], difficulty: str) -> Dict[str, Any]:
+async def research_single_topic(title: str, learning_objective: str, search_queries: List[str], difficulty: str, day: int) -> Dict[str, Any]:
     """Executes deep research by searching, scraping, and synthesizing multiple sources."""
     print(f"--- Deep Researching: {title} ({settings.llm_provider}) ---")
     
