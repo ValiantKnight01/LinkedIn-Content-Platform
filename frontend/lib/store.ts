@@ -12,6 +12,16 @@ export interface Post {
   difficulty?: string;
   summary?: string;
   sources?: string[];
+  day?: number;
+  hook?: string;
+  sections?: {
+    header: string;
+    content: string;
+    example_use_case: string;
+  }[];
+  key_takeaways?: string[];
+  call_to_action?: string;
+  hashtags?: string[];
 }
 
 // --- Calendar Store ---

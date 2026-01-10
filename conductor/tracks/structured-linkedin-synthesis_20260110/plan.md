@@ -15,3 +15,10 @@
 - [x] Task: Update `research_post` route in `backend/src/routes/posts.py`. (c88a5f6)
     - *How To*: Update the call to `research_single_topic` to pass the `post.day` value. Then, update the `post.update()` call to map the new fields (`hook`, `sections`, `key_takeaways`, `call_to_action`, `hashtags`, `sources`) from the synthesis result to the database document.
 - [ ] Task: Conductor - User Manual Verification 'Data Persistence' (Protocol in workflow.md)
+
+## Phase 3: Frontend Integration
+- [~] Task: Update `Post` interface in `frontend/lib/store.ts`.
+    - *How To*: Add `hook`, `sections`, `key_takeaways`, `call_to_action`, and `hashtags` to the `Post` interface. `sections` should be an array of objects with `header`, `content`, and `example_use_case`.
+- [ ] Task: Update `PostIndicator` component to display structured data.
+    - *How To*: Modify `frontend/components/calendar/post-indicator.tsx` to render the new fields. Use a simple vertical stack: Hook, then map through sections, then Takeaways, then CTA, then Hashtags.
+- [ ] Task: Conductor - User Manual Verification 'Frontend Integration' (Protocol in workflow.md)
