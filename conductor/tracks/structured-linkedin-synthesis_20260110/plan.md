@@ -26,5 +26,5 @@
 ## Phase 4: Refinement (Boss Feedback)
 - [x] Task: Refine synthesis prompt in `topic_researcher.py`. (34cd0f8)
     - *How To*: Update the prompt in `research_single_topic` to strictly enforce the new Hook, Example, Data, Difficulty, and Structure rules.
-- [~] Task: Refine synthesis prompt (Round 2) in `topic_researcher.py`.
+- [x] Task: Refine synthesis prompt (Round 2) in `topic_researcher.py`. (42bb206)
     - *How To*: Add requirements for: Technical Metrics (explain/simplify), Example Depth (50 words+, feature/usage/impact), Before/After comparisons, Trade-offs/Challenges section, and removal of generic filler phrases.
