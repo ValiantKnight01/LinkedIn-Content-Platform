@@ -43,6 +43,9 @@ The goal of this track is to refactor the research synthesis phase in the `topic
         - **ELIMINATE DEDICATED EXAMPLE SECTION:** Remove the "Real Examples" section from the required structure.
         - **DISTRIBUTE EXAMPLES:** Require that specific company examples be moved into the `example_use_case` field of the *relevant* sections (Problem, Solution, How it works, etc.).
         - **POPULATE EXAMPLE FIELDS:** Ensure `example_use_case` is populated for every section to provide context and "secret sauce" directly alongside the concept.
+    - **Anti-Hallucination Refinement:**
+        - **STRICT SOURCING:** Explicitly instruct the LLM to ONLY use numbers/metrics that appear in the provided `Researched Content`.
+        - **NO FABRICATION:** Ban the generation of plausible-sounding but unverified business metrics (like specific dollar amounts not in sources).
 
 ### 3. Backend Integration
 - Update the return dictionary in `research_single_topic` to match the new `ResearchSynthesis` fields.

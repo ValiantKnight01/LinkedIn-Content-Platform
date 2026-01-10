@@ -251,6 +251,11 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
 
         NEVER write: "predicted X resulting in Y% revenue increase" (confusing!)
 
+        CRITICAL SOURCE RULE (ANTI-HALLUCINATION):
+        - You must ONLY use numbers ($, %, dates) that appear in the provided `Researched Content`.
+        - DO NOT generate plausible-sounding business metrics (like '$2.3M saved' or '40% reduction') unless they are explicitly in the source text.
+        - If a specific metric is missing, do NOT invent one. Use qualitative descriptions instead.
+
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
         BEFORE vs AFTER FORMAT:
