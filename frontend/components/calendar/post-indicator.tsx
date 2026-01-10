@@ -311,44 +311,44 @@ export function PostIndicator({ post }: { post: Post }) {
                                 
                                       <div className="grid gap-6">
                                         <div className="space-y-2">
-                                          <Label htmlFor="title" className="text-[#3D2B1F] font-bold">Post Title</Label>
+                                          <Label htmlFor="title" className="text-[#3D2B1F] font-bold uppercase tracking-wider text-xs">Post Title</Label>
                                           <Input 
                                             id="title" 
                                             value={editData.title} 
                                             onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-                                            className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
+                                            className="bg-[#faedcd]/30 border-[#d4a373]/40 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-11 transition-all"
                                           />
                                         </div>
                       
                                         <div className="space-y-2">
-                                          <Label htmlFor="hook" className="text-[#3D2B1F] font-bold">Hook (First Line)</Label>
+                                          <Label htmlFor="hook" className="text-[#3D2B1F] font-bold uppercase tracking-wider text-xs">Hook (First Line)</Label>
                                           <Textarea 
                                             id="hook" 
                                             value={editData.hook || ""} 
                                             onChange={(e) => setEditData({ ...editData, hook: e.target.value })}
-                                            className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] min-h-[100px] text-[#3D2B1F]"
+                                            className="bg-[#faedcd]/30 border-[#d4a373]/40 focus:border-[#d4a373] focus:ring-[#d4a373]/20 min-h-[100px] text-[#3D2B1F] rounded-xl transition-all"
                                             placeholder="Enter a thumb-stopping hook..."
                                           />
                                         </div>
                       
                                         <div className="space-y-2">
-                                          <Label htmlFor="learning_objective" className="text-[#3D2B1F] font-bold">Learning Objective</Label>
+                                          <Label htmlFor="learning_objective" className="text-[#3D2B1F] font-bold uppercase tracking-wider text-xs">Learning Objective</Label>
                                           <Textarea 
                                             id="learning_objective" 
                                             value={editData.learning_objective || ""} 
                                             onChange={(e) => setEditData({ ...editData, learning_objective: e.target.value })}
-                                            className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
+                                            className="bg-[#faedcd]/30 border-[#d4a373]/40 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl transition-all"
                                           />
                                         </div>
                       
                                         <div className="grid grid-cols-2 gap-4">
                                           <div className="space-y-2">
-                                            <Label htmlFor="status" className="text-[#3D2B1F] font-bold">Status</Label>
+                                            <Label htmlFor="status" className="text-[#3D2B1F] font-bold uppercase tracking-wider text-xs">Status</Label>
                                             <select 
                                               id="status"
                                               value={editData.status}
                                               disabled
-                                              className="w-full h-10 px-3 rounded-md bg-black/5 border border-[#d4a373]/20 text-[#3D2B1F]/60 cursor-not-allowed"
+                                              className="w-full h-11 px-3 rounded-xl bg-black/5 border border-[#d4a373]/20 text-[#3D2B1F]/60 cursor-not-allowed font-medium"
                                             >
                                               <option value="planned">Planned</option>
                                               <option value="researched">Researched</option>
@@ -357,19 +357,19 @@ export function PostIndicator({ post }: { post: Post }) {
                                             </select>
                                           </div>
                                           <div className="space-y-2">
-                                            <Label htmlFor="difficulty" className="text-[#3D2B1F] font-bold">Difficulty</Label>
+                                            <Label htmlFor="difficulty" className="text-[#3D2B1F] font-bold uppercase tracking-wider text-xs">Difficulty</Label>
                                             <Input 
                                               id="difficulty" 
                                               value={editData.difficulty || ""} 
                                               onChange={(e) => setEditData({ ...editData, difficulty: e.target.value })}
-                                              className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
+                                              className="bg-[#faedcd]/30 border-[#d4a373]/40 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-11 transition-all"
                                             />
                                           </div>
                                         </div>
                       
                                                           <div className="space-y-2">
                       
-                                                            <Label htmlFor="cta" className="text-[#3D2B1F] font-bold">Call to Action</Label>
+                                                            <Label htmlFor="cta" className="text-[#3D2B1F] font-bold uppercase tracking-wider text-xs">Call to Action</Label>
                       
                                                             <Input 
                       
@@ -379,7 +379,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                               onChange={(e) => setEditData({ ...editData, call_to_action: e.target.value })}
                       
-                                                              className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
+                                                              className="bg-[#faedcd]/30 border-[#d4a373]/40 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-11 transition-all"
                       
                                                               placeholder="What should they do next?"
                       
@@ -473,7 +473,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                         }}
                       
-                                                                        className="bg-white/50 border-[#d4a373]/30 text-[#3D2B1F]"
+                                                                        className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-10 transition-all"
                       
                                                                         placeholder="Slide heading..."
                       
@@ -499,7 +499,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                         }}
                       
-                                                                        className="bg-white/50 border-[#d4a373]/30 min-h-[80px] text-[#3D2B1F]"
+                                                                        className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 min-h-[80px] text-[#3D2B1F] rounded-xl transition-all"
                       
                                                                         placeholder="What's the core message?"
                       
@@ -525,7 +525,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                         }}
                       
-                                                                        className="bg-white/50 border-[#d4a373]/30 text-[#3D2B1F]"
+                                                                        className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-10 transition-all"
                       
                                                                         placeholder="Real-world example..."
                       
@@ -599,7 +599,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                     }}
                       
-                                                                    className="bg-white/50 border-[#d4a373]/30 text-[#3D2B1F]"
+                                                                    className="bg-[#faedcd]/20 border-[#d4a373]/30 focus:border-[#d4a373] focus:ring-[#d4a373]/20 text-[#3D2B1F] rounded-xl h-10 transition-all"
                       
                                                                     placeholder="A key point to remember..."
                       
@@ -619,7 +619,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                     })}
                       
-                                                                    className="text-destructive shrink-0"
+                                                                    className="text-destructive shrink-0 hover:bg-destructive/10 rounded-full h-10 w-10"
                       
                                                                   >
                       
