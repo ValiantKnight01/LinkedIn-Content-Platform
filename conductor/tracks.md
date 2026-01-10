@@ -35,4 +35,9 @@
 ## [~] Track: Agentic Topic Research (Sub-Agent Architecture)
 *Link: [./conductor/tracks/agentic-research_20251226/](./conductor/tracks/agentic-research_20251226/)*
 
+---
+
+## [~] Track: Post Edit & LinkedIn Carousel Preview
+*Link: [./conductor/tracks/post-edit-carousel_20260110/](./conductor/tracks/post-edit-carousel_20260110/)*
+
 
