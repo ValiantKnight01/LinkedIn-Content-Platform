@@ -3,7 +3,7 @@
 ## Phase 1: Agent Logic
 - [x] Task: Update `topic_researcher.py` Pydantic models. (f6f0f93)
     - *How To*: Define a new `ResearchSection(BaseModel)` with `header`, `content`, and `example_use_case`. Update the existing `ResearchSynthesis` model to include `day`, `title`, `hook`, `sections` (as `List[ResearchSection]`), `key_takeaways` (as `List[str]`), `call_to_action`, `hashtags` (as `List[str]`), and `sources`.
-- [~] Task: Update `research_single_topic` signature.
+- [x] Task: Update `research_single_topic` signature. (d9ee03c)
     - *How To*: Update the function definition in `backend/src/agents/topic_researcher.py` to accept an additional `day: int` parameter.
 - [ ] Task: Update the synthesis prompt.
     - *How To*: Modify the synthesis prompt within `research_single_topic` to include the new JSON structure. Add explicit instructions to: 1. Use ONLY plain text (no markdown and NO emojis), 2. Create a flexible number of sections based on topic depth, and 3. Ensure the hook is punchy and optimized for LinkedIn.
