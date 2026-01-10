@@ -34,6 +34,7 @@ interface CalendarState {
   prevMonth: () => void;
   fetchPosts: () => Promise<void>;
   researchPost: (id: string) => Promise<void>;
+  updatePost: (id: string, updates: Partial<Post>) => Promise<void>;
 }
 
 export const useCalendarStore = create<CalendarState>((set, get) => ({
@@ -82,6 +83,24 @@ export const useCalendarStore = create<CalendarState>((set, get) => ({
       } catch (error) {
           console.error("Failed to research post:", error);
       }
+  },
+
+  updatePost: async (id: string, updates: Partial<Post>) => {
+    try {
+        const response = await fetch(`/api/posts/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updates),
+        });
+        if (response.ok) {
+            const updatedPost = await response.json();
+            set(state => ({
+                posts: state.posts.map(p => p.id === id ? updatedPost : p)
+            }));
+        }
+    } catch (error) {
+        console.error("Failed to update post:", error);
+    }
   }
 }));
 

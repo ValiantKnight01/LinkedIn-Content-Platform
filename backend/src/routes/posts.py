@@ -3,6 +3,7 @@ from typing import List, Optional
 from datetime import datetime
 from ..models.post import Post
 from ..models.theme import Theme
+from ..schemas.post import PostUpdate
 from ..agents.topic_researcher import research_single_topic
 from mongoengine.errors import DoesNotExist, ValidationError
 from bson import ObjectId
@@ -110,3 +111,25 @@ async def get_post(id: str):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
     
     return format_post(post)
+
+@router.patch("/{id}", response_model=dict)
+async def update_post(id: str, updates: PostUpdate):
+    if not ObjectId.is_valid(id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid ID format")
+    
+    post = Post.objects(id=id).first()
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+    
+    update_data = updates.model_dump(exclude_unset=True)
+    if not update_data:
+        return format_post(post)
+    
+    try:
+        mongo_updates = {f"set__{k}": v for k, v in update_data.items()}
+        post.update(**mongo_updates)
+        post.reload()
+        return format_post(post)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
