@@ -69,7 +69,7 @@ export function PostIndicator({ post }: { post: Post }) {
       </SheetTrigger>
       
       <SheetContent 
-        className="w-full sm:max-w-[50vw] bg-[#fefae0] border-l border-primary/20 p-0 gap-0 overflow-hidden" 
+        className="w-full sm:max-w-[75vw] bg-[#fefae0] border-l border-primary/20 p-0 gap-0 overflow-hidden" 
         side="right"
       >
         <Tabs defaultValue="research" className="flex flex-col h-full w-full">
