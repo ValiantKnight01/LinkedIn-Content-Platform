@@ -62,74 +62,74 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
             <div 
               key={idx} 
               className={cn(
-                "w-[500px] aspect-square rounded-2xl shadow-lg p-16 relative flex flex-col shrink-0 whitespace-normal transition-all hover:scale-[1.02]",
+                "w-[800px] aspect-[16/10] rounded-3xl shadow-2xl p-20 relative flex flex-col shrink-0 whitespace-normal transition-all hover:scale-[1.01]",
                 slide.bg,
                 slide.text
               )}
             >
               
               {slide.type === 'title' && (
-                <div className="flex-1 flex flex-col justify-center text-center space-y-10">
-                  <h1 className="text-5xl font-extrabold leading-tight font-serif italic">
+                <div className="flex-1 flex flex-col justify-center text-center space-y-12">
+                  <h1 className="text-6xl font-extrabold leading-tight font-serif italic">
                     {slide.title}
                   </h1>
-                  <p className="text-2xl opacity-90 leading-relaxed font-medium">
+                  <p className="text-3xl opacity-90 leading-relaxed font-medium max-w-3xl mx-auto">
                     {slide.hook}
                   </p>
-                  <div className="absolute bottom-10 left-10 text-lg font-bold opacity-80">
+                  <div className="absolute bottom-12 left-12 text-xl font-bold opacity-80">
                     {slide.author}
                   </div>
                 </div>
               )}
 
               {slide.type === 'content' && (
-                <div className="flex-1 flex flex-col space-y-8">
-                  <div className="h-2 w-full bg-[#d4a373]/30 rounded-full overflow-hidden">
+                <div className="flex-1 flex flex-col space-y-10">
+                  <div className="h-3 w-full bg-[#d4a373]/30 rounded-full overflow-hidden">
                     <div className="h-full bg-[#d4a373] w-1/3" />
                   </div>
-                  <h2 className="text-4xl font-extrabold leading-tight font-serif">
+                  <h2 className="text-5xl font-extrabold leading-tight font-serif">
                     {slide.header}
                   </h2>
-                  <p className="text-xl leading-relaxed flex-1">
+                  <p className="text-2xl leading-relaxed flex-1">
                     {slide.content}
                   </p>
                   {slide.example && (
-                    <div className="bg-black/5 p-8 rounded-3xl border-l-8 border-[#d4a373] italic mb-8">
-                      <p className="text-sm font-bold uppercase tracking-widest text-[#d4a373] mb-3">Real Example</p>
-                      <p className="text-lg opacity-90">{slide.example}</p>
+                    <div className="bg-black/5 p-10 rounded-[2.5rem] border-l-[12px] border-[#d4a373] italic mb-4">
+                      <p className="text-base font-bold uppercase tracking-widest text-[#d4a373] mb-4">Real Example</p>
+                      <p className="text-xl opacity-90">{slide.example}</p>
                     </div>
                   )}
                 </div>
               )}
 
               {slide.type === 'quote' && (
-                <div className="flex-1 flex flex-col justify-center items-center text-center space-y-8">
-                  <div className="text-9xl text-[#d4a373] opacity-30 font-serif h-16 leading-[0]">"</div>
-                  <p className="text-3xl font-semibold leading-relaxed italic">
+                <div className="flex-1 flex flex-col justify-center items-center text-center space-y-10">
+                  <div className="text-[12rem] text-[#d4a373] opacity-30 font-serif h-24 leading-[0]">"</div>
+                  <p className="text-4xl font-semibold leading-relaxed italic max-w-2xl">
                     {slide.text}
                   </p>
-                  <p className="text-[#d4a373] font-bold tracking-wider text-xl">
+                  <p className="text-[#d4a373] font-bold tracking-wider text-2xl">
                     - {slide.source}
                   </p>
                 </div>
               )}
 
               {slide.type === 'takeaways' && (
-                <div className="flex-1 flex flex-col space-y-10">
-                  <h2 className="text-5xl font-extrabold text-[#d4a373] text-center font-serif">
+                <div className="flex-1 flex flex-col space-y-12">
+                  <h2 className="text-6xl font-extrabold text-[#d4a373] text-center font-serif">
                     {slide.title}
                   </h2>
-                  <div className="space-y-6 flex-1">
+                  <div className="space-y-8 flex-1">
                     {slide.items.map((item, i) => (
-                      <div key={i} className="flex gap-6 items-start">
-                        <span className="text-3xl text-[#d4a373] font-bold">→</span>
-                        <p className="text-xl leading-snug">{item}</p>
+                      <div key={i} className="flex gap-8 items-start">
+                        <span className="text-4xl text-[#d4a373] font-bold">→</span>
+                        <p className="text-2xl leading-snug">{item}</p>
                       </div>
                     ))}
                   </div>
                   {slide.cta && (
-                    <div className="pt-8 border-t border-[#d4a373]/30 text-center">
-                      <p className="text-2xl font-bold text-[#faedcd] italic">
+                    <div className="pt-10 border-t border-[#d4a373]/30 text-center">
+                      <p className="text-3xl font-bold text-[#faedcd] italic">
                         {slide.cta}
                       </p>
                     </div>
@@ -137,7 +137,7 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
                 </div>
               )}
 
-              <div className="absolute bottom-10 right-10 text-base font-bold opacity-40">
+              <div className="absolute bottom-12 right-12 text-xl font-bold opacity-40">
                 {idx + 1} / {slides.length}
               </div>
             </div>
