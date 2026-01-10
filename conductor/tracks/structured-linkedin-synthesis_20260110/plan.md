@@ -17,7 +17,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Data Persistence' (Protocol in workflow.md)
 
 ## Phase 3: Frontend Integration
-- [~] Task: Update `Post` interface in `frontend/lib/store.ts`.
+- [x] Task: Update `Post` interface in `frontend/lib/store.ts`. (93f839c)
     - *How To*: Add `hook`, `sections`, `key_takeaways`, `call_to_action`, and `hashtags` to the `Post` interface. `sections` should be an array of objects with `header`, `content`, and `example_use_case`.
 - [ ] Task: Update `PostIndicator` component to display structured data.
     - *How To*: Modify `frontend/components/calendar/post-indicator.tsx` to render the new fields. Use a simple vertical stack: Hook, then map through sections, then Takeaways, then CTA, then Hashtags.
