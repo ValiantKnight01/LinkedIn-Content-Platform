@@ -2,7 +2,7 @@
 
 This plan details the steps to transition "Before vs After" and "Trade-offs" content to structured JSON.
 
-## Phase 1: Backend Foundation
+## Phase 1: Backend Foundation (6b772cc)
 Update the data models and schemas to support structured content.
 
 - [x] Task: Update `Section` schema/model (d1e2f3g)
