@@ -94,7 +94,7 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
                     {slide.content}
                   </p>
                   {slide.example && (
-                    <div className="bg-black/5 p-8 rounded-3xl border-l-8 border-[#d4a373] italic">
+                    <div className="bg-black/5 p-8 rounded-3xl border-l-8 border-[#d4a373] italic mb-8">
                       <p className="text-sm font-bold uppercase tracking-widest text-[#d4a373] mb-3">Real Example</p>
                       <p className="text-lg opacity-90">{slide.example}</p>
                     </div>

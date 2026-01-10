@@ -104,21 +104,21 @@ export function PostIndicator({ post }: { post: Post }) {
       >
         <Tabs defaultValue="research" className="flex flex-col h-full w-full">
           <div className="px-8 pt-6 pb-2 border-b border-primary/10 shrink-0 bg-[#fefae0] flex items-center justify-between gap-4">
-            <TabsList className="grid w-full grid-cols-3 rounded-full bg-black/5 p-1 max-w-md">
-              <TabsTrigger value="research" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Research</TabsTrigger>
-              <TabsTrigger value="edit" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Edit</TabsTrigger>
-              <TabsTrigger value="preview" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Preview</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 rounded-full bg-[#faedcd] p-1 max-w-md">
+              <TabsTrigger value="research" className="rounded-full data-[state=active]:bg-[#3D2B1F] data-[state=active]:text-[#fefae0] data-[state=active]:shadow-sm">Research</TabsTrigger>
+              <TabsTrigger value="edit" className="rounded-full data-[state=active]:bg-[#3D2B1F] data-[state=active]:text-[#fefae0] data-[state=active]:shadow-sm">Edit</TabsTrigger>
+              <TabsTrigger value="preview" className="rounded-full data-[state=active]:bg-[#3D2B1F] data-[state=active]:text-[#fefae0] data-[state=active]:shadow-sm">Preview</TabsTrigger>
             </TabsList>
             
             <Button
               variant="outline"
               size="sm"
               onClick={handleCopy}
-              className="rounded-full border-primary/20 hover:bg-primary/5 h-9 px-4 shrink-0 font-medium"
+              className="rounded-full border-[#d4a373] text-[#3D2B1F] hover:bg-[#d4a373]/20 h-9 px-4 shrink-0 font-medium"
             >
               {copied ? (
                 <>
-                  <Check className="h-4 w-4 mr-2 text-green-600" /> Copied!
+                  <Check className="h-4 w-4 mr-2 text-green-700" /> Copied!
                 </>
               ) : (
                 <>
@@ -128,7 +128,7 @@ export function PostIndicator({ post }: { post: Post }) {
             </Button>
           </div>
 
-                    <TabsContent value="research" className="flex-1 flex flex-col m-0 overflow-hidden border-none">
+                    <TabsContent value="research" className="flex-1 flex flex-col m-0 overflow-hidden border-none bg-[#fefae0]">
 
                       <div className="flex flex-col h-full w-full">
 
@@ -302,7 +302,7 @@ export function PostIndicator({ post }: { post: Post }) {
                         </div>
                       </TabsContent>
             
-                                          <TabsContent value="edit" className="flex-1 m-0 overflow-hidden border-none flex flex-col min-h-0">
+                                          <TabsContent value="edit" className="flex-1 m-0 overflow-hidden border-none flex flex-col min-h-0 bg-[#fefae0]">
             
                                             <ScrollArea className="flex-1 h-full">
             
@@ -316,7 +316,7 @@ export function PostIndicator({ post }: { post: Post }) {
                                             id="title" 
                                             value={editData.title} 
                                             onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-                                            className="bg-white/50 border-primary/20 focus:border-primary/40"
+                                            className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
                                           />
                                         </div>
                       
@@ -326,7 +326,7 @@ export function PostIndicator({ post }: { post: Post }) {
                                             id="hook" 
                                             value={editData.hook || ""} 
                                             onChange={(e) => setEditData({ ...editData, hook: e.target.value })}
-                                            className="bg-white/50 border-primary/20 focus:border-primary/40 min-h-[100px]"
+                                            className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] min-h-[100px] text-[#3D2B1F]"
                                             placeholder="Enter a thumb-stopping hook..."
                                           />
                                         </div>
@@ -337,7 +337,7 @@ export function PostIndicator({ post }: { post: Post }) {
                                             id="learning_objective" 
                                             value={editData.learning_objective || ""} 
                                             onChange={(e) => setEditData({ ...editData, learning_objective: e.target.value })}
-                                            className="bg-white/50 border-primary/20 focus:border-primary/40"
+                                            className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
                                           />
                                         </div>
                       
@@ -347,8 +347,8 @@ export function PostIndicator({ post }: { post: Post }) {
                                             <select 
                                               id="status"
                                               value={editData.status}
-                                              onChange={(e) => setEditData({ ...editData, status: e.target.value as PostStatus })}
-                                              className="w-full h-10 px-3 rounded-md bg-white/50 border border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                              disabled
+                                              className="w-full h-10 px-3 rounded-md bg-black/5 border border-[#d4a373]/20 text-[#3D2B1F]/60 cursor-not-allowed"
                                             >
                                               <option value="planned">Planned</option>
                                               <option value="researched">Researched</option>
@@ -362,7 +362,7 @@ export function PostIndicator({ post }: { post: Post }) {
                                               id="difficulty" 
                                               value={editData.difficulty || ""} 
                                               onChange={(e) => setEditData({ ...editData, difficulty: e.target.value })}
-                                              className="bg-white/50 border-primary/20 focus:border-primary/40"
+                                              className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
                                             />
                                           </div>
                                         </div>
@@ -379,7 +379,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                               onChange={(e) => setEditData({ ...editData, call_to_action: e.target.value })}
                       
-                                                              className="bg-white/50 border-primary/20 focus:border-primary/40"
+                                                              className="bg-white/50 border-[#d4a373]/30 focus:border-[#d4a373] text-[#3D2B1F]"
                       
                                                               placeholder="What should they do next?"
                       
@@ -411,7 +411,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                 })}
                       
-                                                                className="rounded-full border-primary/20 hover:bg-primary/5"
+                                                                className="rounded-full border-[#d4a373]/30 text-[#3D2B1F] hover:bg-[#d4a373]/10"
                       
                                                               >
                       
@@ -427,7 +427,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                               {editData.sections?.map((section, idx) => (
                       
-                                                                <div key={idx} className="p-6 rounded-[1.5rem] bg-white/30 border border-primary/10 relative group">
+                                                                <div key={idx} className="p-6 rounded-[1.5rem] bg-white/40 border border-[#d4a373]/20 relative group">
                       
                                                                   <Button
                       
@@ -457,7 +457,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                     <div className="space-y-2">
                       
-                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Slide Header</Label>
+                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Slide Header</Label>
                       
                                                                       <Input 
                       
@@ -473,7 +473,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                         }}
                       
-                                                                        className="bg-white/50 border-primary/10"
+                                                                        className="bg-white/50 border-[#d4a373]/30 text-[#3D2B1F]"
                       
                                                                         placeholder="Slide heading..."
                       
@@ -483,7 +483,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                     <div className="space-y-2">
                       
-                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Slide Content</Label>
+                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Slide Content</Label>
                       
                                                                       <Textarea 
                       
@@ -499,7 +499,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                         }}
                       
-                                                                        className="bg-white/50 border-primary/10 min-h-[80px]"
+                                                                        className="bg-white/50 border-[#d4a373]/30 min-h-[80px] text-[#3D2B1F]"
                       
                                                                         placeholder="What's the core message?"
                       
@@ -509,7 +509,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                     <div className="space-y-2">
                       
-                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Example (Optional)</Label>
+                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-[#6B4F3A]">Example (Optional)</Label>
                       
                                                                       <Input 
                       
@@ -525,7 +525,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                         }}
                       
-                                                                        className="bg-white/50 border-primary/10"
+                                                                        className="bg-white/50 border-[#d4a373]/30 text-[#3D2B1F]"
                       
                                                                         placeholder="Real-world example..."
                       
@@ -567,7 +567,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                 })}
                       
-                                                                className="rounded-full border-primary/20 hover:bg-primary/5"
+                                                                className="rounded-full border-[#d4a373]/30 text-[#3D2B1F] hover:bg-[#d4a373]/10"
                       
                                                               >
                       
@@ -599,7 +599,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                     }}
                       
-                                                                    className="bg-white/50 border-primary/10"
+                                                                    className="bg-white/50 border-[#d4a373]/30 text-[#3D2B1F]"
                       
                                                                     placeholder="A key point to remember..."
                       
