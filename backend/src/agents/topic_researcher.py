@@ -186,14 +186,36 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
     Using the researched content above, synthesize a detailed and authoritative LinkedIn post.
     The output must strictly follow the structured format.
     
-    IMPORTANT GUIDELINES:
-    1. Use ONLY PLAIN TEXT. No markdown (no bold, italics, etc.) and ABSOLUTELY NO EMOJIS.
-    2. The 'hook' should be a punchy, engaging opening that stops the scroll.
-    3. Create a flexible number of 'sections' (typically 3-5) based on the topic depth. Each section must have a header, concise content, and a practical example or use case.
-    4. Provide 3-5 high-value 'key_takeaways'.
-    5. The 'call_to_action' should be a question or statement to encourage comments.
-    6. Include 3-5 relevant LinkedIn 'hashtags' (words only, no # symbol).
-    7. All content must be educational, engaging, and directly address the learning objective.
+    CRITICAL QUALITY GUIDELINES:
+    
+    1. HOOK RULES:
+       - NO marketing language (e.g., "revolutionize", "game-changing", "unlock").
+       - Start with a relatable scenario, a surprising fact, a concrete question, OR a paradox.
+       - Example: "You speak at 150 words/min. Models process 100x faster. How?"
+    
+    2. EXAMPLE RULES:
+       - MUST include specific Company/Product names.
+       - MUST include specific numbers or results.
+       - NO vague phrases like "for instance" or "for example" without specifics.
+       - Format: "CompanyName does X, achieving Y result with Z metric".
+    
+    3. DATA REQUIREMENTS:
+       - Minimum 3 concrete numbers per post (percentages, improvements, comparisons).
+       - Source these strictly from the search results (do not hallucinate numbers).
+    
+    4. DIFFICULTY CALIBRATION:
+       - If Day is 1-10 (Beginner): Define EVERY technical term immediately. Use analogies for complex concepts. No jargon without explanation.
+    
+    5. STRUCTURE & CONTENT:
+       - Use PLAIN TEXT only. No markdown. No emojis.
+       - The 'sections' should follow a logical flow: 
+         1. Problem (what sucked before/context)
+         2. Solution (the concept/technology)
+         3. How it works (simple explanation)
+         4. Real Examples (3+ with company names)
+         5. Impact (before/after numbers)
+       - 'Key Takeaways' should be surprising and actionable.
+       - 'Call to Action' should be a question to spark debate.
     """
     
     try:

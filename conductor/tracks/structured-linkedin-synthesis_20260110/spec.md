@@ -24,6 +24,12 @@ The goal of this track is to refactor the research synthesis phase in the `topic
 - Update the synthesis prompt in `research_single_topic` to instruct the LLM to generate content following the new structured format.
 - Ensure the instruction explicitly requests "Plain Text" (no markdown and NO emojis) for all content fields.
 - The prompt should encourage a flexible number of sections (typically 3-5, but at the AI's discretion) based on topic depth.
+- **Boss Feedback / Critical Refinements:**
+    - **HOOK RULES:** No marketing language ("revolutionize", "game-changing"). Start with relatable scenario, surprising fact, concrete question, or paradox.
+    - **EXAMPLE RULES:** Must include company/product name and specific numbers/results. No vague "for instance".
+    - **DATA REQUIREMENTS:** Minimum 3 concrete numbers per post (percentages, improvements). Source from search results.
+    - **DIFFICULTY CALIBRATION:** Beginner (Days 1-10): Define technical terms, use analogies.
+    - **STRUCTURE:** Problem, Solution, How it works, Real examples (3+), Impact (numbers), Takeaways.
 
 ### 3. Backend Integration
 - Update the return dictionary in `research_single_topic` to match the new `ResearchSynthesis` fields.

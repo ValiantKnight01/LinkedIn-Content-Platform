@@ -22,3 +22,7 @@
 - [x] Task: Update `PostIndicator` component to display structured data. (6a2b011)
     - *How To*: Modify `frontend/components/calendar/post-indicator.tsx` to render the new fields. Use a simple vertical stack: Hook, then map through sections, then Takeaways, then CTA, then Hashtags.
 - [ ] Task: Conductor - User Manual Verification 'Frontend Integration' (Protocol in workflow.md)
+
+## Phase 4: Refinement (Boss Feedback)
+- [~] Task: Refine synthesis prompt in `topic_researcher.py`.
+    - *How To*: Update the prompt in `research_single_topic` to strictly enforce the new Hook, Example, Data, Difficulty, and Structure rules.
