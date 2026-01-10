@@ -33,6 +33,15 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
         text: 'text-[#3D2B1F]'
       };
     }),
+    // Alternative Quote Style (if summary exists)
+    ...(post.summary ? [{
+      type: 'quote',
+      label: 'Quote Style',
+      text: post.summary.slice(0, 200) + (post.summary.length > 200 ? '...' : ''),
+      source: 'Research Finding',
+      bg: 'bg-[#3D2B1F]',
+      textColor: 'text-[#fefae0]'
+    }] : []),
     // Takeaways Slide
     {
       type: 'takeaways',
@@ -93,6 +102,18 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
                       <p className="text-sm opacity-90">{slide.example}</p>
                     </div>
                   )}
+                </div>
+              )}
+
+              {slide.type === 'quote' && (
+                <div className="flex-1 flex flex-col justify-center items-center text-center space-y-6">
+                  <div className="text-8xl text-[#d4a373] opacity-30 font-serif h-12 leading-[0]">"</div>
+                  <p className="text-2xl font-semibold leading-relaxed italic">
+                    {slide.text}
+                  </p>
+                  <p className="text-[#d4a373] font-bold tracking-wider">
+                    - {slide.source}
+                  </p>
                 </div>
               )}
 

@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Save, Trash2, Plus } from "lucide-react";
+import { Save, Trash2, Plus, Copy, Check } from "lucide-react";
 import { CarouselPreview } from "./carousel-preview";
 
 const statusColors: Record<PostStatus, string> = {
@@ -56,6 +56,7 @@ export function PostIndicator({ post }: { post: Post }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState<Post>(post);
+  const [copied, setCopied] = useState(false);
 
   const handleResearch = async () => {
     setIsResearching(true);
@@ -67,6 +68,22 @@ export function PostIndicator({ post }: { post: Post }) {
     setIsSaving(true);
     await updatePost(post.id, editData);
     setIsSaving(false);
+  };
+
+  const handleCopy = () => {
+    const sections = (editData.sections || [])
+      .map(s => `\n${s.header.toUpperCase()}\n${s.content}${s.example_use_case ? `\n\nExample: ${s.example_use_case}` : ''}`)
+      .join('\n\n---\n');
+
+    const takeaways = (editData.key_takeaways || [])
+      .map(t => `• ${t}`)
+      .join('\n');
+
+    const text = `${editData.hook || ''}\n\n${sections}\n\nKEY TAKEAWAYS\n${takeaways}\n\n${editData.call_to_action || ''}\n\n${(editData.hashtags || []).map(h => `#${h}`).join(' ')}`;
+    
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -86,12 +103,29 @@ export function PostIndicator({ post }: { post: Post }) {
         side="right"
       >
         <Tabs defaultValue="research" className="flex flex-col h-full w-full">
-          <div className="px-8 pt-6 pb-2 border-b border-primary/10 shrink-0 bg-[#fefae0]">
-            <TabsList className="grid w-full grid-cols-3 rounded-full bg-black/5 p-1">
+          <div className="px-8 pt-6 pb-2 border-b border-primary/10 shrink-0 bg-[#fefae0] flex items-center justify-between gap-4">
+            <TabsList className="grid w-full grid-cols-3 rounded-full bg-black/5 p-1 max-w-md">
               <TabsTrigger value="research" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Research</TabsTrigger>
               <TabsTrigger value="edit" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Edit</TabsTrigger>
               <TabsTrigger value="preview" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Preview</TabsTrigger>
             </TabsList>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleCopy}
+              className="rounded-full border-primary/20 hover:bg-primary/5 h-9 px-4 shrink-0 font-medium"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4 mr-2 text-green-600" /> Copied!
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4 mr-2" /> Copy Post
+                </>
+              )}
+            </Button>
           </div>
 
                     <TabsContent value="research" className="flex-1 flex flex-col m-0 overflow-hidden border-none">
