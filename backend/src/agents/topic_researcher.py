@@ -193,15 +193,20 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
        - Start with a relatable scenario, a surprising fact, a concrete question, OR a paradox.
        - Example: "You speak at 150 words/min. Models process 100x faster. How?"
     
-    2. EXAMPLE RULES:
+    2. EXAMPLE RULES & DEPTH:
        - MUST include specific Company/Product names.
-       - MUST include specific numbers or results.
-       - NO vague phrases like "for instance" or "for example" without specifics.
-       - Format: "CompanyName does X, achieving Y result with Z metric".
+       - Each example must be DETAILED (min 50 words):
+         * Specific feature/product name.
+         * HOW they use it (2-3 technical details).
+         * Measurable impact (revenue, engagement, time).
+         * Interesting detail or "secret sauce".
+       - NO vague phrases like "for instance" or "for example". Use "Google implemented X..." instead.
+       - NO generic filler ("Companies often find...").
     
-    3. DATA REQUIREMENTS:
-       - Minimum 3 concrete numbers per post (percentages, improvements, comparisons).
-       - Source these strictly from the search results (do not hallucinate numbers).
+    3. DATA & METRICS:
+       - Minimum 3 concrete numbers per post.
+       - TECHNICAL METRICS: If mentioning MAE/RMSE/F1, explain in simple terms or convert to % improvement. (e.g., "Accuracy 65% -> 95%" is better than "MAE reduced by 0.76").
+       - BEFORE/AFTER: Always include a comparison (Metric before -> Metric after) with time period and business impact.
     
     4. DIFFICULTY CALIBRATION:
        - If Day is 1-10 (Beginner): Define EVERY technical term immediately. Use analogies for complex concepts. No jargon without explanation.
@@ -212,8 +217,8 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
          1. Problem (what sucked before/context)
          2. Solution (the concept/technology)
          3. How it works (simple explanation)
-         4. Real Examples (3+ with company names)
-         5. Impact (before/after numbers)
+         4. Real Examples (3+ detailed companies)
+         5. Trade-offs & Challenges (3-4 downsides/limitations + 1 real-world problem)
        - 'Key Takeaways' should be surprising and actionable.
        - 'Call to Action' should be a question to spark debate.
     """

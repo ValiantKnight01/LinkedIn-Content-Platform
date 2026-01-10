@@ -30,6 +30,12 @@ The goal of this track is to refactor the research synthesis phase in the `topic
     - **DATA REQUIREMENTS:** Minimum 3 concrete numbers per post (percentages, improvements). Source from search results.
     - **DIFFICULTY CALIBRATION:** Beginner (Days 1-10): Define technical terms, use analogies.
     - **STRUCTURE:** Problem, Solution, How it works, Real examples (3+), Impact (numbers), Takeaways.
+    - **Round 2 Refinements:**
+        - **TECHNICAL METRICS:** Explain metrics like MAE/RMSE in simple terms or convert to %.
+        - **EXAMPLE DEPTH:** Company example must have feature name, specific usage details, impact, and "secret sauce". Min 50 words per example.
+        - **BEFORE/AFTER:** Explicit comparison of metrics before/after attention, with time period and business impact.
+        - **TRADE-OFFS:** Dedicated "Challenges" section with 3-4 downsides and real-world problems.
+        - **NO GENERIC FILLER:** Banned phrases like "For instance...", "In a typical scenario...". Use specific company/action/result instead.
 
 ### 3. Backend Integration
 - Update the return dictionary in `research_single_topic` to match the new `ResearchSynthesis` fields.
