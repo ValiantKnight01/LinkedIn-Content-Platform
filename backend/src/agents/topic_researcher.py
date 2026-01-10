@@ -39,8 +39,19 @@ class TopicResult(BaseModel):
     sources: List[str] = Field(description="List of source URLs found")
     summary: str = Field(description="Brief summary of the topic")
 
+class ResearchSection(BaseModel):
+    header: str = Field(description="The section header (plain text, no emojis)")
+    content: str = Field(description="The main content of the section (plain text, no emojis)")
+    example_use_case: str = Field(description="A practical example or use case (plain text, no emojis)")
+
 class ResearchSynthesis(BaseModel):
-    summary: str = Field(description="A detailed synthesis of the researched topic (5-8 paragraphs)")
+    day: int = Field(description="The day of the curriculum")
+    title: str = Field(description="A compelling title for the post (plain text, no emojis)")
+    hook: str = Field(description="An engaging opening hook for the LinkedIn post (plain text, no emojis)")
+    sections: List[ResearchSection] = Field(description="The main body sections of the post")
+    key_takeaways: List[str] = Field(description="3-5 key takeaways (plain text, no emojis)")
+    call_to_action: str = Field(description="A question or statement to encourage engagement (plain text, no emojis)")
+    hashtags: List[str] = Field(description="Relevant LinkedIn hashtags (no # symbol, just the words)")
     sources: List[str] = Field(description="The most relevant source URLs used")
 
 # --- State ---
