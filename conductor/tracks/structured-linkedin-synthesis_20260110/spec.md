@@ -39,6 +39,10 @@ The goal of this track is to refactor the research synthesis phase in the `topic
     - **Bug Fix (Validation Error):**
         - Make `example_use_case` optional in `ResearchSection` model to prevent crashes if the LLM adds sections like "Conclusion" without examples.
         - Update prompt to explicitly instruct LLM *not* to put "Key Takeaways" or "Conclusion" in the `sections` list.
+    - **Round 3 Refinements (Distribute Examples):**
+        - **ELIMINATE DEDICATED EXAMPLE SECTION:** Remove the "Real Examples" section from the required structure.
+        - **DISTRIBUTE EXAMPLES:** Require that specific company examples be moved into the `example_use_case` field of the *relevant* sections (Problem, Solution, How it works, etc.).
+        - **POPULATE EXAMPLE FIELDS:** Ensure `example_use_case` is populated for every section to provide context and "secret sauce" directly alongside the concept.
 
 ### 3. Backend Integration
 - Update the return dictionary in `research_single_topic` to match the new `ResearchSynthesis` fields.

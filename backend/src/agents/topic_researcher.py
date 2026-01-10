@@ -191,11 +191,12 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         2. Problem (why old methods failed)
         3. Solution (what attention mechanism does differently)
         4. How It Works (explain mechanism with analogy)
-        5. Real Examples (3+ companies with specific metrics)
-        6. Before vs After (side-by-side comparison table format)
-        7. Trade-offs (3+ benefits, 3+ challenges)
-        8. Key Takeaways (5-7 bullets, actionable + surprising)
-        9. Call to Action (personal question, not abstract)
+        5. Before vs After (side-by-side comparison table format)
+        6. Trade-offs (3+ benefits, 3+ challenges)
+        7. Key Takeaways (5-7 bullets, actionable + surprising)
+        8. Call to Action (personal question, not abstract)
+
+        CRITICAL: Each of the body sections (Problem, Solution, How It Works, Before vs After, Trade-offs) MUST have a specific, detailed Company Example populated in its `example_use_case` field. Do NOT create a separate "Real Examples" section. Distribute the high-quality company examples (Google, etc.) across these sections.
 
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -222,9 +223,14 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
 
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-        EXAMPLE RULES (EACH MUST HAVE):
+        EXAMPLE RULES (DISTRIBUTED):
 
-        For EACH company example (minimum 3 examples):
+        You must find 3-4 high-quality company examples.
+        Instead of listing them in one block, ASSIGN each one to the most relevant section using the `example_use_case` field.
+        
+        CRITICAL: EVERY section (Problem, Solution, etc.) MUST have a populated `example_use_case`.
+
+        For EACH example used:
 
         1. Company/Product Name (specific)
         2. Specific Feature (not "their system" - name it)
