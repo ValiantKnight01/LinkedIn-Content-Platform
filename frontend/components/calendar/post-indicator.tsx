@@ -302,9 +302,13 @@ export function PostIndicator({ post }: { post: Post }) {
                         </div>
                       </TabsContent>
             
-                                <TabsContent value="edit" className="flex-1 m-0 overflow-hidden border-none flex flex-col">
-                                  <ScrollArea className="flex-1">
-                                    <div className="p-8 space-y-8">
+                                          <TabsContent value="edit" className="flex-1 m-0 overflow-hidden border-none flex flex-col min-h-0">
+            
+                                            <ScrollArea className="flex-1 h-full">
+            
+                                              <div className="p-8 space-y-8">
+            
+                                
                                       <div className="grid gap-6">
                                         <div className="space-y-2">
                                           <Label htmlFor="title" className="text-[#3D2B1F] font-bold">Post Title</Label>
