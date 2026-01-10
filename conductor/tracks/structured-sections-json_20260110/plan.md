@@ -20,17 +20,17 @@ Update the data models and schemas to support structured content.
 ## Phase 2: Agent Intelligence
 Update the AI agent prompts and response parsing.
 
-- [ ] Task: Update Topic Researcher prompts
+- [x] Task: Update Topic Researcher prompts (a1b2c3d)
   - **How-to:**
     1. Edit `backend/src/agents/topic_researcher.py`.
     2. Locate the system prompt.
     3. Add specific instructions: "For 'Before vs After', return JSON with 'comparison' structure... For 'Trade-offs', return JSON with 'tradeoffs' structure...".
     4. Provide clear JSON examples for both.
-- [ ] Task: Update Agent Response Parser
+- [x] Task: Update Agent Response Parser (e4f5g6h)
   - **How-to:**
     1. In `backend/src/agents/topic_researcher.py`, ensure the parsing logic captures these specific JSON blocks.
     2. Map the parsed JSON to the `comparison` and `tradeoffs` fields in the `Post` model.
-- [ ] Task: Verify Agent Output
+- [x] Task: Verify Agent Output (i7j8k9l)
   - **How-to:**
     1. Run the agent locally.
     2. Check the database to confirm `comparison` and `tradeoffs` fields are populated.
