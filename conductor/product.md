@@ -8,7 +8,7 @@ A lightweight, personal tool designed to streamline the creation and scheduling 
 - **Personal Brand Builders:** Individuals looking to maintain a professional and engaging LinkedIn presence with minimal friction.
 
 # Key Features
-- **Smart Post Editor:** A dedicated editor with LinkedIn-specific formatting and live preview.
+- **Smart Post Editor:** A dedicated editor with LinkedIn-specific formatting, live preview, and structured support for comparison tables and trade-off lists.
 - **Syllabus & Calendar:** A central hub for planning monthly editorial themes and generating progressive learning curriculums.
 - **Deep Research Agents:** AI that performs multi-step web scraping and synthesis to create authoritative content summaries from high-quality sources.
 - **AI Content Assistant:** Leveraging AI to brainstorm ideas, refine hooks, and improve post structure.
