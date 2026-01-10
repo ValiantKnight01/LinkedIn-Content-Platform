@@ -36,7 +36,7 @@ Update the AI agent prompts and response parsing.
     2. Check the database to confirm `comparison` and `tradeoffs` fields are populated.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Agent Intelligence' (Protocol in workflow.md)
 
-## Phase 3: Frontend Interface
+## Phase 3: Frontend Interface (7551361)
 Implement structured rendering for the new section types.
 
 - [x] Task: Update Frontend Types (m1n2o3p)
