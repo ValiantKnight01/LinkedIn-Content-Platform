@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Save, Trash2, Plus } from "lucide-react";
+import { CarouselPreview } from "./carousel-preview";
 
 const statusColors: Record<PostStatus, string> = {
   draft: "bg-yellow-400",
@@ -620,12 +621,10 @@ export function PostIndicator({ post }: { post: Post }) {
                                     </Button>
                                   </div>
                                 </TabsContent>
-                                            <TabsContent value="preview" className="flex-1 m-0 overflow-hidden border-none">
-                        <div className="p-8">
-                          <h3 className="font-serif text-2xl font-bold text-[#3D2B1F]">Carousel Preview</h3>
-                          <p className="text-[#6B4F3A]">LinkedIn carousel simulation will go here.</p>
-                        </div>
-                      </TabsContent>
+                                                      <TabsContent value="preview" className="flex-1 m-0 overflow-hidden border-none p-0">
+                                                        <CarouselPreview post={editData} />
+                                                      </TabsContent>
+                                            
                     </Tabs>
                   </SheetContent>
             
