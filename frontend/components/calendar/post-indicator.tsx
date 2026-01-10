@@ -16,6 +16,12 @@ import { Loader2, Sparkles, FileText, Globe } from "lucide-react";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 
 const statusColors: Record<PostStatus, string> = {
   draft: "bg-yellow-400",
@@ -66,8 +72,22 @@ export function PostIndicator({ post }: { post: Post }) {
         className="w-full sm:max-w-[50vw] bg-[#fefae0] border-l border-primary/20 p-0 gap-0 overflow-hidden" 
         side="right"
       >
-        <div className="flex flex-col h-full w-full">
-            <SheetHeader className="p-8 pb-4 shrink-0 space-y-4">
+        <Tabs defaultValue="research" className="flex flex-col h-full w-full">
+          <div className="px-8 pt-6 pb-2 border-b border-primary/10 shrink-0 bg-[#fefae0]">
+            <TabsList className="grid w-full grid-cols-3 rounded-full bg-black/5 p-1">
+              <TabsTrigger value="research" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Research</TabsTrigger>
+              <TabsTrigger value="edit" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Edit</TabsTrigger>
+              <TabsTrigger value="preview" className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm">Preview</TabsTrigger>
+            </TabsList>
+          </div>
+
+                    <TabsContent value="research" className="flex-1 flex flex-col m-0 overflow-hidden border-none">
+
+                      <div className="flex flex-col h-full w-full">
+
+                          <SheetHeader className="p-8 pb-4 shrink-0 space-y-4 text-left">
+
+          
               <div className="flex items-center gap-3">
                 <Badge variant="outline" className={cn("capitalize px-3 py-1", bgStyles[post.status])}>
                   {post.status}
@@ -231,9 +251,26 @@ export function PostIndicator({ post }: { post: Post }) {
                         <span className="opacity-50">Drafting module locked</span>
                      </div>
                  )}
-            </SheetFooter>
-        </div>
-      </SheetContent>
+                            </SheetFooter>
+                        </div>
+                      </TabsContent>
+            
+                      <TabsContent value="edit" className="flex-1 m-0 overflow-hidden border-none">
+                        <div className="p-8">
+                          <h3 className="font-serif text-2xl font-bold text-[#3D2B1F]">Edit Post</h3>
+                          <p className="text-[#6B4F3A]">Form fields will go here.</p>
+                        </div>
+                      </TabsContent>
+            
+                      <TabsContent value="preview" className="flex-1 m-0 overflow-hidden border-none">
+                        <div className="p-8">
+                          <h3 className="font-serif text-2xl font-bold text-[#3D2B1F]">Carousel Preview</h3>
+                          <p className="text-[#6B4F3A]">LinkedIn carousel simulation will go here.</p>
+                        </div>
+                      </TabsContent>
+                    </Tabs>
+                  </SheetContent>
+            
     </Sheet>
   );
 }
