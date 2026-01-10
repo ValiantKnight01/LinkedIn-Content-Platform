@@ -24,5 +24,5 @@
 - [ ] Task: Conductor - User Manual Verification 'Frontend Integration' (Protocol in workflow.md)
 
 ## Phase 4: Refinement (Boss Feedback)
-- [~] Task: Refine synthesis prompt in `topic_researcher.py`.
+- [x] Task: Refine synthesis prompt in `topic_researcher.py`. (34cd0f8)
     - *How To*: Update the prompt in `research_single_topic` to strictly enforce the new Hook, Example, Data, Difficulty, and Structure rules.
