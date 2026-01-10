@@ -17,7 +17,7 @@ Update the data models and schemas to support structured content.
     2. Add a simple test case or verify manually that passing the new structure works.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Foundation' (Protocol in workflow.md)
 
-## Phase 2: Agent Intelligence
+## Phase 2: Agent Intelligence (2d380ac)
 Update the AI agent prompts and response parsing.
 
 - [x] Task: Update Topic Researcher prompts (a1b2c3d)
