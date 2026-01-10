@@ -1,18 +1,18 @@
 # Plan: Post Edit & LinkedIn Carousel Preview
 
-## Phase 1: Backend Implementation
+## Phase 1: Backend Implementation [38e953d]
 Add support for updating post details in the database.
 
 - [x] Task: Implement `PATCH /posts/{id}` endpoint in `backend/src/routes/posts.py`. c1b47cd
     - *How To:* Create a Pydantic schema `PostUpdate` with optional fields for all editable attributes (title, hook, sections, etc.). In the route, fetch the post by ID, apply updates using `post.update(**update_data)`, reload the document, and return the formatted post.
 - [x] Task: Ensure the `Post` model supports updates for all fields (Sections, Takeaways, CTA, etc.). c1b47cd
     - *How To:* Verify `backend/src/models/post.py` already has the necessary fields. If `sections` is a `ListField(DictField())`, ensure the update logic in the route handles full replacement of this list correctly.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Implementation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Implementation' (Protocol in workflow.md) 38e953d
 
 ## Phase 2: Store & Foundation
 Update the frontend state management and base UI components.
 
-- [ ] Task: Add `updatePost` action to `useCalendarStore` in `frontend/lib/store.ts`.
+- [~] Task: Add `updatePost` action to `useCalendarStore` in `frontend/lib/store.ts`.
     - *How To:* Define `updatePost: (id: string, updates: Partial<Post>) => Promise<void>` in the store interface. Implement the function to call `PATCH /api/posts/{id}` and optimistically update the `posts` array in the state.
 - [ ] Task: Adjust `SheetContent` in `PostIndicator` for 50vw width on desktop and 100% on mobile.
     - *How To:* In `frontend/components/calendar/post-indicator.tsx`, modify the `SheetContent` `className`. Change `sm:max-w-xl` to `sm:max-w-[50vw] w-full`. Ensure the mobile view retains `w-full`.
