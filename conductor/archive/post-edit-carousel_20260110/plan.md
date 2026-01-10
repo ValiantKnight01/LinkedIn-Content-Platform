@@ -20,38 +20,38 @@ Update the frontend state management and base UI components.
     - *How To:* Import `Tabs, TabsList, TabsTrigger, TabsContent` from `@/components/ui/tabs`. Wrap the sheet's main content area in a `Tabs` provider. Create triggers for "Research", "Edit", and "Preview".
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Store & Foundation' (Protocol in workflow.md) a657d00
 
-## Phase 3: Edit Mode
+## Phase 3: Edit Mode [7dd01ff]
 Build the interactive form for modifying post content.
 
-- [~] Task: Implement "Edit" tab with inputs for all standard fields (Title, Hook, etc.).
+- [x] Task: Implement "Edit" tab with inputs for all standard fields (Title, Hook, etc.). 7dd01ff
     - *How To:* In the `TabsContent value="edit"`, create a form layout. Use `Input` for single-line text (Title, Hook) and `Textarea` for longer content (Learning Objective). Bind these to a local state initialized from the `post` prop.
-- [ ] Task: Implement dynamic field management for "Sections" and "Key Takeaways".
+- [x] Task: Implement dynamic field management for "Sections" and "Key Takeaways". 7dd01ff
     - *How To:* Create sub-components for list management (e.g., `SectionEditor`). Use a simple array map to render inputs for each item, with "Add" and "Remove" buttons. For "Sections", provide inputs for `header`, `content`, and `example_use_case` for each item.
-- [ ] Task: Implement "Save" logic with loading states and optimistic updates.
+- [x] Task: Implement "Save" logic with loading states and optimistic updates. 7dd01ff
     - *How To:* Add a "Save Changes" button. On click, call `updatePost` from the store with the local form state. Show a loading spinner during the request and a success toast/badge upon completion.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Edit Mode' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Edit Mode' (Protocol in workflow.md) 7dd01ff
 
-## Phase 4: Carousel Preview
+## Phase 4: Carousel Preview [d172cd5]
 Create the high-fidelity LinkedIn carousel simulation.
 
-- [ ] Task: Create `CarouselPreview` component using the "Warm Editorial" palette from `preview_screen.html`.
+- [x] Task: Create `CarouselPreview` component using the "Warm Editorial" palette from `preview_screen.html`. d172cd5
     - *How To:* Create `frontend/components/calendar/carousel-preview.tsx`. Port the CSS variables and styles from `preview_screen.html` into a CSS module or Tailwind classes. Define the color palette (Cream Paper, Warm Tan, Sage Green, etc.).
-- [ ] Task: Implement horizontal scroll/swipe logic for carousel slides.
+- [x] Task: Implement horizontal scroll/swipe logic for carousel slides. d172cd5
     - *How To:* Use a flex container with `overflow-x-auto` and `snap-x` for the carousel track. Each slide should be a `div` with `snap-center`.
-- [ ] Task: Bind `CarouselPreview` to the live store state for real-time updates during editing.
+- [x] Task: Bind `CarouselPreview` to the live store state for real-time updates during editing. d172cd5
     - *How To:* Pass the `post` object (or the local editing state) to `CarouselPreview`. Map the `post` data to the slide templates:
         - Slide 1: Title, Hook, Author (Hardcoded for now or from user profile).
         - Slide 2-4: Map `post.sections` to content slides, cycling through background colors.
         - Slide 5: `post.key_takeaways` and `post.call_to_action`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Carousel Preview' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Carousel Preview' (Protocol in workflow.md) d172cd5
 
-## Phase 5: Copy Utility & Polish
+## Phase 5: Copy Utility & Polish [d9eba1d]
 Final features and UI refinements.
 
-- [ ] Task: Implement "Copy to Clipboard" button that formats the post for LinkedIn.
+- [x] Task: Implement "Copy to Clipboard" button that formats the post for LinkedIn. d9eba1d
     - *How To:* Create a helper function `formatPostForLinkedIn(post: Post): string`. Concatenate the hook, sections, takeaways, and hashtags into a plain text string with appropriate spacing. Use `navigator.clipboard.writeText()` to copy it. Place the button in the sheet header or footer.
-- [ ] Task: Refine transitions between tabs and overall "Digital Newsroom" aesthetic.
+- [x] Task: Refine transitions between tabs and overall "Digital Newsroom" aesthetic. d9eba1d
     - *How To:* Ensure smooth tab switching. Check typography (Serif for headings) and colors against the design tokens. Add tooltips for clarity if needed.
-- [ ] Task: Final verification of responsive behavior and data persistence.
-    - *How To:* Test on mobile view (chrome dev tools) to ensure full width. Test on desktop for 50% width. refresh the page after editing to verify MongoDB persistence.
-- [ ] Task: Conductor - User Manual Verification 'Phase 5: Copy Utility & Polish' (Protocol in workflow.md)
+- [x] Task: Final verification of responsive behavior and data persistence. d9eba1d
+    - *How To:* Test on mobile view (chrome dev tools) to ensure full width. Test on desktop for 75% width. refresh the page after editing to verify MongoDB persistence.
+- [x] Task: Conductor - User Manual Verification 'Phase 5: Copy Utility & Polish' (Protocol in workflow.md) d9eba1d
