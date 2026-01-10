@@ -32,5 +32,7 @@
     - *How To*: 1. Update `ResearchSection` model to make `example_use_case` optional. 2. Update prompt to forbid duplicating "Key Takeaways" into the `sections` list.
 - [x] Task: Refine synthesis prompt (Round 3 - Distribute Examples). (d80a9f9)
     - *How To*: Modify prompt to remove the dedicated "Real Examples" section and instruct LLM to integrate company examples into the `example_use_case` field of each section (Problem, Solution, etc.).
-- [~] Task: Refine synthesis prompt (Anti-Hallucination).
-    - *How To*: Add "CRITICAL SOURCE RULE" to prompt: "Use ONLY numbers/metrics from the provided Researched Content. DO NOT fabricate business impact numbers."
+- [x] Task: Refine synthesis prompt (Anti-Hallucination). (2debe1a)
+    - *How To*: Add "CRITICAL SOURCE RULE" to prompt: "Use ONLY numbers from the provided Researched Content. DO NOT fabricate business impact numbers."
+- [~] Task: Refine synthesis prompt (Strict Prioritization).
+    - *How To*: Update prompt to explicitly state: "If source numbers are missing, DO NOT invent them to satisfy formatting rules. Use qualitative descriptions instead. Accuracy > Formatting."
