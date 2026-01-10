@@ -35,8 +35,4 @@
 ## [~] Track: Agentic Topic Research (Sub-Agent Architecture)
 *Link: [./conductor/tracks/agentic-research_20251226/](./conductor/tracks/agentic-research_20251226/)*
 
----
-
-## [~] Track: Structured LinkedIn Post Synthesis
-*Link: [./conductor/tracks/structured-linkedin-synthesis_20260110/](./conductor/tracks/structured-linkedin-synthesis_20260110/)*
 
