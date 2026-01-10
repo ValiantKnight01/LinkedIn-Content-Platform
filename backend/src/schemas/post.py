@@ -9,6 +9,13 @@ class PostBase(BaseModel):
     sources: Optional[List[str]] = []
     summary: Optional[str] = None
     
+    # Structured LinkedIn Content
+    hook: Optional[str] = None
+    sections: Optional[List[dict]] = None
+    key_takeaways: Optional[List[str]] = None
+    call_to_action: Optional[str] = None
+    hashtags: Optional[List[str]] = None
+
     # New fields for Progressive Curriculum
     day: Optional[int] = None
     learning_objective: Optional[str] = None
@@ -24,6 +31,11 @@ class PostUpdate(BaseModel):
     status: Optional[str] = Field(None, pattern='^(proposed|planned|researched|selected|inDraft|scheduled)$')
     sources: Optional[List[str]] = None
     summary: Optional[str] = None
+    hook: Optional[str] = None
+    sections: Optional[List[dict]] = None
+    key_takeaways: Optional[List[str]] = None
+    call_to_action: Optional[str] = None
+    hashtags: Optional[List[str]] = None
     day: Optional[int] = None
     learning_objective: Optional[str] = None
     difficulty: Optional[str] = None
