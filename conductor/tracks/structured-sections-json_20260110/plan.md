@@ -58,7 +58,7 @@ Implement structured rendering for the new section types.
     2. Add logic to render `SectionComparison` or `SectionTradeoffs` if the respective data exists; otherwise default to text.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Frontend Interface' (Protocol in workflow.md)
 
-## Phase 4: Editor Integration
+## Phase 4: Editor Integration (c865028)
 Implement editing capabilities for structured sections.
 
 - [x] Task: Create `ComparisonEditor` Component (c1d2e3f)
