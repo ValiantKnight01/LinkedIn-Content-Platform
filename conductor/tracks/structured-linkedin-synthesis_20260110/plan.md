@@ -10,7 +10,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Agent Logic' (Protocol in workflow.md)
 
 ## Phase 2: Data Persistence
-- [ ] Task: Update `Post` model in `backend/src/models/post.py`.
+- [~] Task: Update `Post` model in `backend/src/models/post.py`.
     - *How To*: Add the following fields to the `Post` document: `hook` (StringField), `sections` (ListField of DictField), `key_takeaways` (ListField of StringField), `call_to_action` (StringField), and `hashtags` (ListField of StringField). Ensure `DictField` is imported from `mongoengine`.
 - [ ] Task: Update `research_post` route in `backend/src/routes/posts.py`.
     - *How To*: Update the call to `research_single_topic` to pass the `post.day` value. Then, update the `post.update()` call to map the new fields (`hook`, `sections`, `key_takeaways`, `call_to_action`, `hashtags`, `sources`) from the synthesis result to the database document.
