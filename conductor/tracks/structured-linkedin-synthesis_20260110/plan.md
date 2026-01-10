@@ -30,5 +30,5 @@
     - *How To*: Add requirements for: Technical Metrics (explain/simplify), Example Depth (50 words+, feature/usage/impact), Before/After comparisons, Trade-offs/Challenges section, and removal of generic filler phrases.
 - [x] Task: Fix validation error in `topic_researcher.py`. (7a33dba)
     - *How To*: 1. Update `ResearchSection` model to make `example_use_case` optional. 2. Update prompt to forbid duplicating "Key Takeaways" into the `sections` list.
-- [~] Task: Refine synthesis prompt (Round 3 - Distribute Examples).
+- [x] Task: Refine synthesis prompt (Round 3 - Distribute Examples). (d80a9f9)
     - *How To*: Modify prompt to remove the dedicated "Real Examples" section and instruct LLM to integrate company examples into the `example_use_case` field of each section (Problem, Solution, etc.).
