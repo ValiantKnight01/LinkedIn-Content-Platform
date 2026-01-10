@@ -235,26 +235,18 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         1. Company/Product Name (specific)
         2. Specific Feature (not "their system" - name it)
         3. Technical Details (2-3 sentences on HOW)
-        4. Business Metrics (separate accuracy from revenue)
+        4. Business Outcome (Explain the impact in plain language - NO specific percentages or dollar amounts unless you are 100% sure they are in the source text)
         5. Time Period (when this happened)
 
         FORMAT TEMPLATE:
         "[Company]'s [Product Name] ([Year]):
         - Technical approach: [How they use attention - 2 details]
-        - Accuracy improvement: [Before X% → After Y%]
-        - Business impact: [Revenue/cost/time saved with $]
+        - Business outcome: [Explain the qualitative impact, e.g., 'drastically reduced latency', 'improved accuracy on long-range text']
         - Key insight: [Interesting detail]"
 
-        SEPARATE CLEARLY:
-        - Prediction accuracy: "Forecasting accuracy improved from 72% to 94%"
-        - Business outcome: "This accuracy gain saved $120M in energy costs"
-
-        NEVER write: "predicted X resulting in Y% revenue increase" (confusing!)
-
         CRITICAL SOURCE RULE (ANTI-HALLUCINATION):
-        - You must ONLY use numbers ($, %, dates) that appear in the provided `Researched Content`.
-        - DO NOT generate plausible-sounding business metrics (like '$2.3M saved' or '40% reduction') unless they are explicitly in the source text.
-        - **PRIORITY OVERRIDE:** If you cannot find specific numbers to satisfy the "3 numbers per post" rule, DO NOT INVENT THEM. Use qualitative descriptions (e.g., "significant reduction", "faster processing") instead.
+        - DO NOT generate plausible-sounding business metrics (like '$2.3M saved' or '40% reduction').
+        - Use ONLY qualitative descriptions (e.g., "significant reduction", "faster processing", "more accurate context") for impact and results.
         - ACCURACY IS MORE IMPORTANT THAN FORMATTING. Hallucinating numbers = IMMEDIATE FAIL.
 
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -264,18 +256,18 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         Always include comparison in this format:
 
         Traditional Methods ([Method Name]):
-        → Accuracy: [X%]
-        → Forecast horizon: [timeframe]
-        → Cost: [$]
-        → Limitations: [what it couldn't do]
+        → Performance: [Qualitative description of performance]
+        → Context: [Limitation on context handling]
+        → Efficiency: [Description of resource usage]
+        → Limitations: [What it couldn't do]
 
         With Attention Mechanisms:
-        → Accuracy: [Y%] (+Z%)
-        → Forecast horizon: [longer timeframe]
-        → Cost savings: [$]
-        → New capabilities: [what it can do now]
+        → Performance: [Qualitative improvement description]
+        → Context: [How it handles long-range context now]
+        → Efficiency: [Description of parallelization/speed gains]
+        → New capabilities: [What it can do now]
 
-        Result: [Company] saved $[X] from [year] to [year]
+        Result: [Company] improved [Product] between [year] and [year]
 
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -316,14 +308,14 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         TRADE-OFFS SECTION (MANDATORY):
 
         Benefits (3-4 points):
-        ✓ [Specific improvement with %]
-        ✓ [Capability that didn't exist before]
-        ✓ [Speed/cost advantage with numbers]
+        ✓ [Specific capability improvement]
+        ✓ [New feature/possibility that didn't exist before]
+        ✓ [Speed/cost advantage explained qualitatively]
 
         Challenges (3-4 points):
-        ✗ [Resource requirement with numbers]
-        ✗ [Limitation with specific scenario]
-        ✗ [Downside with real-world example]
+        ✗ [Resource/compute requirement context]
+        ✗ [Specific limitation or edge case]
+        ✗ [Downside with real-world context]
 
         When NOT to use:
         → [Scenario 1 with reason]
@@ -336,14 +328,14 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         KEY TAKEAWAYS FORMAT:
 
         Each takeaway must be ONE of these types:
-        → Surprising metric: "[Technology] improved [metric] from X% to Y%"
-        → Business impact: "[Company] saved/earned $X using [technology]"
+        → Impactful change: "[Technology] improved [process] by enabling [capability]"
+        → Business context: "[Company] solved [problem] using [technology]"
         → Actionable tool: "Start with [specific tool/library name]"
-        → Key limitation: "Minimum [number] data points needed"
+        → Key limitation: "Requires [specific resource/condition] to work"
         → Best use case: "Works best for [specific industry/problem]"
 
         Minimum 5 takeaways, maximum 7.
-        Each must include numbers OR specific product names OR actionable advice.
+        Each must include specific product names OR actionable advice.
 
         NO generic statements like "Attention mechanisms are powerful" ← REJECT
 
@@ -365,11 +357,11 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         FINAL VALIDATION CHECKLIST:
 
         Before submitting, verify:
-        □ Hook has 2+ numbers and no semicolons
-        □ All 9 sections present
+        □ Hook is punchy and has no semicolons
+        □ All body sections present
         □ 3+ company examples with specific products
-        □ Each example has: accuracy metrics + business impact + timeframe
-        □ Before/After comparison included
+        □ Each example has: qualitative impact + timeframe
+        □ Before/After comparison included (qualitative)
         □ Trade-offs section has benefits + challenges + when not to use
         □ All technical terms defined (for Days 1-10)
         □ No sentences over 25 words
