@@ -176,32 +176,53 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
     
     context = "\n\n---\n\n".join(scraped_content)
     prompt = f"""Topic: {title}
+    Day: {day}
     Learning Objective: {learning_objective}
     Difficulty: {difficulty}
     
     Researched Content:
     {context}
     
-    Using the researched content above, synthesize a detailed and authoritative summary for a LinkedIn post. 
-    The summary should be educational, engaging, and directly address the learning objective.
-    Focus on extracting data points, unique insights, and actionable advice.
+    Using the researched content above, synthesize a detailed and authoritative LinkedIn post.
+    The output must strictly follow the structured format.
+    
+    IMPORTANT GUIDELINES:
+    1. Use ONLY PLAIN TEXT. No markdown (no bold, italics, etc.) and ABSOLUTELY NO EMOJIS.
+    2. The 'hook' should be a punchy, engaging opening that stops the scroll.
+    3. Create a flexible number of 'sections' (typically 3-5) based on the topic depth. Each section must have a header, concise content, and a practical example or use case.
+    4. Provide 3-5 high-value 'key_takeaways'.
+    5. The 'call_to_action' should be a question or statement to encourage comments.
+    6. Include 3-5 relevant LinkedIn 'hashtags' (words only, no # symbol).
+    7. All content must be educational, engaging, and directly address the learning objective.
     """
     
     try:
         synthesis = await structured_llm.ainvoke([
-            SystemMessage(content="You are an expert researcher and technical writer."),
+            SystemMessage(content="You are an expert researcher and LinkedIn content strategist."),
             HumanMessage(content=prompt)
         ])
         print("   + Synthesis complete.")
         return {
-            "summary": synthesis.summary,
+            "day": synthesis.day,
+            "title": synthesis.title,
+            "hook": synthesis.hook,
+            "sections": [s.dict() for s in synthesis.sections],
+            "key_takeaways": synthesis.key_takeaways,
+            "call_to_action": synthesis.call_to_action,
+            "hashtags": synthesis.hashtags,
             "sources": synthesis.sources,
             "status": "researched"
         }
     except Exception as e:
         print(f"   x Synthesis Error: {e}")
         return {
-            "summary": f"Error during synthesis: {str(e)}",
+            "day": day,
+            "title": title,
+            "hook": "Error during synthesis.",
+            "sections": [],
+            "key_takeaways": [],
+            "call_to_action": "",
+            "hashtags": [],
             "sources": unique_urls,
             "status": "researched"
         }
