@@ -22,6 +22,10 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Save, Trash2, Plus } from "lucide-react";
 
 const statusColors: Record<PostStatus, string> = {
   draft: "bg-yellow-400",
@@ -46,14 +50,22 @@ const bgStyles: Record<PostStatus, string> = {
 };
 
 export function PostIndicator({ post }: { post: Post }) {
-  const { researchPost } = useCalendarStore();
+  const { researchPost, updatePost } = useCalendarStore();
   const [isResearching, setIsResearching] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [editData, setEditData] = useState<Post>(post);
 
   const handleResearch = async () => {
     setIsResearching(true);
     await researchPost(post.id);
     setIsResearching(false);
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    await updatePost(post.id, editData);
+    setIsSaving(false);
   };
 
   return (
@@ -255,14 +267,360 @@ export function PostIndicator({ post }: { post: Post }) {
                         </div>
                       </TabsContent>
             
-                      <TabsContent value="edit" className="flex-1 m-0 overflow-hidden border-none">
-                        <div className="p-8">
-                          <h3 className="font-serif text-2xl font-bold text-[#3D2B1F]">Edit Post</h3>
-                          <p className="text-[#6B4F3A]">Form fields will go here.</p>
-                        </div>
-                      </TabsContent>
-            
-                      <TabsContent value="preview" className="flex-1 m-0 overflow-hidden border-none">
+                                <TabsContent value="edit" className="flex-1 m-0 overflow-hidden border-none flex flex-col">
+                                  <ScrollArea className="flex-1">
+                                    <div className="p-8 space-y-8">
+                                      <div className="grid gap-6">
+                                        <div className="space-y-2">
+                                          <Label htmlFor="title" className="text-[#3D2B1F] font-bold">Post Title</Label>
+                                          <Input 
+                                            id="title" 
+                                            value={editData.title} 
+                                            onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                                            className="bg-white/50 border-primary/20 focus:border-primary/40"
+                                          />
+                                        </div>
+                      
+                                        <div className="space-y-2">
+                                          <Label htmlFor="hook" className="text-[#3D2B1F] font-bold">Hook (First Line)</Label>
+                                          <Textarea 
+                                            id="hook" 
+                                            value={editData.hook || ""} 
+                                            onChange={(e) => setEditData({ ...editData, hook: e.target.value })}
+                                            className="bg-white/50 border-primary/20 focus:border-primary/40 min-h-[100px]"
+                                            placeholder="Enter a thumb-stopping hook..."
+                                          />
+                                        </div>
+                      
+                                        <div className="space-y-2">
+                                          <Label htmlFor="learning_objective" className="text-[#3D2B1F] font-bold">Learning Objective</Label>
+                                          <Textarea 
+                                            id="learning_objective" 
+                                            value={editData.learning_objective || ""} 
+                                            onChange={(e) => setEditData({ ...editData, learning_objective: e.target.value })}
+                                            className="bg-white/50 border-primary/20 focus:border-primary/40"
+                                          />
+                                        </div>
+                      
+                                        <div className="grid grid-cols-2 gap-4">
+                                          <div className="space-y-2">
+                                            <Label htmlFor="status" className="text-[#3D2B1F] font-bold">Status</Label>
+                                            <select 
+                                              id="status"
+                                              value={editData.status}
+                                              onChange={(e) => setEditData({ ...editData, status: e.target.value as PostStatus })}
+                                              className="w-full h-10 px-3 rounded-md bg-white/50 border border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                            >
+                                              <option value="planned">Planned</option>
+                                              <option value="researched">Researched</option>
+                                              <option value="inDraft">In Draft</option>
+                                              <option value="scheduled">Scheduled</option>
+                                            </select>
+                                          </div>
+                                          <div className="space-y-2">
+                                            <Label htmlFor="difficulty" className="text-[#3D2B1F] font-bold">Difficulty</Label>
+                                            <Input 
+                                              id="difficulty" 
+                                              value={editData.difficulty || ""} 
+                                              onChange={(e) => setEditData({ ...editData, difficulty: e.target.value })}
+                                              className="bg-white/50 border-primary/20 focus:border-primary/40"
+                                            />
+                                          </div>
+                                        </div>
+                      
+                                                          <div className="space-y-2">
+                      
+                                                            <Label htmlFor="cta" className="text-[#3D2B1F] font-bold">Call to Action</Label>
+                      
+                                                            <Input 
+                      
+                                                              id="cta" 
+                      
+                                                              value={editData.call_to_action || ""} 
+                      
+                                                              onChange={(e) => setEditData({ ...editData, call_to_action: e.target.value })}
+                      
+                                                              className="bg-white/50 border-primary/20 focus:border-primary/40"
+                      
+                                                              placeholder="What should they do next?"
+                      
+                                                            />
+                      
+                                                          </div>
+                      
+                                        
+                      
+                                                          {/* Dynamic Sections */}
+                      
+                                                          <div className="space-y-4">
+                      
+                                                            <div className="flex items-center justify-between">
+                      
+                                                              <Label className="text-[#3D2B1F] font-bold">Carousel Sections</Label>
+                      
+                                                              <Button 
+                      
+                                                                variant="outline" 
+                      
+                                                                size="sm" 
+                      
+                                                                onClick={() => setEditData({
+                      
+                                                                  ...editData,
+                      
+                                                                  sections: [...(editData.sections || []), { header: "", content: "", example_use_case: "" }]
+                      
+                                                                })}
+                      
+                                                                className="rounded-full border-primary/20 hover:bg-primary/5"
+                      
+                                                              >
+                      
+                                                                <Plus className="h-4 w-4 mr-1" /> Add Section
+                      
+                                                              </Button>
+                      
+                                                            </div>
+                      
+                                                            
+                      
+                                                            <div className="space-y-6">
+                      
+                                                              {editData.sections?.map((section, idx) => (
+                      
+                                                                <div key={idx} className="p-6 rounded-[1.5rem] bg-white/30 border border-primary/10 relative group">
+                      
+                                                                  <Button
+                      
+                                                                    variant="ghost"
+                      
+                                                                    size="icon"
+                      
+                                                                    onClick={() => setEditData({
+                      
+                                                                      ...editData,
+                      
+                                                                      sections: editData.sections?.filter((_, i) => i !== idx)
+                      
+                                                                    })}
+                      
+                                                                    className="absolute top-4 right-4 text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                      
+                                                                  >
+                      
+                                                                    <Trash2 className="h-4 w-4" />
+                      
+                                                                  </Button>
+                      
+                                                                  
+                      
+                                                                  <div className="space-y-4">
+                      
+                                                                    <div className="space-y-2">
+                      
+                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Slide Header</Label>
+                      
+                                                                      <Input 
+                      
+                                                                        value={section.header} 
+                      
+                                                                        onChange={(e) => {
+                      
+                                                                          const newSections = [...(editData.sections || [])];
+                      
+                                                                          newSections[idx].header = e.target.value;
+                      
+                                                                          setEditData({ ...editData, sections: newSections });
+                      
+                                                                        }}
+                      
+                                                                        className="bg-white/50 border-primary/10"
+                      
+                                                                        placeholder="Slide heading..."
+                      
+                                                                      />
+                      
+                                                                    </div>
+                      
+                                                                    <div className="space-y-2">
+                      
+                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Slide Content</Label>
+                      
+                                                                      <Textarea 
+                      
+                                                                        value={section.content} 
+                      
+                                                                        onChange={(e) => {
+                      
+                                                                          const newSections = [...(editData.sections || [])];
+                      
+                                                                          newSections[idx].content = e.target.value;
+                      
+                                                                          setEditData({ ...editData, sections: newSections });
+                      
+                                                                        }}
+                      
+                                                                        className="bg-white/50 border-primary/10 min-h-[80px]"
+                      
+                                                                        placeholder="What's the core message?"
+                      
+                                                                      />
+                      
+                                                                    </div>
+                      
+                                                                    <div className="space-y-2">
+                      
+                                                                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Example (Optional)</Label>
+                      
+                                                                      <Input 
+                      
+                                                                        value={section.example_use_case} 
+                      
+                                                                        onChange={(e) => {
+                      
+                                                                          const newSections = [...(editData.sections || [])];
+                      
+                                                                          newSections[idx].example_use_case = e.target.value;
+                      
+                                                                          setEditData({ ...editData, sections: newSections });
+                      
+                                                                        }}
+                      
+                                                                        className="bg-white/50 border-primary/10"
+                      
+                                                                        placeholder="Real-world example..."
+                      
+                                                                      />
+                      
+                                                                    </div>
+                      
+                                                                  </div>
+                      
+                                                                </div>
+                      
+                                                              ))}
+                      
+                                                            </div>
+                      
+                                                          </div>
+                      
+                                        
+                      
+                                                          {/* Key Takeaways */}
+                      
+                                                          <div className="space-y-4">
+                      
+                                                            <div className="flex items-center justify-between">
+                      
+                                                              <Label className="text-[#3D2B1F] font-bold">Key Takeaways</Label>
+                      
+                                                              <Button 
+                      
+                                                                variant="outline" 
+                      
+                                                                size="sm" 
+                      
+                                                                onClick={() => setEditData({
+                      
+                                                                  ...editData,
+                      
+                                                                  key_takeaways: [...(editData.key_takeaways || []), ""]
+                      
+                                                                })}
+                      
+                                                                className="rounded-full border-primary/20 hover:bg-primary/5"
+                      
+                                                              >
+                      
+                                                                <Plus className="h-4 w-4 mr-1" /> Add Takeaway
+                      
+                                                              </Button>
+                      
+                                                            </div>
+                      
+                                        
+                      
+                                                            <div className="space-y-2">
+                      
+                                                              {editData.key_takeaways?.map((point, idx) => (
+                      
+                                                                <div key={idx} className="flex gap-2">
+                      
+                                                                  <Input 
+                      
+                                                                    value={point} 
+                      
+                                                                    onChange={(e) => {
+                      
+                                                                      const newPoints = [...(editData.key_takeaways || [])];
+                      
+                                                                      newPoints[idx] = e.target.value;
+                      
+                                                                      setEditData({ ...editData, key_takeaways: newPoints });
+                      
+                                                                    }}
+                      
+                                                                    className="bg-white/50 border-primary/10"
+                      
+                                                                    placeholder="A key point to remember..."
+                      
+                                                                  />
+                      
+                                                                  <Button
+                      
+                                                                    variant="ghost"
+                      
+                                                                    size="icon"
+                      
+                                                                    onClick={() => setEditData({
+                      
+                                                                      ...editData,
+                      
+                                                                      key_takeaways: editData.key_takeaways?.filter((_, i) => i !== idx)
+                      
+                                                                    })}
+                      
+                                                                    className="text-destructive shrink-0"
+                      
+                                                                  >
+                      
+                                                                    <Trash2 className="h-4 w-4" />
+                      
+                                                                  </Button>
+                      
+                                                                </div>
+                      
+                                                              ))}
+                      
+                                                            </div>
+                      
+                                                          </div>
+                      
+                                        
+                                      </div>
+                                    </div>
+                                  </ScrollArea>
+                                  <div className="p-8 pt-4 border-t border-primary/10 bg-[#fefae0] shrink-0">
+                                    <Button 
+                                      onClick={handleSave} 
+                                      disabled={isSaving}
+                                      className="w-full h-14 rounded-full bg-[#3D2B1F] text-[#fefae0] hover:bg-[#2a1e16] text-lg font-medium shadow-lg hover:shadow-xl transition-all"
+                                    >
+                                      {isSaving ? (
+                                        <>
+                                          <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                                          Saving Changes...
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Save className="mr-2 h-6 w-6" />
+                                          Save Changes
+                                        </>
+                                      )}
+                                    </Button>
+                                  </div>
+                                </TabsContent>
+                                            <TabsContent value="preview" className="flex-1 m-0 overflow-hidden border-none">
                         <div className="p-8">
                           <h3 className="font-serif text-2xl font-bold text-[#3D2B1F]">Carousel Preview</h3>
                           <p className="text-[#6B4F3A]">LinkedIn carousel simulation will go here.</p>
