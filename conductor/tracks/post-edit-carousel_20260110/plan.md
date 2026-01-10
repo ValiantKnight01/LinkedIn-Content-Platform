@@ -9,7 +9,7 @@ Add support for updating post details in the database.
     - *How To:* Verify `backend/src/models/post.py` already has the necessary fields. If `sections` is a `ListField(DictField())`, ensure the update logic in the route handles full replacement of this list correctly.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Implementation' (Protocol in workflow.md) 38e953d
 
-## Phase 2: Store & Foundation
+## Phase 2: Store & Foundation [9cb8dfa]
 Update the frontend state management and base UI components.
 
 - [x] Task: Add `updatePost` action to `useCalendarStore` in `frontend/lib/store.ts`. 60eba91
