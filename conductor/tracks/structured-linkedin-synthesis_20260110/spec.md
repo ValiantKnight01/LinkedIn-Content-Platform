@@ -36,6 +36,9 @@ The goal of this track is to refactor the research synthesis phase in the `topic
         - **BEFORE/AFTER:** Explicit comparison of metrics before/after attention, with time period and business impact.
         - **TRADE-OFFS:** Dedicated "Challenges" section with 3-4 downsides and real-world problems.
         - **NO GENERIC FILLER:** Banned phrases like "For instance...", "In a typical scenario...". Use specific company/action/result instead.
+    - **Bug Fix (Validation Error):**
+        - Make `example_use_case` optional in `ResearchSection` model to prevent crashes if the LLM adds sections like "Conclusion" without examples.
+        - Update prompt to explicitly instruct LLM *not* to put "Key Takeaways" or "Conclusion" in the `sections` list.
 
 ### 3. Backend Integration
 - Update the return dictionary in `research_single_topic` to match the new `ResearchSynthesis` fields.

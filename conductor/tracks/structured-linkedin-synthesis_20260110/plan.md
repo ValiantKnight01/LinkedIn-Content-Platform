@@ -28,3 +28,5 @@
     - *How To*: Update the prompt in `research_single_topic` to strictly enforce the new Hook, Example, Data, Difficulty, and Structure rules.
 - [x] Task: Refine synthesis prompt (Round 2) in `topic_researcher.py`. (42bb206)
     - *How To*: Add requirements for: Technical Metrics (explain/simplify), Example Depth (50 words+, feature/usage/impact), Before/After comparisons, Trade-offs/Challenges section, and removal of generic filler phrases.
+- [~] Task: Fix validation error in `topic_researcher.py`.
+    - *How To*: 1. Update `ResearchSection` model to make `example_use_case` optional. 2. Update prompt to forbid duplicating "Key Takeaways" into the `sections` list.

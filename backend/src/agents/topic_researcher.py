@@ -42,7 +42,7 @@ class TopicResult(BaseModel):
 class ResearchSection(BaseModel):
     header: str = Field(description="The section header (plain text, no emojis)")
     content: str = Field(description="The main content of the section (plain text, no emojis)")
-    example_use_case: str = Field(description="A practical example or use case (plain text, no emojis)")
+    example_use_case: Optional[str] = Field(None, description="A practical example or use case (plain text, no emojis)")
 
 class ResearchSynthesis(BaseModel):
     day: int = Field(description="The day of the curriculum")
@@ -175,52 +175,208 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
     structured_llm = llm.with_structured_output(ResearchSynthesis)
     
     context = "\n\n---\n\n".join(scraped_content)
-    prompt = f"""Topic: {title}
-    Day: {day}
-    Learning Objective: {learning_objective}
-    Difficulty: {difficulty}
-    
-    Researched Content:
-    {context}
-    
-    Using the researched content above, synthesize a detailed and authoritative LinkedIn post.
-    The output must strictly follow the structured format.
-    
-    CRITICAL QUALITY GUIDELINES:
-    
-    1. HOOK RULES:
-       - NO marketing language (e.g., "revolutionize", "game-changing", "unlock").
-       - Start with a relatable scenario, a surprising fact, a concrete question, OR a paradox.
-       - Example: "You speak at 150 words/min. Models process 100x faster. How?"
-    
-    2. EXAMPLE RULES & DEPTH:
-       - MUST include specific Company/Product names.
-       - Each example must be DETAILED (min 50 words):
-         * Specific feature/product name.
-         * HOW they use it (2-3 technical details).
-         * Measurable impact (revenue, engagement, time).
-         * Interesting detail or "secret sauce".
-       - NO vague phrases like "for instance" or "for example". Use "Google implemented X..." instead.
-       - NO generic filler ("Companies often find...").
-    
-    3. DATA & METRICS:
-       - Minimum 3 concrete numbers per post.
-       - TECHNICAL METRICS: If mentioning MAE/RMSE/F1, explain in simple terms or convert to % improvement. (e.g., "Accuracy 65% -> 95%" is better than "MAE reduced by 0.76").
-       - BEFORE/AFTER: Always include a comparison (Metric before -> Metric after) with time period and business impact.
-    
-    4. DIFFICULTY CALIBRATION:
-       - If Day is 1-10 (Beginner): Define EVERY technical term immediately. Use analogies for complex concepts. No jargon without explanation.
-    
-    5. STRUCTURE & CONTENT:
-       - Use PLAIN TEXT only. No markdown. No emojis.
-       - The 'sections' should follow a logical flow: 
-         1. Problem (what sucked before/context)
-         2. Solution (the concept/technology)
-         3. How it works (simple explanation)
-         4. Real Examples (3+ detailed companies)
-         5. Trade-offs & Challenges (3-4 downsides/limitations + 1 real-world problem)
-       - 'Key Takeaways' should be surprising and actionable.
-       - 'Call to Action' should be a question to spark debate.
+    prompt = f"""
+        Topic: {title}
+        Day: {day}
+        Learning Objective: {learning_objective}
+        Difficulty: {difficulty}
+
+        Researched Content:
+        {context}
+
+        Create a LinkedIn post following this EXACT structure. Missing ANY section = FAIL.
+
+        MANDATORY SECTIONS (in order):
+        1. Hook (max 3 sentences, must include 2+ numbers)
+        2. Problem (why old methods failed)
+        3. Solution (what attention mechanism does differently)
+        4. How It Works (explain mechanism with analogy)
+        5. Real Examples (3+ companies with specific metrics)
+        6. Before vs After (side-by-side comparison table format)
+        7. Trade-offs (3+ benefits, 3+ challenges)
+        8. Key Takeaways (5-7 bullets, actionable + surprising)
+        9. Call to Action (personal question, not abstract)
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        CRITICAL HOOK RULES (STRICTLY ENFORCE):
+
+        ✓ DO:
+        - Start with concrete scenario: "You do X. Models do Y. How?"
+        - Include 2+ specific numbers
+        - Max 3 sentences (preferably 2)
+        - Conversational tone
+
+        ✗ DON'T:
+        - NO semicolons (;) in hook - EVER
+        - NO academic writing style
+        - NO marketing fluff ("revolutionary", "game-changing")
+        - NO sentences over 25 words
+        - NO vague statements without numbers
+
+        TEST YOUR HOOK:
+        - Contains semicolon? → REJECT, rewrite
+        - Over 3 sentences? → REJECT, shorten
+        - No numbers? → REJECT, add metrics
+        - Sounds like academic paper? → REJECT, make conversational
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        EXAMPLE RULES (EACH MUST HAVE):
+
+        For EACH company example (minimum 3 examples):
+
+        1. Company/Product Name (specific)
+        2. Specific Feature (not "their system" - name it)
+        3. Technical Details (2-3 sentences on HOW)
+        4. Business Metrics (separate accuracy from revenue)
+        5. Time Period (when this happened)
+
+        FORMAT TEMPLATE:
+        "[Company]'s [Product Name] ([Year]):
+        - Technical approach: [How they use attention - 2 details]
+        - Accuracy improvement: [Before X% → After Y%]
+        - Business impact: [Revenue/cost/time saved with $]
+        - Key insight: [Interesting detail]"
+
+        SEPARATE CLEARLY:
+        - Prediction accuracy: "Forecasting accuracy improved from 72% to 94%"
+        - Business outcome: "This accuracy gain saved $120M in energy costs"
+
+        NEVER write: "predicted X resulting in Y% revenue increase" (confusing!)
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        BEFORE vs AFTER FORMAT:
+
+        Always include comparison in this format:
+
+        Traditional Methods ([Method Name]):
+        → Accuracy: [X%]
+        → Forecast horizon: [timeframe]
+        → Cost: [$]
+        → Limitations: [what it couldn't do]
+
+        With Attention Mechanisms:
+        → Accuracy: [Y%] (+Z%)
+        → Forecast horizon: [longer timeframe]
+        → Cost savings: [$]
+        → New capabilities: [what it can do now]
+
+        Result: [Company] saved $[X] from [year] to [year]
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        TECHNICAL TERMS (Days 1-10 ONLY):
+
+        If you mention ANY of these terms, define them IMMEDIATELY:
+        - ARIMA → "AutoRegressive Integrated Moving Average - a 1970s statistical method that assumes smooth patterns"
+        - Transformer → "Deep learning architecture from 2017 that uses attention to focus on relevant data"
+        - RNN → "Recurrent Neural Network - processes sequences step-by-step"
+        - MAE/RMSE/F1 → Convert to simple language: "Accuracy improved from 65% to 95%"
+
+        FORMAT: [Term] → [One sentence definition] → [When/why it's used]
+
+        NO jargon dumps. If you use a technical term, explain it in the SAME sentence.
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        WRITING STYLE (MANDATORY):
+
+        Sentence rules:
+        - Average length: 12-15 words
+        - Maximum length: 25 words
+        - NO semicolons anywhere (use periods)
+        - NO run-on sentences
+
+        Paragraph rules:
+        - Maximum: 4 sentences per paragraph
+        - Prefer: 2-3 sentences
+        - Add blank line between paragraphs
+
+        Tone:
+        - Conversational (write like you're explaining to a friend)
+        - Active voice ("Google built" not "was built by Google")
+        - Direct ("This works" not "This can potentially work")
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        TRADE-OFFS SECTION (MANDATORY):
+
+        Benefits (3-4 points):
+        ✓ [Specific improvement with %]
+        ✓ [Capability that didn't exist before]
+        ✓ [Speed/cost advantage with numbers]
+
+        Challenges (3-4 points):
+        ✗ [Resource requirement with numbers]
+        ✗ [Limitation with specific scenario]
+        ✗ [Downside with real-world example]
+
+        When NOT to use:
+        → [Scenario 1 with reason]
+        → [Scenario 2 with reason]
+
+        Real-world problem: [1 specific example of when attention failed/had issues]
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        KEY TAKEAWAYS FORMAT:
+
+        Each takeaway must be ONE of these types:
+        → Surprising metric: "[Technology] improved [metric] from X% to Y%"
+        → Business impact: "[Company] saved/earned $X using [technology]"
+        → Actionable tool: "Start with [specific tool/library name]"
+        → Key limitation: "Minimum [number] data points needed"
+        → Best use case: "Works best for [specific industry/problem]"
+
+        Minimum 5 takeaways, maximum 7.
+        Each must include numbers OR specific product names OR actionable advice.
+
+        NO generic statements like "Attention mechanisms are powerful" ← REJECT
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        CALL TO ACTION:
+
+        ✗ DON'T ask abstract questions: "What are potential applications in your industry?"
+
+        ✓ DO ask personal questions:
+        - "What's the weirdest recommendation you've gotten?"
+        - "Have you noticed [product] getting better? What changed?"
+        - "What's the hardest forecasting problem in your work?"
+
+        Make it about THEIR experience, not hypothetical scenarios.
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        FINAL VALIDATION CHECKLIST:
+
+        Before submitting, verify:
+        □ Hook has 2+ numbers and no semicolons
+        □ All 9 sections present
+        □ 3+ company examples with specific products
+        □ Each example has: accuracy metrics + business impact + timeframe
+        □ Before/After comparison included
+        □ Trade-offs section has benefits + challenges + when not to use
+        □ All technical terms defined (for Days 1-10)
+        □ No sentences over 25 words
+        □ No marketing fluff in hook
+        □ CTA is personal, not abstract
+        □ 5+ actionable takeaways
+
+        If ANY checkbox is unchecked → FIX before submitting.
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        JSON STRUCTURE MAPPING (CRITICAL):
+        - "Hook" content goes to -> `hook` field
+        - "Key Takeaways" content goes to -> `key_takeaways` field
+        - "Call to Action" content goes to -> `call_to_action` field
+        - ALL OTHER BODY CONTENT (Problem, Solution, How it works, Examples, Trade-offs) goes to -> `sections` list
+        - Do NOT put Takeaways or CTA in the `sections` list.
+
+        Now generate the post following ALL rules above.
     """
     
     try:
