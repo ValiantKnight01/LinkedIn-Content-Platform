@@ -39,20 +39,20 @@ Update the AI agent prompts and response parsing.
 ## Phase 3: Frontend Interface
 Implement structured rendering for the new section types.
 
-- [ ] Task: Update Frontend Types
+- [x] Task: Update Frontend Types (m1n2o3p)
   - **How-to:**
     1. Open `frontend/lib/store.ts` (or types file).
     2. Add `ComparisonItem` and `Tradeoffs` interfaces.
     3. Update `Section` to include these optional properties.
-- [ ] Task: Create `SectionComparison` Component
+- [x] Task: Create `SectionComparison` Component (q4r5s6t)
   - **How-to:**
     1. Create `frontend/components/calendar/section-comparison.tsx`.
     2. Implement a comparison view (e.g., table or side-by-side list) using the `comparison` data.
-- [ ] Task: Create `SectionTradeoffs` Component
+- [x] Task: Create `SectionTradeoffs` Component (u7v8w9x)
   - **How-to:**
     1. Create `frontend/components/calendar/section-tradeoffs.tsx`.
     2. Implement visual distinct lists for `pros`, `cons`, and `constraints`.
-- [ ] Task: Integrate Structured Components into Post Preview
+- [x] Task: Integrate Structured Components into Post Preview (y1z2a3b)
   - **How-to:**
     1. Open `frontend/components/calendar/carousel-preview.tsx`.
     2. Add logic to render `SectionComparison` or `SectionTradeoffs` if the respective data exists; otherwise default to text.
