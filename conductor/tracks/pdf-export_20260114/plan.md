@@ -11,13 +11,11 @@ This plan outlines the implementation of a backend-driven PDF export feature, en
     - *How To:* Create `backend/src/utils/pdf_templates/carousel_template.html` using the provided `code.html` as the base. Parameterize the fields for Title, Hook, Sections, Author, and CTAs.
 - [x] Task: Implement Content-to-Slide mapping logic. (490578b)
     - *How To:* Create a utility `backend/src/utils/pdf_generator.py`. Implement logic to distribute post sections into slides, applying the color rotation (Cream, Beige, Sage) and selecting the "Quote Style" for appropriate sections.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Infrastructure & Templating' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Infrastructure & Templating' (Protocol in workflow.md) (c2943fc)
 
-## Phase 2: PDF Export API
-- [ ] Task: Implement the PDF generation utility.
-    - *How To:* In `backend/src/utils/pdf_generator.py`, use Playwright to launch a headless browser, set the viewport to the carousel aspect ratio (e.g., 1080x1080 or 1350x1080), render the Jinja2 template, and generate a PDF buffer using `page.pdf()`.
-- [ ] Task: Create the PDF Export API endpoint.
-    - *How To:* In `backend/src/routes/posts.py`, add a `GET /api/posts/{post_id}/export/pdf` endpoint. It should fetch the post, invoke the PDF generator, and return the result as a file download.
+## Phase 2: PDF Export API [c2943fc]
+- [x] Task: Implement the PDF generation utility. (490578b)
+- [~] Task: Create the PDF Export API endpoint.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: PDF Export API' (Protocol in workflow.md)
 
 ## Phase 3: Frontend Integration

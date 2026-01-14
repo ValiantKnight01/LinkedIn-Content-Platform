@@ -34,3 +34,8 @@
 
 ## [~] Track: Agentic Topic Research (Sub-Agent Architecture)
 *Link: [./conductor/tracks/agentic-research_20251226/](./conductor/tracks/agentic-research_20251226/)*
+
+---
+
+## [~] Track: PDF Export for LinkedIn Carousels
+*Link: [./conductor/tracks/pdf-export_20260114/](./conductor/tracks/pdf-export_20260114/)*
