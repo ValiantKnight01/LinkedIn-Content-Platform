@@ -29,7 +29,7 @@
   - Commit SHA: f18ce9b
 - [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
-## Phase 3: Refactor Deep Research Domain
+## Phase 3: Refactor Deep Research Domain [Checkpoint: 4997872]
 - [x] Task: Extract Research Models
   - Create `backend/src/agents/research/models.py`
   - Move `ResearchSynthesis`, `ResearchSection`, `TradeoffsContent`, `ComparisonContent`, `ComparisonItem`, `TopicResult`, `ResearchPlan`, `AnglePlan` from `topic_researcher.py`.
@@ -43,7 +43,7 @@
   - Move `research_single_topic` logic here.
   - Update imports to use the new local `models`, `prompts`, and shared `web` tools.
   - Commit SHA: 2460b23
-- [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
 ## Phase 4: Integration & Cleanup
 - [ ] Task: Update Route Imports
