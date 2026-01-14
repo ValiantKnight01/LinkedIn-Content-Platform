@@ -45,7 +45,7 @@
   - Commit SHA: 2460b23
 - [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
-## Phase 4: Integration & Cleanup
+## Phase 4: Integration & Cleanup [Checkpoint: 0a9155b]
 - [x] Task: Update Route Imports
   - Update `backend/src/routes/themes.py` to import `plan_curriculum` from `backend.src.agents.curriculum.agent`.
   - Update `backend/src/routes/posts.py` to import `research_single_topic` from `backend.src.agents.research.agent`.
@@ -57,4 +57,4 @@
   - Ensure backend starts without import errors.
   - Verify `__init__.py` files exist in new directories for proper package resolution.
   - Commit SHA: 06acf32
-- [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
