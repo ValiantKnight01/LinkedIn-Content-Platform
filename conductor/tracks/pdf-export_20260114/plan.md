@@ -9,7 +9,7 @@ This plan outlines the implementation of a backend-driven PDF export feature, en
     - *How To:* Run `playwright install chromium` (Note: In some Linux server environments, `playwright install-deps` may also be required for system libraries).
 - [x] Task: Create a Jinja2 HTML template for the carousel. (d77ee95)
     - *How To:* Create `backend/src/utils/pdf_templates/carousel_template.html` using the provided `code.html` as the base. Parameterize the fields for Title, Hook, Sections, Author, and CTAs.
-- [ ] Task: Implement Content-to-Slide mapping logic.
+- [x] Task: Implement Content-to-Slide mapping logic. (490578b)
     - *How To:* Create a utility `backend/src/utils/pdf_generator.py`. Implement logic to distribute post sections into slides, applying the color rotation (Cream, Beige, Sage) and selecting the "Quote Style" for appropriate sections.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Infrastructure & Templating' (Protocol in workflow.md)
 
