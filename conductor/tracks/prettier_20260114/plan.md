@@ -5,7 +5,7 @@
 - [x] Task: Create `frontend/.prettierrc` with default configuration. a7d3c83
 - [x] Task: Create `frontend/.prettierignore` to exclude build artifacts (e.g., `.next`, `node_modules`). 738e28c
 - [x] Task: Add `format` ("prettier --write .") and `format:check` ("prettier --check .") scripts to `frontend/package.json`. 910eb34
-- [ ] Task: Conductor - User Manual Verification 'Installation & Configuration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Installation & Configuration' (Protocol in workflow.md) 42aa71b
 
 ## Phase 2: Integration & Formatting
 - [ ] Task: Update `frontend/eslint.config.mjs` to include `eslint-config-prettier` config to disable conflicting rules.
