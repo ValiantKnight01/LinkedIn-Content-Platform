@@ -5,7 +5,7 @@ This plan outlines the implementation of a backend-driven PDF export feature, en
 ## Phase 1: Backend Infrastructure & Templating
 - [x] Task: Add `playwright` and `jinja2` dependencies to the backend. (31de093)
     - *How To:* Add `playwright` and `jinja2` to `backend/requirements.txt`. Run `uv pip install -r requirements.txt` and `uv pip freeze > requirements.txt`.
-- [ ] Task: Initialize Playwright browsers in the backend environment.
+- [x] Task: Initialize Playwright browsers in the backend environment. (N/A - Environment setup)
     - *How To:* Run `playwright install chromium` (Note: In some Linux server environments, `playwright install-deps` may also be required for system libraries).
 - [ ] Task: Create a Jinja2 HTML template for the carousel.
     - *How To:* Create `backend/src/utils/pdf_templates/carousel_template.html` using the provided `code.html` as the base. Parameterize the fields for Title, Hook, Sections, Author, and CTAs.
