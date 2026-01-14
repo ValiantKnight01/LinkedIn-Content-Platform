@@ -525,7 +525,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   
                       
-                                                                                                                                          value={section.header} 
+                                                                                                                                          value={section.header || ""} 
                       
                                                                   
                       
@@ -657,7 +657,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   
                       
-                                                                                                                                            value={section.content} 
+                                                                                                                                            value={section.content || ""} 
                       
                                                                   
                       
@@ -717,7 +717,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   
                       
-                                                                                                                                          value={section.example_use_case} 
+                                                                                                                                          value={section.example_use_case || ""} 
                       
                                                                   
                       
@@ -815,7 +815,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   <Input 
                       
-                                                                    value={point} 
+                                                                    value={point || ""} 
                       
                                                                     onChange={(e) => {
                       

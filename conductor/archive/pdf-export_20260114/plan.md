@@ -19,10 +19,12 @@ This plan outlines the implementation of a backend-driven PDF export feature, en
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: PDF Export API' (Protocol in workflow.md)
 
 ## Phase 3: Frontend Integration
-- [ ] Task: Add "Export" tab to the Post Sheet View.
-    - *How To:* Update `frontend/components/calendar/post-indicator.tsx`. Add a `TabsTrigger` for "Export" and a corresponding `TabsContent`.
-- [ ] Task: Create the Export Tab View.
-    - *How To:* Implement a simple view within the "Export" tab that shows a preview of what will be exported (or just a descriptive card) and a "Download PDF" button.
-- [ ] Task: Implement PDF Download Action.
-    - *How To:* Add a function to handle the download. Use `fetch` to call the backend endpoint, receive the blob, and use `window.URL.createObjectURL` to trigger the browser download.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Frontend Integration' (Protocol in workflow.md)
+- [x] Task: Add "Export" tab to the Post Sheet View. (b112fdd)
+- [x] Task: Create the Export Tab View. (b112fdd)
+- [x] Task: Implement PDF Download Action. (b112fdd)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Frontend Integration' (Protocol in workflow.md) (a861273)
+
+## Bug Fixes & Refinements
+- [x] Fix: Handle None content in PDF sections. (48a6810)
+- [x] Fix: Resolve 'builtin_function_or_method' error by renaming 'items' to 'takeaway_points'. (a861273)
+- [x] Fix: Correct API port to 8001 in frontend. (Manual Edit)

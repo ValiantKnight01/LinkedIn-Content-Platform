@@ -17,6 +17,7 @@
   - **Cloudflare AI Workers** (via `langchain-community`)
 - **Language:** Python 3.12+
 - **Web Scraping:** `beautifulsoup4`, `aiohttp`, `ddgs` (DuckDuckGo Search)
+- **PDF Generation:** `playwright` (Chromium), `Jinja2`
 - **Task Queue:** Redis (for post scheduling and background AI processing)
 - **Runtime:** Managed via `uv`
 
