@@ -22,10 +22,11 @@
   - Create `backend/src/agents/curriculum/prompts.py`
   - Extract the curriculum planning prompt string into a constant `CURRICULUM_PLANNING_PROMPT`.
   - Commit SHA: 8ae8cc9
-- [ ] Task: Implement Curriculum Agent
+- [x] Task: Implement Curriculum Agent
   - Create `backend/src/agents/curriculum/agent.py`
   - Move `plan_curriculum` logic here.
   - Update imports to use the new local `models` and `prompts`.
+  - Commit SHA: f18ce9b
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
 ## Phase 3: Refactor Deep Research Domain
