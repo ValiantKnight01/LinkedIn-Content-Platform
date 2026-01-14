@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+build
+dist
+public
+package-lock.json
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.ico
