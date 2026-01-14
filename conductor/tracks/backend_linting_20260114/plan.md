@@ -5,7 +5,7 @@
 - [x] Task: Create `backend/.flake8` configuration file to ensure compatibility with Black. 2c8d55c
 - [x] Task: Conductor - User Manual Verification 'Installation & Configuration' (Protocol in workflow.md) af6ca89
 
-## Phase 2: Execution & Formatting
+## Phase 2: Execution & Formatting (Checkpoint: 11de085)
 - [x] Task: Run `black .` in `backend/` to format the entire backend codebase. 29fead6
 - [x] Task: Run `flake8 .` in `backend/` to check for remaining linting issues. 673b636
 - [x] Task: Conductor - User Manual Verification 'Execution & Formatting' (Protocol in workflow.md) 616239b
