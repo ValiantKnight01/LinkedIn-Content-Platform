@@ -308,9 +308,13 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         - NO run-on sentences
 
         Paragraph rules:
-        - Maximum: 4 sentences per paragraph
-        - Prefer: 2-3 sentences
+        - Maximum: 2 sentences per paragraph (STRICT LIMIT)
+        - Total section content: Maximum 4 sentences (STRICT LIMIT)
+        - Prefer: 1-2 sentences
         - Add blank line between paragraphs
+        
+        Example Rule:
+        - `example_use_case` field MUST be exactly 1 sentence.
 
         Tone:
         - Conversational (write like you're explaining to a friend)
@@ -325,10 +329,8 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         → Impactful change: "[Technology] improved [process] by enabling [capability]"
         → Business context: "[Company] solved [problem] using [technology]"
         → Actionable tool: "Start with [specific tool/library name]"
-        → Key limitation: "Requires [specific resource/condition] to work"
-        → Best use case: "Works best for [specific industry/problem]"
-
-        Minimum 5 takeaways, maximum 7.
+        
+        STRICT LIMIT: Exactly 3 takeaways. No more, no less.
         Each must include specific product names OR actionable advice.
 
         NO generic statements like "Attention mechanisms are powerful" ← REJECT

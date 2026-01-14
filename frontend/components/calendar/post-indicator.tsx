@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Save, Trash2, Plus, Copy, Check } from "lucide-react";
+import { Save, Trash2, Plus, Copy, Check, Download } from "lucide-react";
 import { CarouselPreview } from "./carousel-preview";
 import { ComparisonEditor } from "./comparison-editor";
 import { TradeoffsEditor } from "./tradeoffs-editor";
@@ -61,11 +61,42 @@ export function PostIndicator({ post }: { post: Post }) {
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState<Post>(post);
   const [copied, setCopied] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleResearch = async () => {
     setIsResearching(true);
     await researchPost(post.id);
     setIsResearching(false);
+  };
+
+  const handleDownloadPDF = async () => {
+    setIsDownloading(true);
+    try {
+      // Backend routes are mounted at root /posts, not /api/posts
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${baseUrl}/posts/${post.id}/export/pdf`);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Backend Error:', response.status, errorText);
+        throw new Error(`Download failed: ${response.status} ${errorText}`);
+      }
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${post.title.replace(/\s+/g, '_')}_Carousel.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Failed to download PDF:', error);
+      alert('Failed to generate PDF. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleSave = async () => {
@@ -120,10 +151,11 @@ export function PostIndicator({ post }: { post: Post }) {
       >
         <Tabs defaultValue="research" className="flex flex-col h-full w-full">
           <div className="px-8 pt-6 pb-2 border-b border-primary/10 shrink-0 bg-[#fefae0] flex items-center justify-between gap-4">
-            <TabsList className="grid w-full grid-cols-3 rounded-full bg-[#faedcd] p-1 max-w-md">
+            <TabsList className="grid w-full grid-cols-4 rounded-full bg-[#faedcd] p-1 max-w-md">
               <TabsTrigger value="research" className="rounded-full data-[state=active]:bg-[#3D2B1F] data-[state=active]:text-[#fefae0] data-[state=active]:shadow-sm">Research</TabsTrigger>
               <TabsTrigger value="edit" className="rounded-full data-[state=active]:bg-[#3D2B1F] data-[state=active]:text-[#fefae0] data-[state=active]:shadow-sm">Edit</TabsTrigger>
               <TabsTrigger value="preview" className="rounded-full data-[state=active]:bg-[#3D2B1F] data-[state=active]:text-[#fefae0] data-[state=active]:shadow-sm">Preview</TabsTrigger>
+              <TabsTrigger value="export" className="rounded-full data-[state=active]:bg-[#3D2B1F] data-[state=active]:text-[#fefae0] data-[state=active]:shadow-sm">Export</TabsTrigger>
             </TabsList>
             
             <Button
@@ -493,7 +525,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   
                       
-                                                                                                                                          value={section.header} 
+                                                                                                                                          value={section.header || ""} 
                       
                                                                   
                       
@@ -625,7 +657,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   
                       
-                                                                                                                                            value={section.content} 
+                                                                                                                                            value={section.content || ""} 
                       
                                                                   
                       
@@ -685,7 +717,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   
                       
-                                                                                                                                          value={section.example_use_case} 
+                                                                                                                                          value={section.example_use_case || ""} 
                       
                                                                   
                       
@@ -783,7 +815,7 @@ export function PostIndicator({ post }: { post: Post }) {
                       
                                                                   <Input 
                       
-                                                                    value={point} 
+                                                                    value={point || ""} 
                       
                                                                     onChange={(e) => {
                       
@@ -857,6 +889,54 @@ export function PostIndicator({ post }: { post: Post }) {
                                 </TabsContent>
                                                       <TabsContent value="preview" className="flex-1 m-0 overflow-hidden border-none p-0">
                                                         <CarouselPreview post={editData} />
+                                                      </TabsContent>
+                                                      
+                                                      <TabsContent value="export" className="flex-1 m-0 overflow-hidden border-none p-0 bg-[#fefae0] flex items-center justify-center">
+                                                        <div className="max-w-md w-full p-8 text-center space-y-6">
+                                                          <div className="h-24 w-24 rounded-full bg-[#faedcd] flex items-center justify-center mx-auto shadow-sm">
+                                                            <FileText className="h-12 w-12 text-[#d4a373]" />
+                                                          </div>
+                                                          
+                                                          <div className="space-y-2">
+                                                            <h3 className="font-serif text-2xl font-bold text-[#3D2B1F]">Export Carousel</h3>
+                                                            <p className="text-[#6B4F3A] text-lg">
+                                                              Download your high-fidelity PDF carousel, ready for LinkedIn.
+                                                            </p>
+                                                          </div>
+
+                                                          <div className="p-6 rounded-2xl bg-white/50 border border-[#d4a373]/20 text-left space-y-3">
+                                                            <div className="flex items-center gap-3 text-[#3D2B1F]">
+                                                              <Check className="h-5 w-5 text-green-600" />
+                                                              <span>Correct Aspect Ratio (1:1)</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-3 text-[#3D2B1F]">
+                                                              <Check className="h-5 w-5 text-green-600" />
+                                                              <span>Vector-quality Text</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-3 text-[#3D2B1F]">
+                                                              <Check className="h-5 w-5 text-green-600" />
+                                                              <span>Optimized File Size</span>
+                                                            </div>
+                                                          </div>
+
+                                                          <Button 
+                                                            onClick={handleDownloadPDF} 
+                                                            disabled={isDownloading}
+                                                            className="w-full h-14 rounded-full bg-[#3D2B1F] text-[#fefae0] hover:bg-[#2a1e16] text-lg font-medium shadow-lg hover:shadow-xl transition-all"
+                                                          >
+                                                            {isDownloading ? (
+                                                              <>
+                                                                <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                                                                Generating PDF...
+                                                              </>
+                                                            ) : (
+                                                              <>
+                                                                <Download className="mr-2 h-6 w-6" />
+                                                                Download PDF
+                                                              </>
+                                                            )}
+                                                          </Button>
+                                                        </div>
                                                       </TabsContent>
                                             
                     </Tabs>
