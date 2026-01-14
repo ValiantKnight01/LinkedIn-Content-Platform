@@ -13,7 +13,7 @@
   - Commit SHA: 6630ce1
 - [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
-## Phase 2: Refactor Curriculum Planning Domain
+## Phase 2: Refactor Curriculum Planning Domain [Checkpoint: 5905471]
 - [x] Task: Extract Curriculum Models
   - Create `backend/src/agents/curriculum/models.py`
   - Move `DailyTopic` and `CurriculumPlan` from `topic_researcher.py`.
@@ -27,7 +27,7 @@
   - Move `plan_curriculum` logic here.
   - Update imports to use the new local `models` and `prompts`.
   - Commit SHA: f18ce9b
-- [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
 ## Phase 3: Refactor Deep Research Domain
 - [ ] Task: Extract Research Models
