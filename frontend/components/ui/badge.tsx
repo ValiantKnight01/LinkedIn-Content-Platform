@@ -17,6 +17,14 @@ const badgeVariants = cva(
           'border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
           'text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+        draft: 'bg-yellow-100/50 border-yellow-200 text-yellow-700',
+        'in-progress': 'bg-blue-100/50 border-blue-200 text-blue-700',
+        scheduled: 'bg-green-100/50 border-green-200 text-green-700',
+        planned: 'bg-purple-100/50 border-purple-200 text-purple-700',
+        researched: 'bg-indigo-100/50 border-indigo-200 text-indigo-700',
+        proposed: 'bg-gray-100/50 border-gray-200 text-gray-700',
+        selected: 'bg-pink-100/50 border-pink-200 text-pink-700',
+        inDraft: 'bg-orange-100/50 border-orange-200 text-orange-700',
       },
     },
     defaultVariants: {
@@ -42,5 +50,16 @@ function Badge({
     />
   );
 }
+
+export const statusDotColors = {
+  draft: 'bg-yellow-400',
+  'in-progress': 'bg-blue-400',
+  scheduled: 'bg-green-500',
+  planned: 'bg-purple-400',
+  researched: 'bg-indigo-500',
+  proposed: 'bg-gray-400',
+  selected: 'bg-pink-400',
+  inDraft: 'bg-orange-400',
+};
 
 export { Badge, badgeVariants };

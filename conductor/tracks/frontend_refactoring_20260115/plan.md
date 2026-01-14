@@ -11,11 +11,11 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: UI Decomposition
-- [ ] Task: Create Editor Sheet Component
+- [x] Task: Create Editor Sheet Component
   - Create `frontend/components/calendar/post-editor-sheet.tsx`.
   - Move the `SheetContent` and its children (Tabs, Forms, etc.) from `PostIndicator` to this new component.
   - Define props interface to accept state and handlers from the hook.
-- [ ] Task: Refactor PostIndicator
+- [x] Task: Refactor PostIndicator
   - Update `frontend/components/calendar/post-indicator.tsx`.
   - Import and use `usePostEditor` hook.
   - Import and render `PostEditorSheet`, passing the necessary props.
