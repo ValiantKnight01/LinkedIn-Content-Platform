@@ -9,7 +9,10 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching themes from backend:', error);
-    return NextResponse.json({ error: 'Failed to fetch themes' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch themes' },
+      { status: 500 }
+    );
   }
 }
 
@@ -25,6 +28,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
     console.error('Error creating theme in backend:', error);
-    return NextResponse.json({ error: 'Failed to create theme' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to create theme' },
+      { status: 500 }
+    );
   }
 }

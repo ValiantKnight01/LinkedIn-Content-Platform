@@ -1,7 +1,15 @@
 import { create } from 'zustand';
 import dayjs from 'dayjs';
 
-export type PostStatus = 'draft' | 'in-progress' | 'scheduled' | 'planned' | 'researched' | 'proposed' | 'selected' | 'inDraft';
+export type PostStatus =
+  | 'draft'
+  | 'in-progress'
+  | 'scheduled'
+  | 'planned'
+  | 'researched'
+  | 'proposed'
+  | 'selected'
+  | 'inDraft';
 
 export interface ComparisonItem {
   dimension: string;
@@ -80,50 +88,52 @@ export const useCalendarStore = create<CalendarState>((set, get) => ({
       const { currentDate } = get();
       const month = currentDate.format('MM');
       const year = currentDate.format('YYYY');
-      
+
       const response = await fetch(`/api/posts?month=${month}&year=${year}`);
       const data = await response.json();
-      
+
       set({ posts: data, isLoading: false });
     } catch (error) {
-      console.error("Failed to fetch posts:", error);
+      console.error('Failed to fetch posts:', error);
       set({ isLoading: false });
     }
   },
 
   researchPost: async (id: string) => {
-      // Optimistic update or just wait for re-fetch?
-      // Let's re-fetch for now to get the updated summary/sources
-      try {
-          const response = await fetch(`/api/posts/${id}/research`, { method: 'POST' });
-          if (response.ok) {
-              const updatedPost = await response.json();
-              set(state => ({
-                  posts: state.posts.map(p => p.id === id ? updatedPost : p)
-              }));
-          }
-      } catch (error) {
-          console.error("Failed to research post:", error);
+    // Optimistic update or just wait for re-fetch?
+    // Let's re-fetch for now to get the updated summary/sources
+    try {
+      const response = await fetch(`/api/posts/${id}/research`, {
+        method: 'POST',
+      });
+      if (response.ok) {
+        const updatedPost = await response.json();
+        set((state) => ({
+          posts: state.posts.map((p) => (p.id === id ? updatedPost : p)),
+        }));
       }
+    } catch (error) {
+      console.error('Failed to research post:', error);
+    }
   },
 
   updatePost: async (id: string, updates: Partial<Post>) => {
     try {
-        const response = await fetch(`/api/posts/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updates),
-        });
-        if (response.ok) {
-            const updatedPost = await response.json();
-            set(state => ({
-                posts: state.posts.map(p => p.id === id ? updatedPost : p)
-            }));
-        }
+      const response = await fetch(`/api/posts/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      });
+      if (response.ok) {
+        const updatedPost = await response.json();
+        set((state) => ({
+          posts: state.posts.map((p) => (p.id === id ? updatedPost : p)),
+        }));
+      }
     } catch (error) {
-        console.error("Failed to update post:", error);
+      console.error('Failed to update post:', error);
     }
-  }
+  },
 }));
 
 // --- Newsroom Kanban Store ---
@@ -154,7 +164,10 @@ interface NewsroomState {
   generateCycle: () => Promise<void>;
   approveCard: (id: string) => Promise<void>;
   discardCard: (id: string) => Promise<void>;
-  updateCardDetails: (id: string, updates: Partial<KanbanCard>) => Promise<void>;
+  updateCardDetails: (
+    id: string,
+    updates: Partial<KanbanCard>
+  ) => Promise<void>;
 }
 
 export const useNewsroomStore = create<NewsroomState>((set, get) => ({
@@ -168,7 +181,7 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
       const data = await response.json();
       set({ cards: data, isLoading: false });
     } catch (error) {
-      console.error("Failed to fetch newsroom cards:", error);
+      console.error('Failed to fetch newsroom cards:', error);
       set({ isLoading: false });
     }
   },
@@ -176,17 +189,17 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
   moveCard: (cardId, newStatus, index) => {
     set((state) => {
       const cards = [...state.cards];
-      const cardIndex = cards.findIndex(c => c.id === cardId);
+      const cardIndex = cards.findIndex((c) => c.id === cardId);
       if (cardIndex === -1) return state;
 
       const [movedCard] = cards.splice(cardIndex, 1);
       const updatedCard = { ...movedCard, status: newStatus };
-      
+
       // Get other cards in the target status to find the correct insertion point
-      const statusCards = cards.filter(c => c.status === newStatus);
+      const statusCards = cards.filter((c) => c.status === newStatus);
       // This is a simplified move; real sortable logic will handle reordering within the same column
       // but for dnd-kit we usually manage the global array.
-      
+
       return { cards: [...cards, updatedCard] }; // We'll refine this for sortable later
     });
   },
@@ -194,14 +207,16 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
   generateCycle: async () => {
     set({ isLoading: true });
     try {
-      const response = await fetch('/api/newsroom/generate', { method: 'POST' });
+      const response = await fetch('/api/newsroom/generate', {
+        method: 'POST',
+      });
       const newCards = await response.json();
-      set((state) => ({ 
-        cards: [...state.cards, ...newCards], 
-        isLoading: false 
+      set((state) => ({
+        cards: [...state.cards, ...newCards],
+        isLoading: false,
       }));
     } catch (error) {
-      console.error("Failed to generate cycle:", error);
+      console.error('Failed to generate cycle:', error);
       set({ isLoading: false });
     }
   },
@@ -214,11 +229,13 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
       });
       if (response.ok) {
         set((state) => ({
-          cards: state.cards.map((c) => (c.id === id ? { ...c, status: 'inDraft' } : c)),
+          cards: state.cards.map((c) =>
+            c.id === id ? { ...c, status: 'inDraft' } : c
+          ),
         }));
       }
     } catch (error) {
-      console.error("Failed to approve card:", error);
+      console.error('Failed to approve card:', error);
     }
   },
 
@@ -233,26 +250,26 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
         }));
       }
     } catch (error) {
-      console.error("Failed to discard card:", error);
+      console.error('Failed to discard card:', error);
     }
   },
 
   updateCardDetails: async (id, updates) => {
-     try {
+    try {
       const response = await fetch(`/api/newsroom/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(updates),
       });
       const updatedCard = await response.json();
-            set((state) => ({
-                cards: state.cards.map((c) => (c.id === id ? updatedCard : c)),
-            }));
-          } catch (error) {
-            console.error("Failed to update card details:", error);
-          }
-        }
+      set((state) => ({
+        cards: state.cards.map((c) => (c.id === id ? updatedCard : c)),
       }));
-      
+    } catch (error) {
+      console.error('Failed to update card details:', error);
+    }
+  },
+}));
+
 // --- Monthly Syllabus Store ---
 
 export interface Theme {
@@ -286,7 +303,7 @@ export const useSyllabusStore = create<SyllabusState>((set, get) => ({
       const data = await response.json();
       set({ themes: data, isLoading: false });
     } catch (error) {
-      console.error("Failed to fetch themes:", error);
+      console.error('Failed to fetch themes:', error);
       set({ isLoading: false });
     }
   },
@@ -303,7 +320,7 @@ export const useSyllabusStore = create<SyllabusState>((set, get) => ({
         set((state) => ({ themes: [...state.themes, newTheme] }));
       }
     } catch (error) {
-      console.error("Failed to add theme:", error);
+      console.error('Failed to add theme:', error);
     }
   },
 
@@ -321,7 +338,7 @@ export const useSyllabusStore = create<SyllabusState>((set, get) => ({
         }));
       }
     } catch (error) {
-      console.error("Failed to update theme:", error);
+      console.error('Failed to update theme:', error);
     }
   },
 
@@ -336,7 +353,7 @@ export const useSyllabusStore = create<SyllabusState>((set, get) => ({
         }));
       }
     } catch (error) {
-      console.error("Failed to delete theme:", error);
+      console.error('Failed to delete theme:', error);
     }
   },
 
@@ -345,19 +362,19 @@ export const useSyllabusStore = create<SyllabusState>((set, get) => ({
   },
 
   planTheme: async (id) => {
-      set({ isLoading: true });
-      try {
-          const response = await fetch(`/api/themes/${id}/plan`, {
-              method: 'POST',
-          });
-          if (response.ok) {
-              // Optionally trigger a refresh of posts or something
-              // But for now, we just acknowledge the success.
-          }
-      } catch (error) {
-          console.error("Failed to plan theme:", error);
-      } finally {
-          set({ isLoading: false });
+    set({ isLoading: true });
+    try {
+      const response = await fetch(`/api/themes/${id}/plan`, {
+        method: 'POST',
+      });
+      if (response.ok) {
+        // Optionally trigger a refresh of posts or something
+        // But for now, we just acknowledge the success.
       }
+    } catch (error) {
+      console.error('Failed to plan theme:', error);
+    } finally {
+      set({ isLoading: false });
+    }
   },
 }));
