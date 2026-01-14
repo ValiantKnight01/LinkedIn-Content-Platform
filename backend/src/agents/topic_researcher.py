@@ -309,6 +309,7 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
 
         Paragraph rules:
         - Maximum: 2 sentences per paragraph (STRICT LIMIT)
+        - Total section content: Maximum 4 sentences (STRICT LIMIT)
         - Prefer: 1-2 sentences
         - Add blank line between paragraphs
         
