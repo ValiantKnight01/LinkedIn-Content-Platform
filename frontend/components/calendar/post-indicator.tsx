@@ -72,9 +72,15 @@ export function PostIndicator({ post }: { post: Post }) {
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/posts/${post.id}/export/pdf`);
+      // Backend routes are mounted at root /posts, not /api/posts
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${baseUrl}/posts/${post.id}/export/pdf`);
       
-      if (!response.ok) throw new Error('Download failed');
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Backend Error:', response.status, errorText);
+        throw new Error(`Download failed: ${response.status} ${errorText}`);
+      }
       
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
