@@ -14,9 +14,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Refactor Curriculum Planning Domain
-- [ ] Task: Extract Curriculum Models
+- [x] Task: Extract Curriculum Models
   - Create `backend/src/agents/curriculum/models.py`
   - Move `DailyTopic` and `CurriculumPlan` from `topic_researcher.py`.
+  - Commit SHA: 8e7f54f
 - [ ] Task: Extract Curriculum Prompts
   - Create `backend/src/agents/curriculum/prompts.py`
   - Extract the curriculum planning prompt string into a constant `CURRICULUM_PLANNING_PROMPT`.
