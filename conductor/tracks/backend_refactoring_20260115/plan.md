@@ -6,10 +6,11 @@
   - Create `backend/src/agents/curriculum`
   - Create `backend/src/agents/research`
   - Commit SHA: 72b3311
-- [ ] Task: Extract Shared Web Tools
+- [x] Task: Extract Shared Web Tools
   - Create `backend/src/agents/tools/web.py`
   - Move `fetch_url` from `topic_researcher.py` to `web.py`
   - Ensure all necessary imports (aiohttp, BeautifulSoup) are included.
+  - Commit SHA: 6630ce1
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Refactor Curriculum Planning Domain
