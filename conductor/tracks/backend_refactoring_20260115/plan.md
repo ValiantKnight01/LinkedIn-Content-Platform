@@ -30,9 +30,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
 ## Phase 3: Refactor Deep Research Domain
-- [ ] Task: Extract Research Models
+- [x] Task: Extract Research Models
   - Create `backend/src/agents/research/models.py`
   - Move `ResearchSynthesis`, `ResearchSection`, `TradeoffsContent`, `ComparisonContent`, `ComparisonItem`, `TopicResult`, `ResearchPlan`, `AnglePlan` from `topic_researcher.py`.
+  - Commit SHA: e81d9c5
 - [ ] Task: Extract Research Prompts
   - Create `backend/src/agents/research/prompts.py`
   - Extract the research synthesis prompt string into a constant `RESEARCH_SYNTHESIS_PROMPT`.
