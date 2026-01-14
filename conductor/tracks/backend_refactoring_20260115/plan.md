@@ -1,6 +1,6 @@
 # Plan: Backend Refactoring & Modularization
 
-## Phase 1: Shared Tools & Domain Preparation
+## Phase 1: Shared Tools & Domain Preparation [Checkpoint: 9dae0c1]
 - [x] Task: Create new directory structure
   - Create `backend/src/agents/tools`
   - Create `backend/src/agents/curriculum`
@@ -11,7 +11,7 @@
   - Move `fetch_url` from `topic_researcher.py` to `web.py`
   - Ensure all necessary imports (aiohttp, BeautifulSoup) are included.
   - Commit SHA: 6630ce1
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Refactor Curriculum Planning Domain
 - [ ] Task: Extract Curriculum Models
