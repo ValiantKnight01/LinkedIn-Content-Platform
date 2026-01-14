@@ -48,17 +48,13 @@
             opacity: 0.7;
         }
 
-        .slide-label {
+        .author-footer {
             position: absolute;
-            top: 40px;
-            right: 40px;
-            background: rgba(0,0,0,0.1);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            bottom: 40px;
+            left: 40px;
+            font-size: 20px;
+            font-weight: 500;
+            opacity: 0.6;
         }
 
         /* Slide 1: Title Slide */
@@ -224,12 +220,10 @@
     {% for slide in slides %}
         <div class="slide {{ slide.type_class }} {{ slide.bg_class }}">
             {% if slide.type == 'title' %}
-                <div class="slide-label">Title Slide</div>
                 <h1>{{ slide.title }}</h1>
                 <div class="hook">{{ slide.hook }}</div>
                 <div class="author">{{ slide.author }}</div>
             {% elif slide.type == 'content' %}
-                <div class="slide-label">Content</div>
                 <div class="header-bar"></div>
                 <h2>{{ slide.heading }}</h2>
                 <div class="content-text">
@@ -241,8 +235,8 @@
                     <div class="example-text">{{ slide.example }}</div>
                 </div>
                 {% endif %}
+                <div class="author-footer">{{ slide.author }}</div>
             {% elif slide.type == 'takeaways' %}
-                <div class="slide-label">Takeaways</div>
                 <h2>Key Takeaways</h2>
                 {% for item in slide.takeaway_points %}
                 <div class="takeaway-item">
@@ -253,11 +247,12 @@
                 {% if slide.cta %}
                 <div class="cta">{{ slide.cta }}</div>
                 {% endif %}
+                <div class="author-footer">{{ slide.author }}</div>
             {% elif slide.type == 'quote' %}
-                <div class="slide-label" style="color: var(--color-cream-paper);">Quote Style</div>
                 <div class="quote-mark">"</div>
                 <div class="quote-text">{{ slide.text }}</div>
                 <div class="quote-source">- {{ slide.source }}</div>
+                <div class="author-footer">{{ slide.author }}</div>
             {% endif %}
             <div class="slide-number">{{ loop.index }}/{{ slides|length }}</div>
         </div>

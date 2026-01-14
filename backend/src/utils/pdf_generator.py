@@ -50,7 +50,8 @@ class PDFGenerator:
                     "type_class": "slide-quote",
                     "bg_class": "bg-dark",
                     "text": content.strip('"“”'),
-                    "source": section.get("header", "Insight")
+                    "source": section.get("header", "Insight"),
+                    "author": author
                 })
             else:
                 slides.append({
@@ -59,7 +60,8 @@ class PDFGenerator:
                     "bg_class": bg_class,
                     "heading": section.get("header", ""),
                     "content": content,
-                    "example": section.get("example_use_case", "")
+                    "example": section.get("example_use_case", ""),
+                    "author": author
                 })
 
         # 3. Takeaways Slide
@@ -70,7 +72,8 @@ class PDFGenerator:
                 "type_class": "slide-takeaways",
                 "bg_class": "bg-dark",
                 "takeaway_points": takeaways,
-                "cta": post_data.get("call_to_action", "")
+                "cta": post_data.get("call_to_action", ""),
+                "author": author
             })
 
         return slides
