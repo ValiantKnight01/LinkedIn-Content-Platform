@@ -3,7 +3,7 @@ from typing import List
 from ..models.theme import Theme
 from ..models.post import Post
 from ..schemas.theme import ThemeCreate, ThemeUpdate, ThemeResponse
-from ..agents.topic_researcher import research_theme, plan_curriculum
+from ..agents.curriculum.agent import plan_curriculum
 from mongoengine.errors import NotUniqueError, ValidationError, DoesNotExist
 from bson import ObjectId
 
