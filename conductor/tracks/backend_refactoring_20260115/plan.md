@@ -34,9 +34,10 @@
   - Create `backend/src/agents/research/models.py`
   - Move `ResearchSynthesis`, `ResearchSection`, `TradeoffsContent`, `ComparisonContent`, `ComparisonItem`, `TopicResult`, `ResearchPlan`, `AnglePlan` from `topic_researcher.py`.
   - Commit SHA: e81d9c5
-- [ ] Task: Extract Research Prompts
+- [x] Task: Extract Research Prompts
   - Create `backend/src/agents/research/prompts.py`
   - Extract the research synthesis prompt string into a constant `RESEARCH_SYNTHESIS_PROMPT`.
+  - Commit SHA: a269bb6
 - [ ] Task: Implement Research Agent
   - Create `backend/src/agents/research/agent.py`
   - Move `research_single_topic` logic here.
