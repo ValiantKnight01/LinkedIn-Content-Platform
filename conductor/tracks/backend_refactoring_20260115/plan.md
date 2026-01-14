@@ -18,9 +18,10 @@
   - Create `backend/src/agents/curriculum/models.py`
   - Move `DailyTopic` and `CurriculumPlan` from `topic_researcher.py`.
   - Commit SHA: 8e7f54f
-- [ ] Task: Extract Curriculum Prompts
+- [x] Task: Extract Curriculum Prompts
   - Create `backend/src/agents/curriculum/prompts.py`
   - Extract the curriculum planning prompt string into a constant `CURRICULUM_PLANNING_PROMPT`.
+  - Commit SHA: 8ae8cc9
 - [ ] Task: Implement Curriculum Agent
   - Create `backend/src/agents/curriculum/agent.py`
   - Move `plan_curriculum` logic here.
