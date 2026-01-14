@@ -31,7 +31,10 @@ class PDFGenerator:
             
             # Detect if it should be a quote slide
             # Heuristic: If content starts and ends with quotes and is relatively short
-            content = section.get("content", "").strip()
+            content = section.get("content")
+            content = str(content) if content is not None else ""
+            content = content.strip()
+            
             is_quote = (content.startswith('"') and content.endswith('"')) or (content.startswith('“') and content.endswith('”'))
             
             if is_quote:
