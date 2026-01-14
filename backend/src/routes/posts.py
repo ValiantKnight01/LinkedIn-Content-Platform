@@ -1,14 +1,17 @@
 from fastapi import APIRouter, HTTPException, status, Query
+from fastapi.responses import Response
 from typing import List, Optional
 from datetime import datetime
 from ..models.post import Post
 from ..models.theme import Theme
 from ..schemas.post import PostUpdate
 from ..agents.topic_researcher import research_single_topic
+from ..utils.pdf_generator import PDFGenerator
 from mongoengine.errors import DoesNotExist, ValidationError
 from bson import ObjectId
 
 router = APIRouter(prefix="/posts", tags=["Posts"])
+pdf_generator = PDFGenerator()
 
 def format_post(post: Post) -> dict:
     data = post.to_mongo().to_dict()
@@ -132,4 +135,31 @@ async def update_post(id: str, updates: PostUpdate):
         return format_post(post)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+@router.get("/{id}/export/pdf")
+async def export_post_pdf(id: str):
+    if not ObjectId.is_valid(id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid ID format")
+
+    post = Post.objects(id=id).first()
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+
+    post_data = format_post(post)
+    
+    try:
+        pdf_bytes = await pdf_generator.generate_pdf(post_data)
+        
+        filename = f"{post.title.replace(' ', '_')}_Carousel.pdf"
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename={filename}"
+            }
+        )
+    except Exception as e:
+        print(f"PDF generation failed: {e}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"PDF generation failed: {str(e)}")
+
     
