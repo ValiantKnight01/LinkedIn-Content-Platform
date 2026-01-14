@@ -68,8 +68,7 @@ export function PostIndicator({ post }: { post: Post }) {
     setIsDownloading(true);
     try {
       // Backend routes are mounted at root /posts, not /api/posts
-      const baseUrl =
-        process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL;
       const response = await fetch(`${baseUrl}/posts/${post.id}/export/pdf`);
 
       if (!response.ok) {
