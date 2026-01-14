@@ -34,5 +34,3 @@
 
 ## [~] Track: Agentic Topic Research (Sub-Agent Architecture)
 *Link: [./conductor/tracks/agentic-research_20251226/](./conductor/tracks/agentic-research_20251226/)*
-
-

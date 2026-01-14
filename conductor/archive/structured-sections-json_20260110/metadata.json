@@ -1,0 +1,8 @@
+{
+  "track_id": "structured-sections-json_20260110",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-10T12:00:00Z",
+  "updated_at": "2026-01-10T12:00:00Z",
+  "description": "Convert Before/After and Trade-offs sections into structured JSON for better rendering."
+}

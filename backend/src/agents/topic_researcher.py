@@ -39,10 +39,27 @@ class TopicResult(BaseModel):
     sources: List[str] = Field(description="List of source URLs found")
     summary: str = Field(description="Brief summary of the topic")
 
+class ComparisonItem(BaseModel):
+    dimension: str = Field(description="The aspect being compared (e.g., Performance, Context)")
+    before: str = Field(description="State before the implementation of the solution")
+    after: str = Field(description="State after the implementation of the solution")
+
+class ComparisonContent(BaseModel):
+    items: List[ComparisonItem] = Field(description="List of side-by-side comparison points")
+    summary: Optional[str] = Field(None, description="A concluding summary of the comparison")
+
+class TradeoffsContent(BaseModel):
+    pros: List[str] = Field(description="List of 3+ benefits")
+    cons: List[str] = Field(description="List of 3+ challenges or limitations")
+    constraints: List[str] = Field(description="2+ specific scenarios where this should NOT be used")
+    real_world_context: Optional[str] = Field(None, description="A real-world example of issues or failures")
+
 class ResearchSection(BaseModel):
     header: str = Field(description="The section header (plain text, no emojis)")
-    content: str = Field(description="The main content of the section (plain text, no emojis)")
+    content: Optional[str] = Field(None, description="The main content of the section (plain text, no emojis)")
     example_use_case: Optional[str] = Field(None, description="A practical example or use case (plain text, no emojis)")
+    comparison: Optional[ComparisonContent] = Field(None, description="Structured data for comparison sections")
+    tradeoffs: Optional[TradeoffsContent] = Field(None, description="Structured data for tradeoffs sections")
 
 class ResearchSynthesis(BaseModel):
     day: int = Field(description="The day of the curriculum")
@@ -118,7 +135,7 @@ async def plan_curriculum(theme_title: str, month: int, year: int) -> List[Dict[
             HumanMessage(content=prompt)
         ])
         print(f"   + Successfully planned {len(plan.topics)} topics.")
-        return [topic.dict() for topic in plan.topics]
+        return [topic.model_dump() for topic in plan.topics]
     except Exception as e:
         print(f"   x Curriculum Planning Error: {e}")
         return []
@@ -191,12 +208,29 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         2. Problem (why old methods failed)
         3. Solution (what attention mechanism does differently)
         4. How It Works (explain mechanism with analogy)
-        5. Before vs After (side-by-side comparison table format)
-        6. Trade-offs (3+ benefits, 3+ challenges)
+        5. Before vs After (STRUCTURED JSON: Populate the `comparison` field)
+        6. Trade-offs (STRUCTURED JSON: Populate the `tradeoffs` field)
         7. Key Takeaways (5-7 bullets, actionable + surprising)
         8. Call to Action (personal question, not abstract)
 
-        CRITICAL: Each of the body sections (Problem, Solution, How It Works, Before vs After, Trade-offs) MUST have a specific, detailed Company Example populated in its `example_use_case` field. Do NOT create a separate "Real Examples" section. Distribute the high-quality company examples (Google, etc.) across these sections.
+        CRITICAL: Each of the body sections MUST have a specific, detailed Company Example populated in its `example_use_case` field.
+
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        CRITICAL JSON STRUCTURE RULES:
+
+        1. For the "Before vs After" section:
+           - DO NOT put text in the `content` field.
+           - INSTEAD, populate the `comparison` object with `items` (dimension, before, after) and a `summary`.
+           - Example dimensions: Performance, Context, Efficiency, Capabilities.
+
+        2. For the "Trade-offs" section:
+           - DO NOT put text in the `content` field.
+           - INSTEAD, populate the `tradeoffs` object with `pros`, `cons`, `constraints`, and `real_world_context`.
+
+        3. For all other sections (Problem, Solution, How It Works):
+           - Populate the `content` field with descriptive text.
+           - Populate the `example_use_case` field.
 
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -251,26 +285,6 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
 
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-        BEFORE vs AFTER FORMAT:
-
-        Always include comparison in this format:
-
-        Traditional Methods ([Method Name]):
-        → Performance: [Qualitative description of performance]
-        → Context: [Limitation on context handling]
-        → Efficiency: [Description of resource usage]
-        → Limitations: [What it couldn't do]
-
-        With Attention Mechanisms:
-        → Performance: [Qualitative improvement description]
-        → Context: [How it handles long-range context now]
-        → Efficiency: [Description of parallelization/speed gains]
-        → New capabilities: [What it can do now]
-
-        Result: [Company] improved [Product] between [year] and [year]
-
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
         TECHNICAL TERMS (Days 1-10 ONLY):
 
         If you mention ANY of these terms, define them IMMEDIATELY:
@@ -302,26 +316,6 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
         - Conversational (write like you're explaining to a friend)
         - Active voice ("Google built" not "was built by Google")
         - Direct ("This works" not "This can potentially work")
-
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-        TRADE-OFFS SECTION (MANDATORY):
-
-        Benefits (3-4 points):
-        ✓ [Specific capability improvement]
-        ✓ [New feature/possibility that didn't exist before]
-        ✓ [Speed/cost advantage explained qualitatively]
-
-        Challenges (3-4 points):
-        ✗ [Resource/compute requirement context]
-        ✗ [Specific limitation or edge case]
-        ✗ [Downside with real-world context]
-
-        When NOT to use:
-        → [Scenario 1 with reason]
-        → [Scenario 2 with reason]
-
-        Real-world problem: [1 specific example of when attention failed/had issues]
 
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -393,7 +387,7 @@ async def research_single_topic(title: str, learning_objective: str, search_quer
             "day": synthesis.day,
             "title": synthesis.title,
             "hook": synthesis.hook,
-            "sections": [s.dict() for s in synthesis.sections],
+            "sections": [s.model_dump() for s in synthesis.sections],
             "key_takeaways": synthesis.key_takeaways,
             "call_to_action": synthesis.call_to_action,
             "hashtags": synthesis.hashtags,
@@ -478,7 +472,7 @@ def researcher_node(state: AgentState):
                 SystemMessage(content="Synthesize search results into a topic."), 
                 HumanMessage(content=prompt)
             ])
-            results.append(result.dict())
+            results.append(result.model_dump())
             
         except Exception as e:
             print(f"  x Failed angle {angle.angle}: {e}")

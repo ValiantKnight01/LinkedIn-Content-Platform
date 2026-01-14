@@ -3,6 +3,32 @@ import dayjs from 'dayjs';
 
 export type PostStatus = 'draft' | 'in-progress' | 'scheduled' | 'planned' | 'researched' | 'proposed' | 'selected' | 'inDraft';
 
+export interface ComparisonItem {
+  dimension: string;
+  before: string;
+  after: string;
+}
+
+export interface ComparisonContent {
+  items: ComparisonItem[];
+  summary?: string;
+}
+
+export interface TradeoffsContent {
+  pros: string[];
+  cons: string[];
+  constraints: string[];
+  real_world_context?: string;
+}
+
+export interface Section {
+  header: string;
+  content?: string;
+  example_use_case?: string;
+  comparison?: ComparisonContent;
+  tradeoffs?: TradeoffsContent;
+}
+
 export interface Post {
   id: string;
   title: string;
@@ -14,11 +40,7 @@ export interface Post {
   sources?: string[];
   day?: number;
   hook?: string;
-  sections?: {
-    header: string;
-    content: string;
-    example_use_case: string;
-  }[];
+  sections?: Section[];
   key_takeaways?: string[];
   call_to_action?: string;
   hashtags?: string[];

@@ -3,6 +3,8 @@
 import { Post } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { SectionComparison } from "./section-comparison";
+import { SectionTradeoffs } from "./section-tradeoffs";
 
 interface CarouselPreviewProps {
   post: Post;
@@ -29,6 +31,8 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
         header: section.header,
         content: section.content,
         example: section.example_use_case,
+        comparison: section.comparison,
+        tradeoffs: section.tradeoffs,
         bg: bgs[idx % bgs.length],
         text: 'text-[#3D2B1F]'
       };
@@ -90,9 +94,19 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
                   <h2 className="text-5xl font-extrabold leading-tight font-serif">
                     {slide.header}
                   </h2>
-                  <p className="text-2xl leading-relaxed flex-1">
-                    {slide.content}
-                  </p>
+                  
+                  <div className="flex-1 overflow-auto">
+                    {slide.comparison ? (
+                      <SectionComparison comparison={slide.comparison} />
+                    ) : slide.tradeoffs ? (
+                      <SectionTradeoffs tradeoffs={slide.tradeoffs} />
+                    ) : (
+                      <p className="text-2xl leading-relaxed">
+                        {slide.content}
+                      </p>
+                    )}
+                  </div>
+
                   {slide.example && (
                     <div className="bg-black/5 p-10 rounded-[2.5rem] border-l-[12px] border-[#d4a373] italic mb-4">
                       <p className="text-base font-bold uppercase tracking-widest text-[#d4a373] mb-4">Real Example</p>
