@@ -3,7 +3,7 @@
 ## Phase 1: Installation & Configuration
 - [x] Task: Install `prettier`, `eslint-config-prettier`, and `prettier-plugin-tailwindcss` as dev dependencies in `frontend/`. 2e52aa9
 - [x] Task: Create `frontend/.prettierrc` with default configuration. a7d3c83
-- [ ] Task: Create `frontend/.prettierignore` to exclude build artifacts (e.g., `.next`, `node_modules`).
+- [x] Task: Create `frontend/.prettierignore` to exclude build artifacts (e.g., `.next`, `node_modules`). 738e28c
 - [ ] Task: Add `format` ("prettier --write .") and `format:check` ("prettier --check .") scripts to `frontend/package.json`.
 - [ ] Task: Conductor - User Manual Verification 'Installation & Configuration' (Protocol in workflow.md)
 
