@@ -38,10 +38,11 @@
   - Create `backend/src/agents/research/prompts.py`
   - Extract the research synthesis prompt string into a constant `RESEARCH_SYNTHESIS_PROMPT`.
   - Commit SHA: a269bb6
-- [ ] Task: Implement Research Agent
+- [x] Task: Implement Research Agent
   - Create `backend/src/agents/research/agent.py`
   - Move `research_single_topic` logic here.
   - Update imports to use the new local `models`, `prompts`, and shared `web` tools.
+  - Commit SHA: 2460b23
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
 ## Phase 4: Integration & Cleanup
