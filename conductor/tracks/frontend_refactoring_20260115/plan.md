@@ -1,6 +1,6 @@
 # Plan: Frontend Refactoring (Phase 1)
 
-## Phase 1: Preparation & Logic Extraction
+## Phase 1: Preparation & Logic Extraction [Checkpoint: 298500a]
 - [x] Task: Create Hook File
   - Create `frontend/hooks/use-post-editor.ts`.
   - Define the `usePostEditor` hook signature.
@@ -8,7 +8,7 @@
   - Move state variables (`isResearching`, `isSaving`, `editData`, etc.) from `PostIndicator` to `usePostEditor`.
   - Move handler functions (`handleResearch`, `handleDownloadPDF`, `handleSave`) to the hook.
   - Implement standardized `NEXT_PUBLIC_API_URL` usage for the PDF download fetch call.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: UI Decomposition
 - [ ] Task: Create Editor Sheet Component
