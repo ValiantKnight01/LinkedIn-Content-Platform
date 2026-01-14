@@ -1,6 +1,6 @@
 # Plan: Add Prettier to Frontend
 
-## Phase 1: Installation & Configuration
+## Phase 1: Installation & Configuration (Checkpoint: 1d43413)
 - [x] Task: Install `prettier`, `eslint-config-prettier`, and `prettier-plugin-tailwindcss` as dev dependencies in `frontend/`. 2e52aa9
 - [x] Task: Create `frontend/.prettierrc` with default configuration. a7d3c83
 - [x] Task: Create `frontend/.prettierignore` to exclude build artifacts (e.g., `.next`, `node_modules`). 738e28c
