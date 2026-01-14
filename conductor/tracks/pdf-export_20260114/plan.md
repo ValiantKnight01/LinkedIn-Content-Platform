@@ -2,7 +2,7 @@
 
 This plan outlines the implementation of a backend-driven PDF export feature, enabling users to download high-fidelity LinkedIn carousels based on the "Warm Editorial" style.
 
-## Phase 1: Backend Infrastructure & Templating
+## Phase 1: Backend Infrastructure & Templating [a6943f9]
 - [x] Task: Add `playwright` and `jinja2` dependencies to the backend. (31de093)
     - *How To:* Add `playwright` and `jinja2` to `backend/requirements.txt`. Run `uv pip install -r requirements.txt` and `uv pip freeze > requirements.txt`.
 - [x] Task: Initialize Playwright browsers in the backend environment. (N/A - Environment setup)
@@ -15,7 +15,7 @@ This plan outlines the implementation of a backend-driven PDF export feature, en
 
 ## Phase 2: PDF Export API [c2943fc]
 - [x] Task: Implement the PDF generation utility. (490578b)
-- [~] Task: Create the PDF Export API endpoint.
+- [x] Task: Create the PDF Export API endpoint. (9c40264)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: PDF Export API' (Protocol in workflow.md)
 
 ## Phase 3: Frontend Integration
