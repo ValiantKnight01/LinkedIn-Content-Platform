@@ -244,7 +244,7 @@
             {% elif slide.type == 'takeaways' %}
                 <div class="slide-label">Takeaways</div>
                 <h2>Key Takeaways</h2>
-                {% for item in slide.items %}
+                {% for item in slide.takeaway_points %}
                 <div class="takeaway-item">
                     <div class="arrow">→</div>
                     <div class="takeaway-text">{{ item }}</div>

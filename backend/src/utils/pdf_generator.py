@@ -34,6 +34,13 @@ class PDFGenerator:
             content = section.get("content")
             content = str(content) if content is not None else ""
             content = content.strip()
+
+            # Fallback for structured sections (Comparison/Tradeoffs)
+            if not content:
+                if section.get("comparison") and section["comparison"].get("summary"):
+                    content = section["comparison"]["summary"]
+                elif section.get("tradeoffs") and section["tradeoffs"].get("real_world_context"):
+                     content = section["tradeoffs"]["real_world_context"]
             
             is_quote = (content.startswith('"') and content.endswith('"')) or (content.startswith('“') and content.endswith('”'))
             
@@ -62,7 +69,7 @@ class PDFGenerator:
                 "type": "takeaways",
                 "type_class": "slide-takeaways",
                 "bg_class": "bg-dark",
-                "items": takeaways,
+                "takeaway_points": takeaways,
                 "cta": post_data.get("call_to_action", "")
             })
 
