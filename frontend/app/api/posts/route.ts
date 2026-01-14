@@ -8,12 +8,15 @@ export async function GET(request: NextRequest) {
   const year = searchParams.get('year');
 
   try {
-    const res = await fetch(`${BACKEND_URL}/posts?month=${month}&year=${year}`, {
-      cache: 'no-store'
-    });
-    
+    const res = await fetch(
+      `${BACKEND_URL}/posts?month=${month}&year=${year}`,
+      {
+        cache: 'no-store',
+      }
+    );
+
     if (!res.ok) {
-        throw new Error(`Backend responded with status: ${res.status}`);
+      throw new Error(`Backend responded with status: ${res.status}`);
     }
 
     const data = await res.json();

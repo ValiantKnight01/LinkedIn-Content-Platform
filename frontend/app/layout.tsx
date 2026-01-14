@@ -1,23 +1,23 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from "@/components/providers";
+import type { Metadata } from 'next';
+import { Playfair_Display, Inter } from 'next/font/google';
+import './globals.css';
+import { Providers } from '@/components/providers';
 
 const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
 });
 
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "PostGenerator",
-  description: "Personal LinkedIn post scheduler",
+  title: 'PostGenerator',
+  description: 'Personal LinkedIn post scheduler',
 };
 
 export default function RootLayout({
@@ -27,12 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${playfair.variable} ${inter.variable} antialiased`}
-      >
-        <Providers>
-          {children}
-        </Providers>
+      <body className={`${playfair.variable} ${inter.variable} antialiased`}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

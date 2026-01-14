@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -14,7 +14,7 @@
   --color-warm-tan: #d4a373;
   --color-sage-green: #e9edc9;
   --color-warm-beige: #faedcd;
-  --color-dark-brown: #3D2B1F;
+  --color-dark-brown: #3d2b1f;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -57,7 +57,7 @@
   --color-warm-tan: #d4a373;
   --color-sage-green: #e9edc9;
   --color-warm-beige: #faedcd;
-  --color-dark-brown: #3D2B1F;
+  --color-dark-brown: #3d2b1f;
 
   --radius: 0.625rem;
 
@@ -82,7 +82,9 @@
   --accent: var(--color-warm-tan);
   --accent-foreground: var(--color-dark-brown);
 
-  --destructive: oklch(0.577 0.245 27.325); /* Keeping default destructive for now */
+  --destructive: oklch(
+    0.577 0.245 27.325
+  ); /* Keeping default destructive for now */
 
   --border: var(--color-warm-tan);
   --input: var(--color-warm-tan);
@@ -151,7 +153,12 @@
     @apply bg-background text-foreground font-sans;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
   }
 }

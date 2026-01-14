@@ -1,12 +1,12 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
-import { redirect } from "next/navigation"
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (session) {
-    redirect("/syllabus")
+    redirect('/syllabus');
   }
 
   // If not authenticated, the middleware likely handles it, or we show a landing.
@@ -14,6 +14,6 @@ export default async function Home() {
   // But strictly speaking, middleware protects everything EXCEPT login.
   // So if we are here, we are authenticated (if middleware is working).
   // Double check middleware config.
-  
-  redirect("/syllabus")
+
+  redirect('/syllabus');
 }

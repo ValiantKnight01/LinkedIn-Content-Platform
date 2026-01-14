@@ -1,10 +1,10 @@
 'use client';
 
-import { BookOpen, Archive, Leaf, ListTodo } from "lucide-react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { useEffect } from "react";
-import dayjs from "dayjs";
+import { BookOpen, Archive, Leaf, ListTodo } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import dayjs from 'dayjs';
 
 import {
   Sidebar,
@@ -16,28 +16,28 @@ import {
   SidebarMenuButton,
   SidebarGroup,
   SidebarGroupContent,
-} from "@/components/ui/sidebar";
-import { Card, CardContent } from "@/components/ui/card";
-import { LogoutButton } from "@/components/logout-button";
-import { useSession } from "next-auth/react";
-import { useSyllabusStore } from "@/lib/store";
-import Image from "next/image";
+} from '@/components/ui/sidebar';
+import { Card, CardContent } from '@/components/ui/card';
+import { LogoutButton } from '@/components/logout-button';
+import { useSession } from 'next-auth/react';
+import { useSyllabusStore } from '@/lib/store';
+import Image from 'next/image';
 
 // Menu items.
 const items = [
   {
-    title: "Syllabus",
-    url: "/syllabus",
+    title: 'Syllabus',
+    url: '/syllabus',
     icon: BookOpen,
   },
   {
-    title: "Monthly Themes",
-    url: "/monthly-themes",
+    title: 'Monthly Themes',
+    url: '/monthly-themes',
     icon: ListTodo,
   },
   {
-    title: "Archives",
-    url: "/archives",
+    title: 'Archives',
+    url: '/archives',
     icon: Archive,
   },
 ];
@@ -56,29 +56,29 @@ export function AppSidebar() {
   const activeTheme = getActiveTheme(currentMonth, currentYear);
 
   return (
-    <Sidebar className="border-r border-border bg-background">
+    <Sidebar className="border-border bg-background border-r">
       <SidebarHeader className="p-6 pb-2">
         <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-full overflow-hidden bg-primary/20 shrink-0">
+          <div className="bg-primary/20 h-12 w-12 shrink-0 overflow-hidden rounded-full">
             {session?.user?.image ? (
-              <Image 
-                src={session.user.image} 
-                alt={session.user.name || "User"} 
-                width={48} 
+              <Image
+                src={session.user.image}
+                alt={session.user.name || 'User'}
+                width={48}
                 height={48}
                 className="object-cover"
               />
             ) : (
-              <div className="h-full w-full flex items-center justify-center text-primary font-bold text-xl">
-                {session?.user?.name?.[0] || "E"}
+              <div className="text-primary flex h-full w-full items-center justify-center text-xl font-bold">
+                {session?.user?.name?.[0] || 'E'}
               </div>
             )}
           </div>
-          <div className="flex flex-col min-w-0">
-            <h1 className="font-serif text-xl font-bold text-foreground leading-tight truncate">
-              {session?.user?.name || "Editor-in-Chief"}
+          <div className="flex min-w-0 flex-col">
+            <h1 className="text-foreground truncate font-serif text-xl leading-tight font-bold">
+              {session?.user?.name || 'Editor-in-Chief'}
             </h1>
-            <span className="text-sm font-sans font-normal text-muted-foreground truncate">
+            <span className="text-muted-foreground truncate font-sans text-sm font-normal">
               Editorial Platform
             </span>
           </div>
@@ -89,50 +89,50 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="gap-2">
               {items.map((item) => {
-                 const isActive = pathname === item.url;
-                 return (
+                const isActive = pathname === item.url;
+                return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton 
-                        asChild 
-                        isActive={isActive}
-                        className="h-12 px-5 text-base font-medium rounded-full data-[active=true]:bg-primary data-[active=true]:text-primary-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-200"
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      className="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-12 rounded-full px-5 text-base font-medium transition-all duration-200"
                     >
                       <Link href={item.url}>
-                        <item.icon className="h-5 w-5 mr-3" />
+                        <item.icon className="mr-3 h-5 w-5" />
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                )
+                );
               })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-6 mt-auto space-y-4">
-        <Card className="bg-card border-none shadow-sm rounded-3xl overflow-hidden">
-          <div className="h-32 bg-primary/10 flex items-center justify-center p-4">
-            <div className="w-full h-full rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/20 border-dashed">
-                <Leaf className="h-10 w-10 text-primary/40" />
+      <SidebarFooter className="mt-auto space-y-4 p-6">
+        <Card className="bg-card overflow-hidden rounded-3xl border-none shadow-sm">
+          <div className="bg-primary/10 flex h-32 items-center justify-center p-4">
+            <div className="bg-primary/20 border-primary/20 flex h-full w-full items-center justify-center rounded-2xl border border-dashed">
+              <Leaf className="text-primary/40 h-10 w-10" />
             </div>
           </div>
-          <CardContent className="p-5 space-y-3">
-            <div className="flex items-center gap-2 text-primary font-medium text-sm">
+          <CardContent className="space-y-3 p-5">
+            <div className="text-primary flex items-center gap-2 text-sm font-medium">
               <span>Active Theme</span>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+              <p className="text-muted-foreground mb-1 text-xs tracking-wider uppercase">
                 {dayjs().format('MMMM YYYY')}
               </p>
-              <p className="font-serif text-lg font-medium text-foreground leading-tight">
-                {activeTheme?.title || "No active theme"}
+              <p className="text-foreground font-serif text-lg leading-tight font-medium">
+                {activeTheme?.title || 'No active theme'}
               </p>
             </div>
           </CardContent>
         </Card>
-        
+
         <div className="w-full">
-            <LogoutButton />
+          <LogoutButton />
         </div>
       </SidebarFooter>
     </Sidebar>
