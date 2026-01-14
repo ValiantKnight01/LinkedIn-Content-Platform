@@ -5,7 +5,7 @@ from datetime import datetime
 from ..models.post import Post
 from ..models.theme import Theme
 from ..schemas.post import PostUpdate
-from ..agents.topic_researcher import research_single_topic
+from ..agents.research.agent import research_single_topic
 from ..utils.pdf_generator import PDFGenerator
 from mongoengine.errors import DoesNotExist, ValidationError
 from bson import ObjectId
