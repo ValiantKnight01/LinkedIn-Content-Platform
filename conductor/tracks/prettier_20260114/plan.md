@@ -8,7 +8,7 @@
 - [x] Task: Conductor - User Manual Verification 'Installation & Configuration' (Protocol in workflow.md) 42aa71b
 
 ## Phase 2: Integration & Formatting
-- [ ] Task: Update `frontend/eslint.config.mjs` to include `eslint-config-prettier` config to disable conflicting rules.
+- [x] Task: Update `frontend/eslint.config.mjs` to include `eslint-config-prettier` config to disable conflicting rules. eab9b75
 - [ ] Task: Run `npm run format` in `frontend/` to format all existing files.
 - [ ] Task: Run `npm run lint` to verify no conflicts exist between ESLint and Prettier.
 - [ ] Task: Conductor - User Manual Verification 'Integration & Formatting' (Protocol in workflow.md)
