@@ -10,6 +10,7 @@ A lightweight, personal tool designed to streamline the creation and scheduling 
 # Key Features
 - **Smart Post Editor:** A dedicated editor with LinkedIn-specific formatting, live preview, and structured support for comparison tables and trade-off lists.
 - **High-Fidelity PDF Export:** Generate branded LinkedIn carousels directly from post drafts using the signature "Warm Editorial" visual style.
+- **Secure LinkedIn Auth:** Authentication via LinkedIn with an integrated email whitelist for personal use.
 - **Syllabus & Calendar:** A central hub for planning monthly editorial themes and generating progressive learning curriculums.
 - **Deep Research Agents:** AI that performs multi-step web scraping and synthesis to create authoritative content summaries from high-quality sources.
 - **AI Content Assistant:** Leveraging AI to brainstorm ideas, refine hooks, and improve post structure.

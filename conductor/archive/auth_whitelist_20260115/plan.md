@@ -15,7 +15,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
 ## Phase 3: Final Verification [Checkpoint: ]
-- [ ] Task: End-to-End Whitelist Test
+- [x] Task: End-to-End Whitelist Test (manual)
   - Verify that an allowed email (configured in `.env.local`) can log in successfully.
   - Update `.env.local` to remove your email from the whitelist, restart the dev server, and verify you are blocked with the correct error message.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
