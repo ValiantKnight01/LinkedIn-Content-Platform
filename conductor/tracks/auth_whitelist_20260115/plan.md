@@ -1,6 +1,6 @@
 # Plan: Authorized LinkedIn Login Whitelist
 
-## Phase 1: Authentication Logic [Checkpoint: ]
+## Phase 1: Authentication Logic [Checkpoint: f8516f2]
 - [x] Task: Implement Whitelist Check in next-auth Callback e3799bf
   - Modify `frontend/lib/auth.ts`.
   - Update the `signIn` callback to check if `user.email` is included in `process.env.ALLOWED_LINKEDIN_EMAILS`.
