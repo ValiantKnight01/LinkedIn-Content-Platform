@@ -12,9 +12,9 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Frontend Implementation [Checkpoint: ]
-- [ ] Task: Update Frontend Environment
+- [x] Task: Update Frontend Environment (manual)
   - Ensure `INTERNAL_API_KEY` is added to `frontend/.env.local`.
-- [ ] Task: Update Frontend Fetch Logic
+- [x] Task: Update Frontend Fetch Logic 30de4fb
   - Modify `frontend/lib/store.ts` (and any other fetch locations).
   - Inject the `Authorization: Bearer ${process.env.INTERNAL_API_KEY}` header into all requests to the backend.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
