@@ -12,6 +12,9 @@ export async function GET(request: NextRequest) {
       `${BACKEND_URL}/posts?month=${month}&year=${year}`,
       {
         cache: 'no-store',
+        headers: {
+          Authorization: `Bearer ${process.env.INTERNAL_API_KEY}`,
+        },
       }
     );
 

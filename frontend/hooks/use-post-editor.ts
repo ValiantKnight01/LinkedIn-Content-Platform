@@ -29,7 +29,11 @@ export function usePostEditor(post: Post) {
     setIsDownloading(true);
     try {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-      const response = await fetch(`${baseUrl}/posts/${post.id}/export/pdf`);
+      const response = await fetch(`${baseUrl}/posts/${post.id}/export/pdf`, {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_INTERNAL_API_KEY}`,
+        },
+      });
 
       if (!response.ok) {
         const errorText = await response.text();

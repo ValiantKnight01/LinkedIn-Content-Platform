@@ -13,6 +13,7 @@ export async function POST(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.INTERNAL_API_KEY}`,
       },
     });
 

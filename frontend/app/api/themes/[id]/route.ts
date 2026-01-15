@@ -11,7 +11,10 @@ export async function PATCH(
     const body = await request.json();
     const response = await fetch(`${BACKEND_URL}/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.INTERNAL_API_KEY}`,
+      },
       body: JSON.stringify(body),
     });
     const data = await response.json();
@@ -33,6 +36,9 @@ export async function DELETE(
     const { id } = await params;
     const response = await fetch(`${BACKEND_URL}/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${process.env.INTERNAL_API_KEY}`,
+      },
     });
 
     if (response.status === 204) {
