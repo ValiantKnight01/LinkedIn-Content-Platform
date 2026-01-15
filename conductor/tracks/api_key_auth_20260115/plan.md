@@ -1,6 +1,6 @@
 # Plan: Internal API Key Authorization
 
-## Phase 1: Backend Implementation [Checkpoint: ]
+## Phase 1: Backend Implementation [Checkpoint: 8f6a2a1]
 - [x] Task: Create API Key Security Dependency 846a3dc
   - Create `backend/src/utils/security.py`.
   - Implement a `verify_api_key` function using FastAPI's `HTTPBearer` or `Security` dependencies.
