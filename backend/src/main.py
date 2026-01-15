@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from .database import connect_db, disconnect_db
 from .routes import themes, posts
+from .utils.security import verify_api_key
 
 
 @asynccontextmanager
@@ -23,8 +24,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(themes.router)
-app.include_router(posts.router)
+app.include_router(themes.router, dependencies=[Depends(verify_api_key)])
+app.include_router(posts.router, dependencies=[Depends(verify_api_key)])
 
 
 @app.get("/")
