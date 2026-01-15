@@ -5,7 +5,7 @@
   - Create `backend/src/utils/security.py`.
   - Implement a `verify_api_key` function using FastAPI's `HTTPBearer` or `Security` dependencies.
   - This function should compare the incoming token with the `INTERNAL_API_KEY` environment variable.
-- [ ] Task: Apply Security to Routers
+- [x] Task: Apply Security to Routers 0b4d6d8
   - Update `backend/src/main.py`.
   - Add the security dependency to the `themes` and `posts` routers globally so all their routes are protected.
   - Ensure `/`, `/health`, and `/docs` remain public.
