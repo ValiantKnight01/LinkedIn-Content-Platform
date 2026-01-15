@@ -8,7 +8,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Login UI Feedback [Checkpoint: ]
-- [ ] Task: Display Error Message on Login Page
+- [x] Task: Display Error Message on Login Page 5a7a38e
   - Update `frontend/app/login/page.tsx`.
   - Detect authentication errors from URL query parameters.
   - Display the specific message: "This is a personal project not for other usage" in a styled alert/toast.
