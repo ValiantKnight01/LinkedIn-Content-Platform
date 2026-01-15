@@ -4,7 +4,11 @@ const BACKEND_URL = `${process.env.NEXT_PUBLIC_API_URL}/themes`;
 
 export async function GET() {
   try {
-    const response = await fetch(BACKEND_URL);
+    const response = await fetch(BACKEND_URL, {
+      headers: {
+        Authorization: `Bearer ${process.env.INTERNAL_API_KEY}`,
+      },
+    });
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
@@ -21,7 +25,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const response = await fetch(BACKEND_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.INTERNAL_API_KEY}`,
+      },
       body: JSON.stringify(body),
     });
     const data = await response.json();
