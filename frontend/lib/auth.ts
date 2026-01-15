@@ -27,6 +27,18 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
   },
   callbacks: {
+    async signIn({ user }) {
+      const allowedEmails =
+        process.env.ALLOWED_LINKEDIN_EMAILS?.split(',').map((e) => e.trim()) ||
+        [];
+
+      if (user.email && allowedEmails.includes(user.email)) {
+        return true;
+      }
+
+      // Redirect to login with error if email is not allowed
+      return '/login?error=AccessDenied';
+    },
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
       if (url.startsWith('/')) return `${baseUrl}${url}`;
