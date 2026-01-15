@@ -83,7 +83,7 @@ export function SectionTradeoffs({ tradeoffs }: SectionTradeoffsProps) {
               </span>
             </div>
             <p className="text-sm text-slate-600 italic">
-              "{tradeoffs.real_world_context}"
+              &ldquo;{tradeoffs.real_world_context}&rdquo;
             </p>
           </div>
         )}

@@ -45,7 +45,7 @@ const items = [
 export function AppSidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const { themes, fetchThemes, getActiveTheme } = useSyllabusStore();
+  const { fetchThemes, getActiveTheme } = useSyllabusStore();
 
   useEffect(() => {
     fetchThemes();

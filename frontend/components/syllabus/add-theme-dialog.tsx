@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSyllabusStore, Theme } from '@/lib/store';
 import {
   Dialog,
@@ -33,27 +33,11 @@ export function AddThemeDialog({
   theme,
 }: AddThemeDialogProps) {
   const { addTheme, updateTheme } = useSyllabusStore();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [month, setMonth] = useState(dayjs().month() + 1);
-  const [year, setYear] = useState(dayjs().year());
-
-  useEffect(() => {
-    if (theme && open) {
-      setTitle(theme.title);
-      setDescription(theme.description || '');
-      setCategory(theme.category || '');
-      setMonth(theme.month);
-      setYear(theme.year);
-    } else if (!theme && open) {
-      setTitle('');
-      setDescription('');
-      setCategory('');
-      setMonth(dayjs().month() + 1);
-      setYear(dayjs().year());
-    }
-  }, [theme, open]);
+  const [title, setTitle] = useState(theme?.title || '');
+  const [description, setDescription] = useState(theme?.description || '');
+  const [category, setCategory] = useState(theme?.category || '');
+  const [month, setMonth] = useState(theme?.month || dayjs().month() + 1);
+  const [year, setYear] = useState(theme?.year || dayjs().year());
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

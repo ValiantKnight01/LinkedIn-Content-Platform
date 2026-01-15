@@ -69,7 +69,11 @@ export default function MonthlyThemesPage() {
         </div>
       </ScrollArea>
 
-      <AddThemeDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
+      <AddThemeDialog
+        key={isDialogOpen ? 'open' : 'closed'}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+      />
     </div>
   );
 }

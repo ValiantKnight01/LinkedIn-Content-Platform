@@ -3,7 +3,7 @@ import { Post, useCalendarStore } from '@/lib/store';
 
 export function usePostEditor(post: Post) {
   const { researchPost, updatePost } = useCalendarStore();
-  
+
   // State
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState<Post>(post);
@@ -60,12 +60,12 @@ export function usePostEditor(post: Post) {
         let content = s.content || '';
 
         if (s.comparison) {
-          content = 
+          content =
             s.comparison.items
               .map(
                 (item) => `• ${item.dimension}: ${item.before} → ${item.after}`
               )
-              .join('\n') + 
+              .join('\n') +
             (s.comparison.summary ? `\n\n${s.comparison.summary}` : '');
         } else if (s.tradeoffs) {
           content = `PROS:\n${s.tradeoffs.pros.map((p) => `✓ ${p}`).join('\n')}\n\nCONS:\n${s.tradeoffs.cons.map((c) => `✗ ${c}`).join('\n')}\n\nCONSTRAINTS:\n${s.tradeoffs.constraints.map((c) => `→ ${c}`).join('\n')}${s.tradeoffs.real_world_context ? `\n\nReal-world: ${s.tradeoffs.real_world_context}` : ''}`;

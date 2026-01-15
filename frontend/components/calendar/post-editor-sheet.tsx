@@ -1,7 +1,6 @@
 'use client';
 
 import { Post, PostStatus } from '@/lib/store';
-import { cn } from '@/lib/utils';
 import {
   SheetContent,
   SheetDescription,
@@ -10,7 +9,18 @@ import {
   SheetFooter,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, FileText, Globe, Save, Trash2, Plus, Copy, Check, Download } from 'lucide-react';
+import {
+  Loader2,
+  Sparkles,
+  FileText,
+  Globe,
+  Save,
+  Trash2,
+  Plus,
+  Copy,
+  Check,
+  Download,
+} from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -22,6 +32,20 @@ import { ComparisonEditor } from './comparison-editor';
 import { TradeoffsEditor } from './tradeoffs-editor';
 import { SectionComparison } from './section-comparison';
 import { SectionTradeoffs } from './section-tradeoffs';
+
+interface PostEditorSheetProps {
+  post: Post;
+  editData: Post;
+  setEditData: (data: Post) => void;
+  isResearching: boolean;
+  isSaving: boolean;
+  isDownloading: boolean;
+  copied: boolean;
+  handleResearch: () => Promise<void>;
+  handleSave: () => Promise<void>;
+  handleDownloadPDF: () => Promise<void>;
+  handleCopy: () => void;
+}
 
 export function PostEditorSheet({
   post,
@@ -96,7 +120,7 @@ export function PostEditorSheet({
             <SheetHeader className="shrink-0 space-y-4 p-8 pb-4 text-left">
               <div className="flex items-center gap-3">
                 <Badge
-                  variant={post.status as any}
+                  variant={post.status as PostStatus}
                   className="px-3 py-1 capitalize"
                 >
                   {post.status}
@@ -121,8 +145,7 @@ export function PostEditorSheet({
             <ScrollArea className="min-h-0 w-full flex-1">
               <div className="px-8 pb-8">
                 {/* Research Results */}
-                {post.status === 'researched' &&
-                (post.summary || post.hook) ? (
+                {post.status === 'researched' && (post.summary || post.hook) ? (
                   <div className="animate-in fade-in slide-in-from-bottom-4 space-y-10 duration-500">
                     <div className="space-y-6">
                       <h4 className="flex items-center gap-2 text-lg font-bold text-[#3D2B1F]">
@@ -134,7 +157,7 @@ export function PostEditorSheet({
                       {post.hook && (
                         <div className="space-y-2">
                           <p className="text-xl leading-relaxed font-medium text-[#3D2B1F] italic">
-                            "{post.hook}"
+                            &ldquo;{post.hook}&rdquo;
                           </p>
                         </div>
                       )}
@@ -174,27 +197,26 @@ export function PostEditorSheet({
                         </div>
                       )}
 
-                      {post.key_takeaways &&
-                        post.key_takeaways.length > 0 && (
-                          <div className="space-y-3 rounded-[2rem] border border-indigo-100 bg-indigo-50/50 p-6">
-                            <p className="mb-2 text-sm font-bold tracking-widest text-indigo-900 uppercase">
-                              Key Takeaways
-                            </p>
-                            <ul className="space-y-2">
-                              {post.key_takeaways.map((point, idx) => (
-                                <li
-                                  key={idx}
-                                  className="flex items-start gap-2 text-lg leading-relaxed text-[#4A3728]"
-                                >
-                                  <span className="mt-1 shrink-0 text-indigo-500">
-                                    •
-                                  </span>
-                                  {point}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                      {post.key_takeaways && post.key_takeaways.length > 0 && (
+                        <div className="space-y-3 rounded-[2rem] border border-indigo-100 bg-indigo-50/50 p-6">
+                          <p className="mb-2 text-sm font-bold tracking-widest text-indigo-900 uppercase">
+                            Key Takeaways
+                          </p>
+                          <ul className="space-y-2">
+                            {post.key_takeaways.map((point, idx) => (
+                              <li
+                                key={idx}
+                                className="flex items-start gap-2 text-lg leading-relaxed text-[#4A3728]"
+                              >
+                                <span className="mt-1 shrink-0 text-indigo-500">
+                                  •
+                                </span>
+                                {point}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                       {post.call_to_action && (
                         <div className="bg-primary/5 border-primary/10 rounded-[2rem] border p-6">
@@ -271,8 +293,7 @@ export function PostEditorSheet({
             </ScrollArea>
 
             <SheetFooter className="border-primary/10 shrink-0 border-t bg-inherit p-8 pt-4">
-              {post.status !== 'researched' ||
-              (!post.summary && !post.hook) ? (
+              {post.status !== 'researched' || (!post.summary && !post.hook) ? (
                 <Button
                   onClick={handleResearch}
                   disabled={isResearching}

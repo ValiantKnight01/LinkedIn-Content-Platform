@@ -1,17 +1,54 @@
 'use client';
 
-import { Post } from '@/lib/store';
+import { Post, ComparisonContent, TradeoffsContent } from '@/lib/store';
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { SectionComparison } from './section-comparison';
 import { SectionTradeoffs } from './section-tradeoffs';
+
+interface BaseSlide {
+  label: string;
+  bg: string;
+  text: string; // CSS class for text color
+}
+
+interface TitleSlide extends BaseSlide {
+  type: 'title';
+  title: string;
+  hook?: string;
+  author: string;
+}
+
+interface ContentSlide extends BaseSlide {
+  type: 'content';
+  header: string;
+  content?: string;
+  example?: string;
+  comparison?: ComparisonContent;
+  tradeoffs?: TradeoffsContent;
+}
+
+interface QuoteSlide extends BaseSlide {
+  type: 'quote';
+  quoteText: string;
+  source: string;
+}
+
+interface TakeawaysSlide extends BaseSlide {
+  type: 'takeaways';
+  title: string;
+  items: string[];
+  cta?: string;
+}
+
+type Slide = TitleSlide | ContentSlide | QuoteSlide | TakeawaysSlide;
 
 interface CarouselPreviewProps {
   post: Post;
 }
 
 export function CarouselPreview({ post }: CarouselPreviewProps) {
-  const slides = [
+  const slides: Slide[] = [
     // Title Slide
     {
       type: 'title',
@@ -23,7 +60,7 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
       text: 'text-[#fefae0]',
     },
     // Content Slides
-    ...(post.sections || []).map((section, idx) => {
+    ...(post.sections || []).map((section, idx): ContentSlide => {
       const bgs = ['bg-[#fefae0]', 'bg-[#faedcd]', 'bg-[#e9edc9]'];
       return {
         type: 'content',
@@ -41,14 +78,14 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
     ...(post.summary
       ? [
           {
-            type: 'quote',
+            type: 'quote' as const,
             label: 'Quote Style',
-            text:
+            quoteText:
               post.summary.slice(0, 200) +
               (post.summary.length > 200 ? '...' : ''),
             source: 'Research Finding',
             bg: 'bg-[#3D2B1F]',
-            textColor: 'text-[#fefae0]',
+            text: 'text-[#fefae0]',
           },
         ]
       : []),
@@ -126,10 +163,10 @@ export function CarouselPreview({ post }: CarouselPreviewProps) {
               {slide.type === 'quote' && (
                 <div className="flex flex-1 flex-col items-center justify-center space-y-10 text-center">
                   <div className="h-24 font-serif text-[12rem] leading-[0] text-[#d4a373] opacity-30">
-                    "
+                    &ldquo;
                   </div>
                   <p className="max-w-2xl text-4xl leading-relaxed font-semibold italic">
-                    {slide.text}
+                    {slide.quoteText}
                   </p>
                   <p className="text-2xl font-bold tracking-wider text-[#d4a373]">
                     - {slide.source}

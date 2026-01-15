@@ -129,6 +129,7 @@ export function ThemeCard({ theme }: ThemeCardProps) {
       </div>
 
       <AddThemeDialog
+        key={isEditDialogOpen ? theme.id : 'closed'}
         open={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
         theme={theme}
