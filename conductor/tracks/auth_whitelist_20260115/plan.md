@@ -7,7 +7,7 @@
   - If unauthorized, return `false` or redirect with an error code.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
-## Phase 2: Login UI Feedback [Checkpoint: ]
+## Phase 2: Login UI Feedback [Checkpoint: d94b4ea]
 - [x] Task: Display Error Message on Login Page 5a7a38e
   - Update `frontend/app/login/page.tsx`.
   - Detect authentication errors from URL query parameters.
