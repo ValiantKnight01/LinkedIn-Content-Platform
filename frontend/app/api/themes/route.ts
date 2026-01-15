@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_URL = 'http://localhost:8001/themes';
+const BACKEND_URL = `${process.env.NEXT_PUBLIC_API_URL}/themes`;
 
 export async function GET() {
   try {

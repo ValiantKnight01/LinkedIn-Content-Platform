@@ -160,7 +160,7 @@ interface NewsroomState {
   cards: KanbanCard[];
   isLoading: boolean;
   fetchCards: () => Promise<void>;
-  moveCard: (cardId: string, newStatus: KanbanStatus, index: number) => void;
+  moveCard: (cardId: string, newStatus: KanbanStatus) => void;
   generateCycle: () => Promise<void>;
   approveCard: (id: string) => Promise<void>;
   discardCard: (id: string) => Promise<void>;
@@ -170,7 +170,7 @@ interface NewsroomState {
   ) => Promise<void>;
 }
 
-export const useNewsroomStore = create<NewsroomState>((set, get) => ({
+export const useNewsroomStore = create<NewsroomState>((set) => ({
   cards: [],
   isLoading: false,
 
@@ -186,7 +186,7 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
     }
   },
 
-  moveCard: (cardId, newStatus, index) => {
+  moveCard: (cardId, newStatus) => {
     set((state) => {
       const cards = [...state.cards];
       const cardIndex = cards.findIndex((c) => c.id === cardId);
@@ -195,8 +195,6 @@ export const useNewsroomStore = create<NewsroomState>((set, get) => ({
       const [movedCard] = cards.splice(cardIndex, 1);
       const updatedCard = { ...movedCard, status: newStatus };
 
-      // Get other cards in the target status to find the correct insertion point
-      const statusCards = cards.filter((c) => c.status === newStatus);
       // This is a simplified move; real sortable logic will handle reordering within the same column
       // but for dnd-kit we usually manage the global array.
 
